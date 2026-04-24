@@ -7,7 +7,6 @@ SmartKasir adalah aplikasi kasir (POS) berbasis web yang dirancang untuk membant
 ## 🔗 Link Akses Proyek
 *   **Web Application (Live):** [https://smartkasir.infinityfreeapp.com](https://smartkasir.infinityfreeapp.com)
 *   **Mobile Source Code:** [https://github.com/dwiferdi-292/SmartKasir-Mobile-App.git](https://github.com/dwiferdi-292/SmartKasir-Mobile-App.git)
-*   **Documentation:** [GitHub Repository Main](https://github.com/dwiferdi-292/SMARTKASIR)
 
 ---
 
