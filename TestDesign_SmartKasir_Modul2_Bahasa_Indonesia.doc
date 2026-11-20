@@ -1,0 +1,889 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>TEST DESIGN SPECIFICATION (TDS) &amp; TTM - SMARTKASIR</title>
+<style>
+    body { 
+        font-family: 'Calibri', 'Arial', sans-serif; 
+        line-height: 1.45; 
+        color: #111827; 
+        margin: 40px 50px; 
+        font-size: 11pt;
+    }
+    h1.doc-title { 
+        font-size: 18pt; 
+        font-weight: bold; 
+        margin-bottom: 22px; 
+        color: #0f172a; 
+        text-transform: uppercase;
+        letter-spacing: -0.3px;
+    }
+    h2.section-title { 
+        font-size: 14pt; 
+        font-weight: bold; 
+        margin-top: 26px; 
+        margin-bottom: 12px; 
+        color: #1e293b; 
+        border-bottom: 1.5px solid #cbd5e1;
+        padding-bottom: 4px;
+    }
+    h3.sub-title {
+        font-size: 12pt;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #2563eb;
+    }
+    p { 
+        margin-bottom: 7px; 
+        line-height: 1.5;
+    }
+    .fs-block {
+        margin-bottom: 16px;
+        background-color: #fbfcfe;
+        padding: 6px 12px;
+        border-left: 3px solid #3b82f6;
+    }
+    .fs-title {
+        font-weight: bold;
+        font-size: 11.5pt;
+        color: #0f172a;
+        margin-bottom: 3px;
+    }
+    .fs-detail {
+        margin-bottom: 2px;
+        font-size: 10.5pt;
+        color: #334155;
+    }
+    table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        margin-top: 10px; 
+        margin-bottom: 22px; 
+    }
+    th, td { 
+        border: 1px solid #334155; 
+        padding: 7px 10px; 
+        text-align: left; 
+        vertical-align: top; 
+        font-size: 10pt; 
+    }
+    th { 
+        background-color: #b8d5f8; 
+        font-weight: bold; 
+        color: #0f172a;
+    }
+    .meta-box {
+        background-color: #f1f5f9;
+        border: 1px solid #94a3b8;
+        padding: 12px 18px;
+        margin-bottom: 25px;
+        font-size: 10.5pt;
+    }
+    .meta-box table {
+        margin: 0;
+    }
+    .meta-box th, .meta-box td {
+        border: none;
+        padding: 3px 6px;
+        background: transparent;
+    }
+    .divider {
+        page-break-after: always;
+        margin: 40px 0;
+        border-top: 2px dashed #94a3b8;
+    }
+    .badge-high { color: #b91c1c; font-weight: bold; }
+    .badge-med { color: #d97706; font-weight: bold; }
+    .badge-low { color: #2563eb; }
+</style>
+</head>
+<body>
+
+    <!-- ============================================================== -->
+    <!-- BAGIAN 1: PROYEK APLIKASI UTAMA (SMARTKASIR - MODUL KASIR)     -->
+    <!-- 100% BAHASA INDONESIA SESUAI TEMPLATE RESMI LAB MODUL 2        -->
+    <!-- ============================================================== -->
+
+    <div class="meta-box">
+        <table>
+            <tr><td width="26%"><strong>Nama Praktikan</strong></td><td width="74%">: MUCHAMMAD DWI FERDI ILHAM ARIFIN</td></tr>
+            <tr><td><strong>NIM</strong></td><td>: 202310370311292</td></tr>
+            <tr><td><strong>Mata Kuliah / Kelas</strong></td><td>: Praktikum Pengujian Kualitas Perangkat Lunak (PKPL) - B</td></tr>
+            <tr><td><strong>Aplikasi Proyek</strong></td><td>: SmartKasir (Sistem Kasir &amp; Point of Sale Berbasis Web)</td></tr>
+            <tr><td><strong>Peran yang Diuji</strong></td><td>: Kasir (Cashier Module)</td></tr>
+            <tr><td><strong>Tautan Sistem Aktif</strong></td><td>: <a href="https://smartkasir.infinityfreeapp.com/">https://smartkasir.infinityfreeapp.com/</a></td></tr>
+            <tr><td><strong>Dokumen</strong></td><td>: Modul 2 - Test Design Specification (TDS) &amp; Test Traceability Matrix (TTM)</td></tr>
+        </table>
+    </div>
+
+    <h1 class="doc-title">TEST DESIGN SPECIFICATION (TDS)</h1>
+
+    <h2 class="section-title">1. Requirements (Kebutuhan Sistem)</h2>
+    <p><strong>RQ-001:</strong> Sistem harus memungkinkan kasir melakukan otentikasi login menggunakan alamat email dan kata sandi yang valid dan terdaftar.</p>
+    <p><strong>RQ-002:</strong> Sistem harus memvalidasi upaya masuk, menolak kredensial yang tidak valid, dan menampilkan pesan kesalahan yang informatif kepada pengguna.</p>
+    <p><strong>RQ-003:</strong> Sistem harus menyediakan pencarian produk secara langsung (*real-time*) berdasarkan kata kunci nama produk atau kode SKU pada antarmuka kasir.</p>
+    <p><strong>RQ-004:</strong> Sistem harus memungkinkan kasir menambahkan produk yang tersedia ke keranjang pesanan serta menghitung jumlah item dan subtotal harga secara otomatis.</p>
+    <p><strong>RQ-005:</strong> Sistem harus mencegah penambahan produk berstok kosong (stok = 0) ke keranjang dan membatasi kuantitas pesanan agar tidak melebihi sisa stok fisik toko.</p>
+    <p><strong>RQ-006:</strong> Sistem harus mengkalkulasi total tagihan belanja secara akurat dan menghitung jumlah uang kembalian secara otomatis berdasarkan nominal uang tunai yang diterima.</p>
+    <p><strong>RQ-007:</strong> Sistem harus memvalidasi pembayaran tunai dan menolak transaksi checkout apabila nominal uang yang diterima kurang dari total nilai belanjaan.</p>
+    <p><strong>RQ-008:</strong> Sistem harus memproses transaksi pembayaran secara atomik (menyimpan transaksi, memotong stok inventaris, dan mencatat log mutasi stok barang).</p>
+    <p><strong>RQ-009:</strong> Sistem harus mencetak struk transaksi resmi sesaat setelah transaksi pembayaran berhasil diproses dan menyediakan fungsi cetak ulang struk (*reprint receipt*).</p>
+    <p><strong>RQ-010:</strong> Sistem harus menyediakan modul riwayat pemesanan yang memungkinkan kasir melihat daftar transaksi penjualan, menyaring transaksi berdasarkan rentang tanggal, mencari invoice, dan melihat rincian item transaksi.</p>
+    <p><strong>RQ-011:</strong> Sistem harus menyediakan modul manajemen stok bagi kasir untuk memantau sisa stok barang, peringatan stok menipis, penambahan stok cepat (*quick restock*), penyesuaian stok (*stock opname*), dan meninjau riwayat mutasi stok.</p>
+    <p><strong>RQ-012:</strong> Sistem harus memastikan tata letak antarmuka responsif dan lancar digulir pada perangkat seluler (HP) serta menyediakan tombol keluar (*logout*) yang dapat diakses di seluruh menu kasir.</p>
+
+    <h2 class="section-title">2. Feature Sets (Kumpulan Fitur)</h2>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-001 – Autentikasi Kasir</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Mengautentikasi kredensial kasir dan memberikan izin akses aman ke sistem kasir (POS).</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Tinggi</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-001, RQ-002</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-002 – Katalog &amp; Pencarian Produk</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Menampilkan katalog menu barang dagangan dan memfilter produk secara instan berdasarkan kata kunci.</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Sedang</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-003</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-003 – Manajemen Keranjang Belanja</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Mengatur daftar belanjaan pelanggan, pembatasan kuantitas item, serta validasi ketersediaan stok fisik.</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Tinggi</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-004, RQ-005</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-004 – Perhitungan &amp; Pembayaran Kasir</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Menghitung total harga transaksi, memvalidasi kecukupan pembayaran tunai, dan menghitung nominal uang kembalian.</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Tinggi</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-006, RQ-007, RQ-008</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-005 – Pencetakan Struk Transaksi</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Menerbitkan bukti struk belanja fisik/digital saat transaksi selesai dan menyediakan fungsi cetak ulang invoice.</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Tinggi</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-008, RQ-009</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-006 – Riwayat Pemesanan Kasir</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Menampilkan rekapitulasi data penjualan lampau, filter rentang tanggal, pencarian nomor invoice, dan rincian transaksi.</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Sedang</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-010</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-007 – Manajemen &amp; Mutasi Stok</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Memantau level stok fisik, restock cepat, penyesuaian stok opname, serta mencatat kartu audit mutasi stok barang.</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Tinggi</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-011</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-008 – Manajemen Sesi &amp; Keluar (Logout)</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Memfasilitasi antarmuka ramah perangkat ponsel serta pemutusan sesi login secara aman dari seluruh halaman.</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Tinggi</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-012</div>
+    </div>
+
+    <h2 class="section-title">3. Test Conditions (Kondisi Pengujian)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="12%">ID</th>
+                <th width="14%">Kumpulan Fitur</th>
+                <th width="44%">Deskripsi Kondisi Pengujian</th>
+                <th width="12%">Prioritas</th>
+                <th width="18%">Keterlacakan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>TCond-001</strong></td>
+                <td>FS-001</td>
+                <td>Login kasir dengan email dan kata sandi yang valid serta terdaftar</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-001</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-002</strong></td>
+                <td>FS-001</td>
+                <td>Login kasir dengan kata sandi salah atau alamat email yang belum terdaftar</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-003</strong></td>
+                <td>FS-001</td>
+                <td>Login kasir dengan mengosongkan kolom input email atau kata sandi</td>
+                <td><span class="badge-med">Sedang</span></td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-004</strong></td>
+                <td>FS-002</td>
+                <td>Pencarian produk menggunakan kata kunci nama yang tersedia di katalog</td>
+                <td><span class="badge-med">Sedang</span></td>
+                <td>RQ-003</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-005</strong></td>
+                <td>FS-002</td>
+                <td>Pencarian produk menggunakan kata kunci acak yang tidak terdaftar di sistem</td>
+                <td><span class="badge-low">Rendah</span></td>
+                <td>RQ-003</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-006</strong></td>
+                <td>FS-003</td>
+                <td>Menambahkan produk berstatus stok mencukupi (stok &gt; 0) ke dalam keranjang pesanan</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-004</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-007</strong></td>
+                <td>FS-003</td>
+                <td>Menambahkan produk yang berstatus stok habis (stok = 0) ke dalam keranjang belanja</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-005</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-008</strong></td>
+                <td>FS-003</td>
+                <td>Meningkatkan kuantitas item dalam keranjang belanja melebihi sisa stok fisik produk</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-005</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-009</strong></td>
+                <td>FS-004</td>
+                <td>Pembayaran tunai dengan nominal uang pas (nominal tunai sama dengan total tagihan)</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-006, RQ-008</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-010</strong></td>
+                <td>FS-004</td>
+                <td>Pembayaran tunai dengan nominal uang lebih (sistem menghitung uang kembalian secara akurat)</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-006, RQ-008</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-011</strong></td>
+                <td>FS-004</td>
+                <td>Pembayaran tunai dengan nominal uang kurang dari total tagihan transaksi belanja</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-007</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-012</strong></td>
+                <td>FS-005</td>
+                <td>Penerbitan dan tampilan struk belanja otomatis sesaat setelah transaksi checkout sukses</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-008, RQ-009</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-013</strong></td>
+                <td>FS-006</td>
+                <td>Penyaringan daftar riwayat transaksi kasir berdasarkan rentang tanggal kalender tertentu</td>
+                <td><span class="badge-med">Sedang</span></td>
+                <td>RQ-010</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-014</strong></td>
+                <td>FS-006</td>
+                <td>Mencetak ulang struk transaksi lama (*reprint receipt*) melalui tabel riwayat pemesanan</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-009, RQ-010</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-015</strong></td>
+                <td>FS-007</td>
+                <td>Penambahan stok produk via fitur Quick Restock dan verifikasi catatan log mutasi barang</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-011</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-016</strong></td>
+                <td>FS-007</td>
+                <td>Penyesuaian stok opname fisik dengan menyertakan alasan penyesuaian stok</td>
+                <td><span class="badge-med">Sedang</span></td>
+                <td>RQ-011</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-017</strong></td>
+                <td>FS-008</td>
+                <td>Menekan tombol Logout pada navbar dan memastikan sesi pengguna ditutup secara tuntas</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-012</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">4. Coverage Items (Item Cakupan Pengujian)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="12%">ID</th>
+                <th width="32%">Deskripsi Item Cakupan</th>
+                <th width="24%">Kondisi Pengujian Terkait</th>
+                <th width="12%">Prioritas</th>
+                <th width="20%">Keterlacakan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>CI-001</strong></td>
+                <td>Bidang input email dan kata sandi pada halaman login</td>
+                <td>TCond-001, TCond-002</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-001, RQ-002</td>
+            </tr>
+            <tr>
+                <td><strong>CI-002</strong></td>
+                <td>Pesan peringatan validasi form login kosong</td>
+                <td>TCond-003</td>
+                <td><span class="badge-med">Sedang</span></td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td><strong>CI-003</strong></td>
+                <td>Kolom input pencarian katalog produk POS</td>
+                <td>TCond-004, TCond-005</td>
+                <td><span class="badge-med">Sedang</span></td>
+                <td>RQ-003</td>
+            </tr>
+            <tr>
+                <td><strong>CI-004</strong></td>
+                <td>Tombol penambahan produk berstok ke keranjang</td>
+                <td>TCond-006</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-004</td>
+            </tr>
+            <tr>
+                <td><strong>CI-005</strong></td>
+                <td>Status disabled dan badge "Stok Habis" pada kartu produk</td>
+                <td>TCond-007</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-005</td>
+            </tr>
+            <tr>
+                <td><strong>CI-006</strong></td>
+                <td>Batas maksimum penambahan kuantitas produk keranjang</td>
+                <td>TCond-008</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-005</td>
+            </tr>
+            <tr>
+                <td><strong>CI-007</strong></td>
+                <td>Kalkulasi subtotal keranjang dan total tagihan transaksi</td>
+                <td>TCond-009, TCond-010</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-006</td>
+            </tr>
+            <tr>
+                <td><strong>CI-008</strong></td>
+                <td>Kalkulasi nominal uang kembalian pada modal pembayaran</td>
+                <td>TCond-010</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-006</td>
+            </tr>
+            <tr>
+                <td><strong>CI-009</strong></td>
+                <td>Validasi pemblokiran tombol bayar saat nominal tunai kurang</td>
+                <td>TCond-011</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-007</td>
+            </tr>
+            <tr>
+                <td><strong>CI-010</strong></td>
+                <td>Eksekusi transaksi atomik dan pengurangan stok database</td>
+                <td>TCond-009, TCond-010</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-008</td>
+            </tr>
+            <tr>
+                <td><strong>CI-011</strong></td>
+                <td>Tampilan rincian struk pembelian dan pemicu dialog cetak</td>
+                <td>TCond-012, TCond-014</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-009</td>
+            </tr>
+            <tr>
+                <td><strong>CI-012</strong></td>
+                <td>Filter rentang tanggal mulai dan tanggal selesai pesanan</td>
+                <td>TCond-013</td>
+                <td><span class="badge-med">Sedang</span></td>
+                <td>RQ-010</td>
+            </tr>
+            <tr>
+                <td><strong>CI-013</strong></td>
+                <td>Form input penambahan stok cepat dan rekaman log mutasi</td>
+                <td>TCond-015</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-011</td>
+            </tr>
+            <tr>
+                <td><strong>CI-014</strong></td>
+                <td>Modal penyesuaian stok opname dan pencatatan alasan selisih</td>
+                <td>TCond-016</td>
+                <td><span class="badge-med">Sedang</span></td>
+                <td>RQ-011</td>
+            </tr>
+            <tr>
+                <td><strong>CI-015</strong></td>
+                <td>Penghapusan sesi pengguna dan pengalihan ke halaman awal</td>
+                <td>TCond-017</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-012</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">5. Test Traceability Matrix (TTM)</h2>
+    <p>Tabel matriks keterlacakan berikut menghubungkan secara komprehensif antara Kebutuhan Sistem (Requirement), Kumpulan Fitur (Feature Set), Kondisi Pengujian (Test Condition), dan Item Cakupan Pengujian (Coverage Item).</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th width="15%">Kebutuhan (Requirement)</th>
+                <th width="18%">Kumpulan Fitur (Feature Set)</th>
+                <th width="22%">Kondisi Pengujian (Test Condition)</th>
+                <th width="45%">Item Cakupan Pengujian (Coverage Item)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>RQ-001</td>
+                <td>FS-001</td>
+                <td>TCond-001</td>
+                <td>CI-001</td>
+            </tr>
+            <tr>
+                <td>RQ-002</td>
+                <td>FS-001</td>
+                <td>TCond-002, TCond-003</td>
+                <td>CI-001, CI-002</td>
+            </tr>
+            <tr>
+                <td>RQ-003</td>
+                <td>FS-002</td>
+                <td>TCond-004, TCond-005</td>
+                <td>CI-003</td>
+            </tr>
+            <tr>
+                <td>RQ-004</td>
+                <td>FS-003</td>
+                <td>TCond-006</td>
+                <td>CI-004, CI-007</td>
+            </tr>
+            <tr>
+                <td>RQ-005</td>
+                <td>FS-003</td>
+                <td>TCond-007, TCond-008</td>
+                <td>CI-005, CI-006</td>
+            </tr>
+            <tr>
+                <td>RQ-006</td>
+                <td>FS-004</td>
+                <td>TCond-009, TCond-010</td>
+                <td>CI-007, CI-008</td>
+            </tr>
+            <tr>
+                <td>RQ-007</td>
+                <td>FS-004</td>
+                <td>TCond-011</td>
+                <td>CI-009</td>
+            </tr>
+            <tr>
+                <td>RQ-008</td>
+                <td>FS-004</td>
+                <td>TCond-009, TCond-010</td>
+                <td>CI-010</td>
+            </tr>
+            <tr>
+                <td>RQ-009</td>
+                <td>FS-005</td>
+                <td>TCond-012, TCond-014</td>
+                <td>CI-011</td>
+            </tr>
+            <tr>
+                <td>RQ-010</td>
+                <td>FS-006</td>
+                <td>TCond-013, TCond-014</td>
+                <td>CI-011, CI-012</td>
+            </tr>
+            <tr>
+                <td>RQ-011</td>
+                <td>FS-007</td>
+                <td>TCond-015, TCond-016</td>
+                <td>CI-013, CI-014</td>
+            </tr>
+            <tr>
+                <td>RQ-012</td>
+                <td>FS-008</td>
+                <td>TCond-017</td>
+                <td>CI-015</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">6. Test Design Technique Summary (Ringkasan Teknik Desain Pengujian)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="15%">ID Kondisi Pengujian</th>
+                <th width="28%">Teknik Desain Pengujian</th>
+                <th width="57%">Alasan Pemilihan Teknik (Rasional)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>TCond-001</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Mengklasifikasikan kelas input kredensial valid yang dapat diterima oleh sistem autentikasi kasir.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-002</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Memisahkan kelas ekivalen kredensial tidak valid (kata sandi salah dan email tidak terdaftar) untuk menguji penanganan kegagalan.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-003</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Menguji penanganan masukan kosong (*empty fields*) pada kolom input otentikasi.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-004</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Menguji partisi kata kunci pencarian yang cocok (*matching*) dengan nama produk di database.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-005</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Menguji partisi kata kunci yang tidak menghasilkan kecocokan (*empty search result*).</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-006</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Memvalidasi penambahan produk dengan kondisi stok yang mencukupi (*stock &gt; 0*).</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-007</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Memvalidasi pencegahan transaksi untuk kondisi stok produk bernilai nol (*stock = 0*).</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-008</strong></td>
+                <td>Boundary Value Analysis</td>
+                <td>Menguji nilai batas maksimum kuantitas pesanan tepat pada nilai sisa stok fisik dan batas satu angka di atasnya (+1).</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-009</strong></td>
+                <td>Boundary Value Analysis</td>
+                <td>Menguji nilai batas pembayaran tunai pas persis sama dengan total tagihan (*Uang Masuk = Total Tagihan*).</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-010</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Menguji kelas partisi pembayaran lebih (*Uang Masuk &gt; Total Tagihan*) dan memastikan akurasi perhitungan uang kembalian.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-011</strong></td>
+                <td>Boundary Value Analysis</td>
+                <td>Menguji nilai batas pembayaran tidak mencukupi, yaitu tepat 1 rupiah di bawah total tagihan belanja (*Uang Masuk = Total Tagihan - 1*).</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-012</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Memverifikasi integritas tampilan data struk belanja pasca transaksi checkout berhasil diproses.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-013</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Memverifikasi partisi rentang tanggal valid (tanggal mulai &le; tanggal akhir) pada modul riwayat pesanan.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-014</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Memverifikasi konsistensi pencetakan kembali struk belanja dari arsip transaksi lampau.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-015</strong></td>
+                <td>Boundary Value Analysis</td>
+                <td>Menguji batas nilai penambahan stok positif (*stok &ge; 1*) dan verifikasi pencatatan log mutasi barang.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-016</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Memverifikasi proses penyesuaian stok fisik dan validasi kewajiban pengisian keterangan/alasan penyesuaian.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-017</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Memverifikasi penghancuran sesi pengguna yang sedang aktif dan pencegahan akses kembali melalui tombol navigasi browser.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- ============================================================== -->
+    <!-- BAGIAN 2: PRE-LAB (SISTEM PENDAFTARAN KURSUS ONLINE)           -->
+    <!-- 100% BAHASA INDONESIA SESUAI TEMPLATE RESMI LAB MODUL 2        -->
+    <!-- ============================================================== -->
+
+    <div class="meta-box">
+        <table>
+            <tr><td width="26%"><strong>Tugas Praktikum</strong></td><td width="74%">: PRE-LAB MODUL 2 (Latihan Perancangan Pengujian)</td></tr>
+            <tr><td><strong>Studi Kasus</strong></td><td>: Sistem Pendaftaran Kursus Online (Online Course Registration System)</td></tr>
+            <tr><td><strong>Nama Praktikan</strong></td><td>: MUCHAMMAD DWI FERDI ILHAM ARIFIN</td></tr>
+            <tr><td><strong>NIM</strong></td><td>: 202310370311292</td></tr>
+            <tr><td><strong>Kelas</strong></td><td>: PKPL - B</td></tr>
+        </table>
+    </div>
+
+    <h1 class="doc-title">TEST DESIGN SPECIFICATION (TDS) - PRE-LAB</h1>
+
+    <h2 class="section-title">1. Requirements (Kebutuhan Sistem Pre-Lab)</h2>
+    <p><strong>RQ-PL-001:</strong> Sistem harus memungkinkan calon peserta mendaftar kursus baru dengan menyediakan nama lengkap, alamat email valid, dan nomor telepon aktif.</p>
+    <p><strong>RQ-PL-002:</strong> Sistem harus memungkinkan peserta memilih jadwal kursus yang masih memiliki sisa kuota kursi peserta.</p>
+    <p><strong>RQ-PL-003:</strong> Sistem harus memvalidasi pembayaran pendaftaran kursus dan menerbitkan nomor registrasi peserta resmi.</p>
+
+    <h2 class="section-title">2. Feature Sets (Kumpulan Fitur Pre-Lab)</h2>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-PL-001 – Pendaftaran Biodata Peserta</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Mengelola data registrasi peserta kursus baru.</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Tinggi</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-PL-001</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-PL-002 – Pemilihan Jadwal &amp; Kuota Kursus</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Mengelola alokasi kapasitas kelas dan pemilihan jadwal belajar.</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Tinggi</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-PL-002</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-PL-003 – Konfirmasi Pembayaran &amp; Penerbitan Tiket</div>
+        <div class="fs-detail"><strong>Tujuan:</strong> Memvalidasi transaksi pembayaran dan menerbitkan bukti kepesertaan kursus.</div>
+        <div class="fs-detail"><strong>Prioritas:</strong> Tinggi</div>
+        <div class="fs-detail"><strong>Keterlacakan:</strong> RQ-PL-003</div>
+    </div>
+
+    <h2 class="section-title">3. Test Conditions (Kondisi Pengujian Pre-Lab)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="15%">ID</th>
+                <th width="18%">Kumpulan Fitur</th>
+                <th width="39%">Deskripsi Kondisi Pengujian</th>
+                <th width="12%">Prioritas</th>
+                <th width="16%">Keterlacakan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>TCond-PL-001</strong></td>
+                <td>FS-PL-001</td>
+                <td>Mendaftar dengan nama lengkap, format email valid, dan nomor telepon benar</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-PL-001</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-PL-002</strong></td>
+                <td>FS-PL-001</td>
+                <td>Mendaftar dengan format alamat email tidak valid (tanpa simbol @ atau domain)</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-PL-001</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-PL-003</strong></td>
+                <td>FS-PL-001</td>
+                <td>Mendaftar dengan email yang sudah pernah terdaftar sebelumnya (duplikat)</td>
+                <td><span class="badge-med">Sedang</span></td>
+                <td>RQ-PL-001</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-PL-004</strong></td>
+                <td>FS-PL-002</td>
+                <td>Memilih jadwal kursus yang kuota kursinya masih tersedia</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-PL-002</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-PL-005</strong></td>
+                <td>FS-PL-002</td>
+                <td>Memilih jadwal kursus yang kuota pesertanya sudah penuh (kapasitas 0)</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-PL-002</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-PL-006</strong></td>
+                <td>FS-PL-003</td>
+                <td>Melakukan konfirmasi pembayaran dengan nominal transfer yang sesuai</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-PL-003</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">4. Coverage Items (Item Cakupan Pre-Lab)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="14%">ID</th>
+                <th width="32%">Deskripsi Item Cakupan</th>
+                <th width="24%">Kondisi Pengujian Terkait</th>
+                <th width="12%">Prioritas</th>
+                <th width="18%">Keterlacakan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>CI-PL-001</strong></td>
+                <td>Kolom isian nama lengkap peserta</td>
+                <td>TCond-PL-001</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-PL-001</td>
+            </tr>
+            <tr>
+                <td><strong>CI-PL-002</strong></td>
+                <td>Validasi sintaks format alamat email</td>
+                <td>TCond-PL-002</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-PL-001</td>
+            </tr>
+            <tr>
+                <td><strong>CI-PL-003</strong></td>
+                <td>Validasi keunikan email terdaftar (pencegahan duplikat)</td>
+                <td>TCond-PL-003</td>
+                <td><span class="badge-med">Sedang</span></td>
+                <td>RQ-PL-001</td>
+            </tr>
+            <tr>
+                <td><strong>CI-PL-004</strong></td>
+                <td>Pemeriksaan ketersediaan kuota kursi kelas kursus</td>
+                <td>TCond-PL-004, TCond-PL-005</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-PL-002</td>
+            </tr>
+            <tr>
+                <td><strong>CI-PL-005</strong></td>
+                <td>Validasi nominal transfer pembayaran pendaftaran</td>
+                <td>TCond-PL-006</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-PL-003</td>
+            </tr>
+            <tr>
+                <td><strong>CI-PL-006</strong></td>
+                <td>Pembuatan kode registrasi dan tiket kepesertaan resmi</td>
+                <td>TCond-PL-006</td>
+                <td><span class="badge-high">Tinggi</span></td>
+                <td>RQ-PL-003</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">5. Test Traceability Matrix (TTM Pre-Lab)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="18%">Kebutuhan (Requirement)</th>
+                <th width="22%">Kumpulan Fitur (Feature Set)</th>
+                <th width="25%">Kondisi Pengujian (Test Condition)</th>
+                <th width="35%">Item Cakupan Pengujian (Coverage Item)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>RQ-PL-001</td>
+                <td>FS-PL-001</td>
+                <td>TCond-PL-001</td>
+                <td>CI-PL-001</td>
+            </tr>
+            <tr>
+                <td>RQ-PL-001</td>
+                <td>FS-PL-001</td>
+                <td>TCond-PL-002</td>
+                <td>CI-PL-002</td>
+            </tr>
+            <tr>
+                <td>RQ-PL-001</td>
+                <td>FS-PL-001</td>
+                <td>TCond-PL-003</td>
+                <td>CI-PL-003</td>
+            </tr>
+            <tr>
+                <td>RQ-PL-002</td>
+                <td>FS-PL-002</td>
+                <td>TCond-PL-004</td>
+                <td>CI-PL-004</td>
+            </tr>
+            <tr>
+                <td>RQ-PL-002</td>
+                <td>FS-PL-002</td>
+                <td>TCond-PL-005</td>
+                <td>CI-PL-004</td>
+            </tr>
+            <tr>
+                <td>RQ-PL-003</td>
+                <td>FS-PL-003</td>
+                <td>TCond-PL-006</td>
+                <td>CI-PL-005, CI-PL-006</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">6. Test Design Technique Summary (Ringkasan Teknik Pre-Lab)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="18%">ID Kondisi Pengujian</th>
+                <th width="28%">Teknik Desain Pengujian</th>
+                <th width="54%">Alasan Pemilihan Teknik (Rasional)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>TCond-PL-001</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Mengklasifikasikan kelas masukan valid untuk nama, format email, dan nomor telepon peserta.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-PL-002</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Menguji partisi masukan tidak valid untuk format email yang menyalahi standar RFC (tanpa @).</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-PL-003</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Membedakan kategori data pendaftaran email baru dan email yang sudah terdaftar di database.</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-PL-004</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Menguji kondisi pemilihan kelas kursus yang memenuhi syarat ketersediaan kuota peserta (*kuota &gt; 0*).</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-PL-005</strong></td>
+                <td>Boundary Value Analysis</td>
+                <td>Menguji nilai batas kapasitas kuota kelas saat bernilai 0 (kondisi kelas penuh).</td>
+            </tr>
+            <tr>
+                <td><strong>TCond-PL-006</strong></td>
+                <td>Equivalence Partitioning</td>
+                <td>Memverifikasi kelas pembayaran valid yang memicu penerbitan tiket dan kode registrasi kursus.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

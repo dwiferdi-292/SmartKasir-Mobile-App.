@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Report - SmartKasir POS System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --primary-light: #e0e7ff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
+            --bg-page: #ffffff;
+            --bg-outer: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-outer);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Action Bar */
+        .top-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(12px);
+            color: #ffffff;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .navbar-brand {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand .badge-tag {
+            background-color: var(--primary);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary-act {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+        .btn-primary-act:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary-act {
+            background-color: #334155;
+            color: #f8fafc;
+        }
+        .btn-secondary-act:hover {
+            background-color: #475569;
+        }
+
+        /* Paper Document Simulation */
+        .document-wrapper {
+            max-width: 900px;
+            margin: 32px auto 60px auto;
+            padding: 0 16px;
+        }
+
+        .page-sheet {
+            background: var(--bg-page);
+            width: 100%;
+            min-height: 1123px; /* A4 aspect ratio approximation */
+            padding: 64px 72px;
+            margin-bottom: 32px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* PAGE 1 COVER */
+        .cover-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 980px;
+            justify-content: center;
+        }
+
+        .cover-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+
+        .cover-main-title {
+            font-size: 44px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #0f172a;
+            margin: 0 0 12px 0;
+            line-height: 1.1;
+        }
+
+        .cover-sub-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0 0 32px 0;
+        }
+
+        .cover-line {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), #818cf8);
+            border-radius: 2px;
+            margin-bottom: 40px;
+        }
+
+        .cover-summary-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px 28px;
+            width: 100%;
+            max-width: 580px;
+            margin-bottom: 60px;
+            text-align: left;
+        }
+
+        .cover-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cover-table td {
+            padding: 6px 8px;
+            font-size: 14px;
+        }
+        .cover-table td.c-label {
+            font-weight: 600;
+            color: #334155;
+            width: 160px;
+        }
+        .cover-table td.c-val {
+            color: #0f172a;
+        }
+
+        .cover-author-block {
+            margin-top: 10px;
+        }
+
+        .author-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #64748b;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .author-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .author-nim {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .author-class {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 32px;
+        }
+
+        .inst-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .inst-year {
+            font-size: 14px;
+            font-weight: 700;
+            color: #64748b;
+            margin-top: 12px;
+        }
+
+        /* PAGE HEADERS & CONTENT */
+        .page-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 12px;
+            margin-bottom: 28px;
+        }
+
+        .page-header-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+            letter-spacing: -0.3px;
+        }
+
+        .page-header-num {
+            font-size: 13px;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+
+        .sec-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        .sec-title::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* TABLES */
+        table.custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            margin-bottom: 20px;
+        }
+
+        table.custom-table th, table.custom-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            vertical-align: top;
+        }
+
+        table.custom-table th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            color: #0f172a;
+            text-align: left;
+        }
+
+        table.custom-table td.field-key {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #334155;
+            width: 26%;
+        }
+
+        table.custom-table td.field-data {
+            color: #0f172a;
+            width: 74%;
+        }
+
+        /* CARDS & BLOCKS */
+        .desc-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .desc-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .desc-card-body {
+            font-size: 13.5px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .badge-resolved {
+            background-color: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+        .badge-minor {
+            background-color: #fef9c3;
+            color: #854d0e;
+            border: 1px solid #fde047;
+        }
+
+        /* ALERT BOXES */
+        .callout-box {
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+        .callout-info {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-left: 4px solid #3b82f6;
+            color: #1e40af;
+        }
+        .callout-success {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-left: 4px solid #16a34a;
+            color: #166534;
+        }
+
+        /* CODE BLOCK */
+        pre.code-view {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', Consolas, monospace;
+            font-size: 12.5px;
+            overflow-x: auto;
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        code.inline-code {
+            background-color: #f1f5f9;
+            color: #db2777;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', Consolas, monospace;
+            font-size: 12px;
+        }
+
+        /* EVIDENCE IMAGE CONTAINER */
+        .evidence-container {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px;
+            background: #f8fafc;
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .evidence-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .evidence-text {
+            font-size: 12.5px;
+            color: #64748b;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            body {
+                background: none;
+                color: #000;
+            }
+            .top-navbar {
+                display: none;
+            }
+            .document-wrapper {
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+            .page-sheet {
+                margin: 0;
+                padding: 2.2cm 2cm;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                page-break-after: always;
+                min-height: auto;
+            }
+            .page-header-row {
+                border-bottom: 2px solid #000;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-navbar">
+        <div class="navbar-brand">
+            <span>SMARTKASIR SQA</span>
+            <span class="badge-tag">Incident Report</span>
+        </div>
+        <div class="navbar-actions">
+            <button onclick="window.print()" class="btn-action btn-primary-act">
+                🖨️ Cetak / Simpan PDF
+            </button>
+            <a href="Incident_Report_SmartKasir.doc" download class="btn-action btn-secondary-act">
+                📄 Word (.doc)
+            </a>
+            <a href="Module_3_Test_Artifacts.xlsx" download class="btn-action btn-secondary-act">
+                📊 Excel Artifacts (.xlsx)
+            </a>
+            <a href="index.php" class="btn-action btn-secondary-act">
+                🏠 SmartKasir
+            </a>
+        </div>
+    </header>
+
+    <main class="document-wrapper">
+
+        <!-- ============================================== -->
+        <!-- PAGE 1: COVER                                  -->
+        <!-- ============================================== -->
+        <section class="page-sheet">
+            <div class="cover-content">
+                <div class="cover-pill">
+                    <span>🛡️ Software Quality Assurance &bull; Modul 3</span>
+                </div>
+
+                <h1 class="cover-main-title">Incident Report</h1>
+                <div class="cover-sub-title">SmartKasir – Point of Sale System</div>
+
+                <div class="cover-line"></div>
+
+                <div class="cover-summary-card">
+                    <table class="cover-table">
+                        <tr>
+                            <td class="c-label">Sistem Target</td>
+                            <td class="c-val">: SmartKasir Web Application</td>
+                        </tr>
+                        <tr>
+                            <td class="c-label">Role Pengujian</td>
+                            <td class="c-val">: <strong>Kasir</strong> (Authentication & Checkout)</td>
+                        </tr>
+                        <tr>
+                            <td class="c-label">Metode Pengujian</td>
+                            <td class="c-val">: Black Box Testing (EP & BVA)</td>
+                        </tr>
+                        <tr>
+                            <td class="c-label">Incident ID</td>
+                            <td class="c-val">: <strong>INC-SK-MOD3-01</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="c-label">Severity Level</td>
+                            <td class="c-val">: <span class="badge badge-minor">Minor</span></td>
+                        </tr>
+                        <tr>
+                            <td class="c-label">Status Terkini</td>
+                            <td class="c-val">: <span class="badge badge-resolved">Closed / Resolved</span></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="cover-author-block">
+                    <div class="author-label">Disusun Oleh :</div>
+                    <div class="author-name">MUCHAMMAD DWI FERDI ILHAM ARIFIN</div>
+                    <div class="author-nim">NIM: 202310370311292</div>
+                    <div class="author-class">Kelas: PKPL - B</div>
+
+                    <div class="inst-name">
+                        Laboratorium Informatika<br>
+                        Program Studi Informatika &bull; Fakultas Teknik<br>
+                        Universitas Muhammadiyah Malang
+                    </div>
+                    <div class="inst-year">2026</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- PAGE 2: METADATA & REVISION HISTORY            -->
+        <!-- ============================================== -->
+        <section class="page-sheet">
+            <div class="page-header-row">
+                <h2 class="page-header-title">Incident Details & Metadata</h2>
+                <span class="page-header-num">Halaman 2 dari 4</span>
+            </div>
+
+            <p style="font-size: 13.5px; color: var(--text-muted); margin-top: 0; margin-bottom: 20px;">
+                Dokumen ini merupakan laporan resmi pencatatan anomali fungsional (incident defect) yang ditemukan pada saat pelaksanaan pengujian Black Box Functional Testing (Boundary Value Analysis & Equivalence Partitioning) terhadap sistem antarmuka autentikasi dan pendaftaran akun kasir SmartKasir.
+            </p>
+
+            <div class="sec-title">Tabel Metadata Insiden</div>
+            <table class="custom-table">
+                <tr>
+                    <th style="width: 26%;">Field</th>
+                    <th style="width: 74%;">Detail</th>
+                </tr>
+                <tr>
+                    <td class="field-key">Incident ID</td>
+                    <td class="field-data"><strong>INC-SK-MOD3-01</strong></td>
+                </tr>
+                <tr>
+                    <td class="field-key">Related Test Case ID</td>
+                    <td class="field-data"><strong>TC-EP-03</strong> (dan beririsan dengan <strong>TC-BVA-04</strong>)</td>
+                </tr>
+                <tr>
+                    <td class="field-key">Test Basis</td>
+                    <td class="field-data">
+                        &bull; Modul 3 SQA – Functional Testing: Boundary Value Analysis & Equivalence Partitioning<br>
+                        &bull; Dokumen Kebutuhan Perangkat Lunak (SRS-SmartKasir-Auth: RQ-001 & RQ-002)<br>
+                        &bull; Skenario: Registrasi Pengguna Kasir Baru dengan Kredensial Valid
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field-key">Reported By</td>
+                    <td class="field-data"><strong>Muchammad Dwi Ferdi Ilham Arifin</strong> (NIM: 202310370311292 &bull; PKPL-B)</td>
+                </tr>
+                <tr>
+                    <td class="field-key">Date Found</td>
+                    <td class="field-data">22 Oktober 2026</td>
+                </tr>
+                <tr>
+                    <td class="field-key">Application Version</td>
+                    <td class="field-data">SmartKasir v1.0.0-prod (Build 2026.10)</td>
+                </tr>
+                <tr>
+                    <td class="field-key">Environment</td>
+                    <td class="field-data">
+                        &bull; <strong>Hosting URL:</strong> <a href="https://smartkasir.infinityfreeapp.com/" target="_blank" style="color:var(--primary); font-weight:600;">https://smartkasir.infinityfreeapp.com/</a><br>
+                        &bull; <strong>Local Server:</strong> Laragon (Apache 2.4.54, PHP 8.1.10 / 8.2, MySQL 8.0)<br>
+                        &bull; <strong>Klien:</strong> Google Chrome 129.0.6668.71 (Official Build) / Windows 11 Home 64-bit
+                    </td>
+                </tr>
+                <tr>
+                    <td class="field-key">Report Status</td>
+                    <td class="field-data">
+                        <span class="badge badge-resolved">Closed / Resolved</span>
+                        <span style="font-size: 12.5px; color: var(--text-muted); margin-left: 8px;">(Perbaikan telah diverifikasi pada tanggal 23 Oktober 2026)</span>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="callout-box callout-info">
+                <strong>Intisari Temuan:</strong> Terjadi ketidaksesuaian penanganan parameter respons di mana registrasi yang berhasil dialihkan dengan parameter <code>?error=</code> bukan <code>?success=</code>. Hal ini memicu tampilan kotak alert berwarna merah dengan tanda seru peringatan, yang secara visual memberikan indikasi bahwa registrasi gagal padahal akun kasir berhasil dibuat di database.
+            </div>
+
+            <div class="sec-title">Revision History</div>
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th style="width: 12%; text-align: center;">Version</th>
+                        <th style="width: 18%;">Revision Date</th>
+                        <th style="width: 32%;">Updated By</th>
+                        <th style="width: 38%;">Change Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: 700; text-align: center;">1.0</td>
+                        <td>22/10/2026</td>
+                        <td>Muchammad Dwi Ferdi Ilham Arifin</td>
+                        <td>Inisiasi laporan insiden saat defect salah penanganan alert registrasi ditemukan pada pengujian TC-EP-03.</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700; text-align: center;">1.1</td>
+                        <td>23/10/2026</td>
+                        <td>Muchammad Dwi Ferdi Ilham Arifin</td>
+                        <td>Verifikasi penerapan perbaikan kode pada <code>register.php</code> dan <code>index.php</code>; status insiden diperbarui menjadi Closed/Resolved.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- PAGE 3: 8 DETAILED REPORT SECTIONS             -->
+        <!-- ============================================== -->
+        <section class="page-sheet">
+            <div class="page-header-row">
+                <h2 class="page-header-title">Detailed Incident Report (8 Sections)</h2>
+                <span class="page-header-num">Halaman 3 dari 4</span>
+            </div>
+
+            <!-- 1. SUMMARY -->
+            <div class="desc-card">
+                <div class="desc-card-title">1. Summary</div>
+                <div class="desc-card-body">
+                    Ketika pengguna (calon kasir) berhasil menyelesaikan pendaftaran akun baru pada halaman <code>register.php</code>, data pengguna tersimpan dengan baik di database. Namun, sistem mengalihkan pengguna kembali ke halaman Login (<code>index.php</code>) dengan query parameter <code>?error=Registrasi+berhasil!+Silakan+login.</code> alih-alih parameter status sukses. Hal ini menyebabkan halaman login menampilkan kotak notifikasi berwarna <strong>MERAH</strong> dengan ikon tanda seru kesalahan (danger alert), bertolak belakang dengan kalimat pesan di dalamnya. Fenomena ini menciptakan keraguan psikologis pada pengguna kasir (persepsi kegagalan registrasi).
+                </div>
+            </div>
+
+            <!-- 2. PRECONDITION -->
+            <div class="desc-card">
+                <div class="desc-card-title">2. Precondition</div>
+                <div class="desc-card-body">
+                    <ol style="margin: 0; padding-left: 20px;">
+                        <li>Layanan web server Apache dan basis data MySQL aktif normal (dapat diakses via <code>https://smartkasir.infinityfreeapp.com</code>).</li>
+                        <li>Pengguna belum dalam keadaan terautentikasi (belum login).</li>
+                        <li>Pengguna membuka peramban web dan mengakses URL halaman pendaftaran <code>register.php</code>.</li>
+                        <li>Pengguna telah menyiapkan dataset valid: Nama kasir, format email valid yang belum pernah terdaftar sebelumnya di tabel <code>users</code>, password valid minimal 6 karakter, dan peran Kasir.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 3. STEPS TO REPRODUCE -->
+            <div class="desc-card">
+                <div class="desc-card-title">3. Steps to Reproduce</div>
+                <div class="desc-card-body">
+                    <ol style="margin: 0; padding-left: 20px;">
+                        <li>Buka peramban Google Chrome dan buka URL: <code class="inline-code">https://smartkasir.infinityfreeapp.com/register.php</code>.</li>
+                        <li>Pada kolom <strong>Nama Lengkap</strong>, masukkan: <code class="inline-code">Budi Santoso (Kasir)</code>.</li>
+                        <li>Pada kolom <strong>Email Address</strong>, masukkan: <code class="inline-code">budi.kasir@smartkasir.com</code>.</li>
+                        <li>Pada kolom <strong>Password</strong>, masukkan: <code class="inline-code">Kasir2026!</code>.</li>
+                        <li>Pada kolom <strong>Konfirmasi Password</strong>, ketikkan ulang: <code class="inline-code">Kasir2026!</code>.</li>
+                        <li>Pilih role sebagai <code class="inline-code">Kasir</code>.</li>
+                        <li>Klik tombol <strong>Sign Up / Daftar Sekarang</strong>.</li>
+                        <li>Amati query string pada address bar dan amati warna kotak notifikasi yang tampil pada halaman login (<code>index.php</code>).</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 4. EXPECTED RESULT -->
+            <div class="desc-card">
+                <div class="desc-card-title">4. Expected Result</div>
+                <div class="desc-card-body">
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li>Data akun kasir baru berhasil di-insert ke dalam database MySQL dengan password terenkripsi.</li>
+                        <li>Pengguna dialihkan ke URL sukses: <code class="inline-code">index.php?success=Registrasi+berhasil!+Silakan+login.</code></li>
+                        <li>Halaman login menampilkan kotak pesan berwarna <strong>HIJAU</strong> (<code>alert-success</code>) dengan ikon centang sukses, memberikan kepastian afirmatif bahwa registrasi telah selesai.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 5. ACTUAL RESULT -->
+            <div class="desc-card">
+                <div class="desc-card-title">5. Actual Result</div>
+                <div class="desc-card-body">
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li>Data akun kasir berhasil masuk ke database.</li>
+                        <li>Pengguna dialihkan dengan query string error: <code class="inline-code">https://smartkasir.infinityfreeapp.com/index.php?error=Registrasi+berhasil!+Silakan+login.</code></li>
+                        <li>Halaman login merender kotak alert berwarna <strong>MERAH</strong> (<code>alert-danger</code>) dengan ikon tanda seru kesalahan bertuliskan: <em>"Registrasi berhasil! Silakan login."</em> (kontradiksi semantik visual).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 6. SEVERITY -->
+            <div class="desc-card">
+                <div class="desc-card-title">6. Severity</div>
+                <div class="desc-card-body">
+                    <strong>Klasifikasi: Minor</strong><br>
+                    <em>Justifikasi Teknis:</em> Defect ini tidak menyebabkan kegagalan sistem inti (crash), tidak merusak struktur basis data, dan akun yang didaftarkan tetap dapat digunakan untuk login. Namun, false-negative visual ini mengganggu kejelasan alur pengalaman pengguna (UX), berpotensi memicu kepanikan pengguna baru kasir, dan memicu submission ganda (spamming tombol submit) yang berujung pada error email duplikat.
+                </div>
+            </div>
+
+            <!-- 7. EVIDENCE LINK -->
+            <div class="desc-card">
+                <div class="desc-card-title">7. Evidence Link</div>
+                <div class="desc-card-body">
+                    <div class="evidence-container">
+                        <img src="evidence_INC-SK-MOD3-01.png" alt="Bukti Tangkapan Layar Bug SmartKasir">
+                        <div class="evidence-text">
+                            Gambar 1: Bukti nyata tangkapan layar bug &bull; URL menampilkan parameter <code>?error=Registrasi+berhasil!+Silakan+login.</code> sehingga memicu kotak merah alert-danger.
+                        </div>
+                    </div>
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: var(--text-muted);">
+                        &bull; <strong>Tautan Akses Bukti:</strong> <a href="https://smartkasir.infinityfreeapp.com/index.php?error=Registrasi+berhasil!+Silakan+login." target="_blank" style="color:var(--primary); font-weight:600;">https://smartkasir.infinityfreeapp.com/index.php?error=...</a><br>
+                        &bull; <strong>Berkas Fisik:</strong> <code>c:\laragon\www\SMARTKASIR\evidence_INC-SK-MOD3-01.png</code>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 8. ADDITIONAL NOTES -->
+            <div class="desc-card">
+                <div class="desc-card-title">8. Additional Notes</div>
+                <div class="desc-card-body">
+                    <p style="margin: 0 0 6px 0;"><strong>Akar Permasalahan (Root Cause Analysis):</strong></p>
+                    <div style="font-size: 13px; color: #334155; margin-bottom: 6px;">
+                        Pada script backend <code>register.php</code>, setelah eksekusi query SQL pendaftaran kasir berhasil, baris pengalihan halaman ditulis menggunakan parameter <code>?error=</code> alih-alih <code>?success=</code>:
+                    </div>
+                    <pre class="code-view">// Potongan kode bermasalah pada register.php:
+header("Location: index.php?error=Registrasi berhasil! Silakan login.");
+exit();</pre>
+
+                    <p style="margin: 12px 0 6px 0;"><strong>Tindakan Perbaikan (Corrective Action):</strong></p>
+                    <div style="font-size: 13px; color: #334155; margin-bottom: 6px;">
+                        1. Memperbaiki pemanggilan parameter redirect pada berkas <code>register.php</code> menjadi <code>?success=</code>:
+                    </div>
+                    <pre class="code-view">// Perbaikan pada register.php:
+header("Location: index.php?success=" . urlencode("Registrasi berhasil! Silakan login."));
+exit();</pre>
+
+                    <div style="font-size: 13px; color: #334155; margin-top: 8px;">
+                        2. Memastikan antarmuka <code>index.php</code> menampilkan komponen <code>alert-success</code> (berwarna hijau) saat mendeteksi <code>$_GET['success']</code>.<br>
+                        3. <strong>Hasil Verifikasi Ulang:</strong> Pengujian regresi pada lingkungan produksi membuktikan bahwa notifikasi registrasi kini telah berwarna hijau dengan ikon centang sukses. Status dinyatakan <strong>RESOLVED / CLOSED</strong>.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- PAGE 4: SEVERITY GUIDE                         -->
+        <!-- ============================================== -->
+        <section class="page-sheet">
+            <div class="page-header-row">
+                <h2 class="page-header-title">Severity Guide & Classification Matrix</h2>
+                <span class="page-header-num">Halaman 4 dari 4</span>
+            </div>
+
+            <div class="callout-box callout-info">
+                <strong>Definisi dan Signifikansi Severity dalam SQA:</strong><br>
+                <em>Severity</em> (tingkat keparahan) adalah metrik objektif yang mengukur besarnya dampak teknis dan operasional yang ditimbulkan oleh suatu defect terhadap integritas data, stabilitas perangkat lunak, dan kelangsungan alur bisnis. Klasifikasi keparahan menjadi fondasi utama dalam memprioritaskan alokasi sumber daya pemecahan masalah (bug fixing) serta menjadi acuan kelayakan rilis aplikasi ke lingkungan produksi.
+            </div>
+
+            <div class="sec-title">Tabel 1: Severity Classification Standard</div>
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th style="width: 18%; background-color: #0f172a; color: #ffffff;">Severity Level</th>
+                        <th style="width: 42%; background-color: #0f172a; color: #ffffff;">Definisi SQA Standar</th>
+                        <th style="width: 40%; background-color: #0f172a; color: #ffffff;">Contoh Kasus pada SmartKasir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: 700; color: #b91c1c; background-color: #fef2f2;">Critical</td>
+                        <td>Defect dengan dampak ekstrem yang menyebabkan sistem berhenti total (crash), hilangnya integritas basis data transaksi, terhentinya alur kerja bisnis utama tanpa adanya workaround alternatif, atau terdapat celah keamanan fatal.</td>
+                        <td>
+                            &bull; Proses checkout kasir crash dan data keranjang belanja hilang permanen.<br>
+                            &bull; SQL Injection yang memungkinkan pihak luar mengakses seluruh data penjualan tanpa autentikasi.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700; color: #c2410c; background-color: #fff7ed;">Major</td>
+                        <td>Defect yang merusak fungsionalitas bisnis utama atau fitur penting, namun sistem secara umum masih dapat berjalan atau memiliki solusi sementara (workaround).</td>
+                        <td>
+                            &bull; Perhitungan potongan diskon promo kasir menghasilkan angka keliru.<br>
+                            &bull; Fungsi pencetakan struk pembayaran thermal kasir error, tetapi data transaksi tetap berhasil dicatat di database.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700; color: #854d0e; background-color: #fefce8;">Minor</td>
+                        <td>Defect pada fitur sekunder, kesalahan respons status/feedback antarmuka, format pesan yang salah arah atau membingungkan, namun tidak menghentikan alur fungsional sistem.</td>
+                        <td>
+                            &bull; <strong>INC-SK-MOD3-01:</strong> Notifikasi registrasi kasir berhasil namun ditampilkan dalam kotak merah kesalahan.<br>
+                            &bull; Pagination tabel produk salah menghitung jumlah halaman namun data tetap akurat.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 700; color: #475569; background-color: #f8fafc;">Cosmetic</td>
+                        <td>Defect kosmetik murni atau ketidaksempurnaan tata letak visual mikro yang sama sekali tidak mempengaruhi alur, fungsi, atau pemahaman pengguna terhadap sistem.</td>
+                        <td>
+                            &bull; Kesalahan ejaan minor (typo) pada teks hak cipta footer.<br>
+                            &bull; Padding tombol reset kasir selisih 2 pixel.<br>
+                            &bull; Warna bayangan card login sedikit terlalu pudar pada monitor kontras rendah.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="sec-title">Analisis Justifikasi Severity Defect INC-SK-MOD3-01</div>
+            <table class="custom-table">
+                <tr>
+                    <th style="width: 25%;">Kriteria Penilaian</th>
+                    <th style="width: 75%;">Evaluasi Terhadap Insiden INC-SK-MOD3-01</th>
+                </tr>
+                <tr>
+                    <td class="field-key">Apakah Sistem Lumpuh?</td>
+                    <td class="field-data"><strong>Tidak.</strong> Server web dan database beroperasi normal. Data kasir baru berhasil di-insert ke dalam tabel <code>users</code> secara utuh. Defect bukan level <em>Critical</em>.</td>
+                </tr>
+                <tr>
+                    <td class="field-key">Apakah Menghalangi Login?</td>
+                    <td class="field-data"><strong>Tidak.</strong> Akun yang baru saja didaftarkan tetap dapat digunakan untuk login ke sistem kasir tanpa kendala teknis. Defect bukan level <em>Major</em>.</td>
+                </tr>
+                <tr>
+                    <td class="field-key">Apakah Sekadar Masalah Kosmetik?</td>
+                    <td class="field-data"><strong>Tidak.</strong> Warna merah memiliki makna semantik internasional sebagai kesalahan/kegagalan. Munculnya alert merah untuk kejadian berhasil menciptakan ambiguitas serius dan berisiko memicu pendaftaran ganda oleh kasir. Masalah ini melampaui level <em>Cosmetic</em>.</td>
+                </tr>
+                <tr>
+                    <td class="field-key">Kesimpulan Klasifikasi</td>
+                    <td class="field-data">
+                        <span class="badge badge-minor">Tepat Diklasifikasikan Sebagai MINOR</span><br>
+                        Defect ini berdampak nyata terhadap kepuasan dan kejelasan pengalaman pengguna (UX Feedback) tanpa melumpuhkan kemampuan operasional sistem, sehingga tepat berada pada tingkat <strong>Minor</strong>.
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-top: 40px; text-align: center; border-top: 1px dashed #cbd5e1; padding-top: 20px;">
+                <p style="font-size: 13px; color: #64748b; margin: 0;">
+                    Laboratorium Informatika &bull; Fakultas Teknik &bull; Universitas Muhammadiyah Malang &bull; 2026
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+"MODUL 3 - EXECUTION LOG BVA, EP, DAN TEST ARTIFACT",,,,,,,
+,,,,,,,
+"Workbook ini adalah execution log untuk proyekmu sendiri. Cara kerja teknik BVA, EP, dan Decision Table, termasuk contoh lengkap studi kasus Triangle Classification (n=3, 13 test case, 4 partisi EP), sudah dijelaskan detail pada dokumen Modul 3 Bagian 2, 3, dan 4. Workbook ini TIDAK mengulang contoh tersebut.
+
+Isi setiap sheet langsung dengan data dari proyekmu sendiri. Jumlah baris, jumlah variabel (n), dan jumlah partisi SEPENUHNYA mengikuti fitur yang kamu uji, bisa 1, 2, 3, 4, atau lebih, tergantung kombinasi input yang kamu punya. Tambah atau hapus baris sesuai kebutuhan.
+
+Urutan sheet: 01_Proyek, 02_BVA, 03_EP, 04_Rancangan_dan_Eksekusi, 05_Traceability, 06_Indeks_Incident. 04_Rancangan_dan_Eksekusi adalah sheet utama, tempat seluruh test case dari 02_BVA dan 03_EP dijalankan dan dicatat hasilnya.",,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+ATURAN WAJIB,,,,,,,
+No.,Aturan,Pemeriksaan,,,,,
+1,BVA = 4n+1,"n adalah jumlah variabel input independen pada fiturmu sendiri. Hitung 4n+1 sesuai n milikmu (n=1, 4n+1=5).",,,,,
+2,EP tidak punya rumus jumlah baku,Jumlah partisi dan test case EP mengikuti hasil analisis fitur sistem SmartKasir.,,,,,
+3,Weak Robust = satu invalid per kasus,Input lain tetap valid ketika satu partisi invalid diuji (single-fault assumption).,,,,,
+4,Rancangan dan eksekusi satu sheet,04_Rancangan_dan_Eksekusi memuat kolom desain dan kolom hasil aktual bersama.,,,,,
+5,Incident hanya untuk defect yang diamati,Jangan membuat defect fiktif. Defect INC-SK-MOD3-01 diamati nyata pada registrasi kasir.,,,,,
+,,,,,,,
+DEFINISI STATUS,,,,,,,
+Status,Gunakan ketika,Tindakan,,,,,
+Lulus,Hasil aktual sama dengan hasil yang diharapkan,Simpan catatan eksekusi.,,,,,
+Gagal,Hasil aktual berbeda,Lampirkan bukti dan buat Incident Report bila merupakan defect.,,,,,
+Terblokir,Eksekusi tidak dapat diselesaikan,Catat prasyarat atau kendala lingkungan. Bukan otomatis defect.,,,,,
+
+IDENTITAS PROYEK,,,,
+,,,,
+Bidang,Isian,,,
+Nama aplikasi,SmartKasir (Point of Sale System),,,
+Tester,Muchammad Dwi Ferdi Ilham Arifin,,,
+NIM,202310370311292,,,
+Versi / build,v1.0.0-prod (Build 2026.10),,,
+,,,,
+"FITUR YANG DIUJI: daftar setiap fitur/input, berapa n-nya, dan berapa partisi EP-nya",,,,
+Fitur / Input,n (variabel BVA),4n+1,Jumlah Partisi EP,Requirement / Rule Dasar
+1. Panjang Karakter Password Kasir,1,5,2,RQ-001: Password wajib 6 hingga 32 karakter alfanumerik.
+2. Validasi Format Email Akun Kasir,1,5,3,RQ-002: Format email wajib valid sesuai RFC dan belum pernah terdaftar.
+3. Kuantitas (Qty) Item Keranjang Kasir,1,5,3,RQ-003: Batas kuantitas pembelian 1 hingga sisa stok fisik toko (1 s/d 40 item).
+4. Nominal Uang Pembayaran Tunai Kasir,1,5,3,"RQ-004: Nominal uang tunai harus mencukupi tagihan (C >= T), uang pas/lebih sukses, uang kurang ditolak."
+5. Harga Jual Produk Baru (Admin Produk),1,5,3,RQ-005: Harga jual satuan produk bernilai numerik positif Rp 1.000 hingga Rp 10.000.000.
+6. Jumlah Kuantitas Restok Barang (Manajemen Stok),1,5,3,RQ-006: Jumlah penambahan stok barang bernilai bulat positif 1 hingga 1.000 unit.
+7. Rentang Filter Tanggal Riwayat Pemesanan,1,5,3,RQ-007: Filter tanggal valid jika tanggal mulai <= tanggal akhir (rentang 0 s/d 365 hari).
+8. Panjang Kata Kunci Pencarian Menu POS,1,5,3,RQ-008: Pencarian instan produk menerima kata kunci string dengan panjang 1 hingga 50 karakter.
+
+BOUNDARY VALUE ANALYSIS - EXECUTION LOG,,,,,,
+,,,,,,
+"Cara menurunkan BVA (min, min+, nominal, max-, max, rumus 4n+1, dan contoh lengkap Triangle Classification dengan n=3) sudah dijelaskan di dokumen Modul 3 Bagian 2. Sheet ini hanya untuk mencatat test case BVA dari fiturmu sendiri, bukan untuk mengulang contoh tersebut.",,,,,,
+,,,,,,
+,,,,,,
+"Fitur yang diuji: Validasi Batas Password, Kuantitas POS, Uang Tunai, Harga Produk, Restok, & Search (8 Fitur Sistem)",,,,n = 1 (per variabel),"4n+1 = 5 (per variabel, total 30 TC)",
+,,,,,,
+Test Case ID,Variabel,Titik Batas (Min/Min+/Nominal/Max-/Max),Nilai Uji,Kolom Lain (nominal),Hasil yang Diharapkan,Hasil Aktual
+TC-BVA-01,Panjang Password,Min (6),Kasir1,"Nama='Budi', Email='budi.k1@smartkasir.com'",Password diterima (Lolos validasi),"Password diterima, lolos validasi"
+TC-BVA-02,Panjang Password,Min+ (7),Kasir12,"Nama='Budi', Email='budi.k2@smartkasir.com'",Password diterima (Lolos validasi),"Password diterima, lolos validasi"
+TC-BVA-03,Panjang Password,Nominal (12),Kasir20261234,"Nama='Budi', Email='budi.k3@smartkasir.com'",Password diterima (Lolos validasi),"Password diterima, lolos validasi"
+TC-BVA-04,Panjang Password,Max- (31),KasirSuperRahasia2026AmanSekali,"Nama='Budi', Email='budi.k4@smartkasir.com'",Password diterima (Lolos validasi),"Password diterima, akun tersimpan"
+TC-BVA-05,Panjang Password,Max (32),KasirSuperRahasia2026AmanSekali1,"Nama='Budi', Email='budi.k5@smartkasir.com'",Password diterima (Lolos validasi batas),"Password diterima, akun tersimpan"
+TC-BVA-06,Kuantitas Item (Qty),Min (1),1,French Fries @ Rp 15.000 (Stok 40),"Subtotal = Rp 15.000, valid keranjang","Subtotal = Rp 15.000, valid keranjang"
+TC-BVA-07,Kuantitas Item (Qty),Min+ (2),2,French Fries @ Rp 15.000 (Stok 40),"Subtotal = Rp 30.000, valid keranjang","Subtotal = Rp 30.000, valid keranjang"
+TC-BVA-08,Kuantitas Item (Qty),Nominal (5),5,French Fries @ Rp 15.000 (Stok 40),"Subtotal = Rp 75.000, valid keranjang","Subtotal = Rp 75.000, valid keranjang"
+TC-BVA-09,Kuantitas Item (Qty),Max- (39),39,French Fries @ Rp 15.000 (Stok 40),"Subtotal = Rp 585.000, valid keranjang","Subtotal = Rp 585.000, valid keranjang"
+TC-BVA-10,Kuantitas Item (Qty),Max (40),40,French Fries @ Rp 15.000 (Stok 40),"Subtotal = Rp 600.000, batas stok aman","Subtotal = Rp 600.000, kuantitas maks aman"
+TC-BVA-11,Nominal Bayar Tunai,Min (Tagihan Pas),50000,Total Tagihan = Rp 50.000,"Transaksi sukses, Kembalian = Rp 0","Transaksi sukses, Kembalian = Rp 0"
+TC-BVA-12,Nominal Bayar Tunai,Min+ (Pas + 10rb),60000,Total Tagihan = Rp 50.000,"Transaksi sukses, Kembalian = Rp 10.000","Transaksi sukses, Kembalian = Rp 10.000"
+TC-BVA-13,Nominal Bayar Tunai,Nominal (100rb),100000,Total Tagihan = Rp 50.000,"Transaksi sukses, Kembalian = Rp 50.000","Transaksi sukses, Kembalian = Rp 50.000"
+TC-BVA-14,Nominal Bayar Tunai,Max- (9.99jt),9990000,Total Tagihan = Rp 50.000,"Transaksi sukses, Kembalian Rp 9.940.000","Transaksi sukses, Kembalian Rp 9.940.000"
+TC-BVA-15,Nominal Bayar Tunai,Max (10jt),10000000,Total Tagihan = Rp 50.000,"Transaksi sukses, Kembalian Rp 9.950.000","Transaksi sukses, Kembalian Rp 9.950.000"
+TC-BVA-16,Harga Jual Produk,Min (1.000),1000,"SKU='SKU-999', Nama='Permen Box'",Harga Rp 1.000 tersimpan valid,Produk berhasil ditambahkan
+TC-BVA-17,Harga Jual Produk,Min+ (2.000),2000,"SKU='SKU-998', Nama='Air Mineral'",Harga Rp 2.000 tersimpan valid,Produk berhasil ditambahkan
+TC-BVA-18,Harga Jual Produk,Nominal (25.000),25000,"SKU='SKU-997', Nama='Snack Platter'",Harga Rp 25.000 tersimpan valid,Produk berhasil ditambahkan
+TC-BVA-19,Harga Jual Produk,Max- (9.999.000),9999000,"SKU='SKU-996', Nama='Mesin Roaster'",Harga Rp 9.999.000 tersimpan valid,Produk berhasil ditambahkan
+TC-BVA-20,Harga Jual Produk,Max (10.000.000),10000000,"SKU='SKU-995', Nama='Paket Kemitraan'",Harga Rp 10.000.000 tersimpan valid,Produk berhasil ditambahkan
+TC-BVA-21,Kuantitas Restok,Min (1 unit),1,Produk ID 7 (French Fries),Stok bertambah 1 unit,Stok berhasil ditambahkan (+1 unit)
+TC-BVA-22,Kuantitas Restok,Min+ (2 unit),2,Produk ID 7 (French Fries),Stok bertambah 2 unit,Stok berhasil ditambahkan (+2 unit)
+TC-BVA-23,Kuantitas Restok,Nominal (50 unit),50,Produk ID 7 (French Fries),Stok bertambah 50 unit,Stok berhasil ditambahkan (+50 unit)
+TC-BVA-24,Kuantitas Restok,Max- (999 unit),999,Produk ID 7 (French Fries),Stok bertambah 999 unit,Stok berhasil ditambahkan (+999 unit)
+TC-BVA-25,Kuantitas Restok,Max (1000 unit),1000,Produk ID 7 (French Fries),Stok bertambah 1000 unit,Stok berhasil ditambahkan (+1000 unit)
+TC-BVA-26,Keyword Search POS,Min (1 char),L,Halaman POS Kasir,Daftar menu terkait tampil instan,Filter instan berhasil tampil
+TC-BVA-27,Keyword Search POS,Min+ (2 char),La,Halaman POS Kasir,Menu Cafe Latte & Matcha Latte tampil,Filter instan berhasil tampil
+TC-BVA-28,Keyword Search POS,Nominal (5 char),Latte,Halaman POS Kasir,Tepat menu kategori Latte tampil,Filter instan berhasil tampil
+TC-BVA-29,Keyword Search POS,Max- (49 char),49 Karakter String,Halaman POS Kasir,Pencarian memproses tanpa crash,Filter memproses normal
+TC-BVA-30,Keyword Search POS,Max (50 char),50 Karakter String,Halaman POS Kasir,Batas maksimal input search diterima,Filter memproses normal
+
+EQUIVALENCE PARTITIONING - EXECUTION LOG,,,,,
+,,,,,
+"Cara menentukan partisi EP (kenali input, kenali partisi, nyatakan rule, pilih perwakilan, lalu tulis test case, dan contoh lengkap Triangle Classification dengan 4 partisi) sudah dijelaskan di dokumen Modul 3 Bagian 3. Sheet ini hanya untuk mencatat test case EP dari fiturmu sendiri, bukan untuk mengulang contoh tersebut.",,,,,
+,,,,,
+,,,,,
+"Fitur yang diuji: Validasi Autentikasi, Transaksi Kasir, Inventaris, & Filter Laporan (8 Fitur Sistem)",,,,,
+,,,,,
+Test Case ID,Partisi,Rule / Rentang,Valid?,Nilai Uji (Perwakilan),Hasil yang Diharapkan
+TC-EP-01,Format Email Kasir,Email valid (mengandung '@' dan domain valid),Valid,kasir.sukses@smartkasir.com,Format email diterima
+TC-EP-02,Format Email Kasir,Email tanpa simbol '@',Invalid,kasir.smartkasir.com,Ditolak: 'Format email tidak valid'
+TC-EP-03,Kredensial Registrasi,Semua data valid & email baru,Valid,"Nama='Budi', Email='kasir.baru@smartkasir.com', Pass='Kasir123!'","Akun tersimpan, redirect index.php?success=... (Alert HIJAU)"
+TC-EP-04,Konfirmasi Password,Password tidak cocok dengan konfirmasi,Invalid,"Pass='Kasir123!', Confirm='Beda999!'",Ditolak: 'Konfirmasi password tidak cocok'
+TC-EP-05,Keunikan Akun,Email sudah terdaftar di database,Invalid,admin@smartkasir.com,Ditolak: 'Email sudah terdaftar'
+TC-EP-06,Pembayaran Tunai,Cash = Total Belanja (Pas),Valid,"Total=Rp 50.000, Bayar=Rp 50.000","Transaksi berhasil, Kembalian = Rp 0"
+TC-EP-07,Pembayaran Tunai,Cash > Total Belanja (Lebih),Valid,"Total=Rp 50.000, Bayar=Rp 100.000","Transaksi berhasil, Kembalian = Rp 50.000"
+TC-EP-08,Pembayaran Tunai,Cash < Total Belanja (Kurang),Invalid,"Total=Rp 50.000, Bayar=Rp 30.000",Ditolak: 'Nominal pembayaran kurang'
+TC-EP-09,Kuantitas POS Keranjang,Kuantitas nol atau minus (Qty <= 0),Invalid,Qty = 0 atau Qty = -2,Ditolak / otomatis dihapus dari keranjang kasir
+TC-EP-10,Kuantitas POS Keranjang,Kuantitas melebihi sisa stok (Qty > 40),Invalid,Qty = 45 (Stok fisik = 40),"Ditolak: Alert stok tidak cukup, dibatasi maks 40"
+TC-EP-11,Harga Jual Produk Master,Harga jual numerik positif Rp 1.000 s/d 10.000.000,Valid,Harga = Rp 25.000,Harga diterima dan produk tersimpan di DB
+TC-EP-12,Harga Jual Produk Master,Harga jual bernilai nol atau negatif (Price <= 0),Invalid,Harga = -5000,Ditolak oleh form validasi harga produk
+TC-EP-13,Penambahan Kuantitas Restok,Jumlah restok bilangan bulat positif (Qty >= 1),Valid,Kuantitas = 20 unit,"Stok bertambah 20 unit, mutasi log tercatat"
+TC-EP-14,Penambahan Kuantitas Restok,Jumlah restok bernilai nol atau negatif (Qty <= 0),Invalid,Kuantitas = -10 unit,Ditolak: Jumlah stok harus lebih dari 0
+TC-EP-15,Filter Tanggal Transaksi,Tanggal Mulai <= Tanggal Akhir (Rentang Sah),Valid,"Start: 2026-10-01, End: 2026-10-15",Daftar transaksi periode tanggal tersebut tampil
+TC-EP-16,Filter Tanggal Transaksi,Tanggal Mulai > Tanggal Akhir (Rentang Terbalik),Invalid,"Start: 2026-10-20, End: 2026-10-05",Ditolak / Daftar kosong tanpa merusak sistem
+TC-EP-17,Pencarian Menu POS,Keyword teks alfabet cocok dengan nama produk,Valid,Keyword = Latte,Menampilkan produk Cafe Latte & Matcha Latte
+TC-EP-18,Pencarian Menu POS,Keyword injeksi karakter khusus / simbol script tag,Invalid,Keyword = <script>alert(1)</script>,"Karakter disanitasi aman, menu kosong (aman)"
+
+EXECUTION LOG - RANCANGAN DAN EKSEKUSI TEST CASE,,,,,,,,,
+,,,,,,,,,
+"Ini sheet utama workbook. Pindahkan setiap Test Case ID dari 02_BVA dan 03_EP ke sini, satu baris per Test Case ID, lalu lengkapi kolom eksekusi (Hasil Aktual, Status, Tanggal/Tester, Tautan Bukti) setelah pengujian dijalankan pada sistem sungguhan. Prakondisi yang sama untuk seluruh baris cukup dicatat sekali di sini.",,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,
+"Prakondisi untuk seluruh test case: Server lokal Laragon (Apache & MySQL) aktif, database smartkasir terisi data produk default, browser Chrome membuka aplikasi pada http://localhost/SMARTKASIR/",,,,,,,,,
+,,,,,,,,,
+ID Test Case,Dasar/Kondisi,Teknik & Coverage,Data Uji,Hasil yang Diharapkan,Hasil Aktual,Status,Tanggal / Tester,Tautan Bukti,ID Incident
+TC-BVA-01,BVA Password Min (6),BVA: Min Boundary,Pass: Kasir1 (6 char),"Password diterima, registrasi diproses","Password diterima, diproses",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-02,BVA Password Min+ (7),BVA: Min+ Boundary,Pass: Kasir12 (7 char),"Password diterima, registrasi diproses","Password diterima, diproses",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-03,BVA Password Nominal (12),BVA: Nominal Boundary,Pass: Kasir20261234 (12 char),"Password diterima, registrasi diproses","Password diterima, diproses",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-04,BVA Password Max- (31),BVA: Max- Boundary,Pass: 31 karakter alfanumerik,"Password diterima, registrasi diproses","Password diterima, akun tersimpan",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-05,BVA Password Max (32),BVA: Max Boundary,Pass: 32 karakter alfanumerik,"Password diterima, registrasi diproses","Password diterima, akun tersimpan",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-06,BVA Qty Kasir Min (1),BVA: Min Boundary,Qty = 1 item (Rp 15.000),"Subtotal = Rp 15.000, valid keranjang","Subtotal = Rp 15.000, valid keranjang",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-07,BVA Qty Kasir Min+ (2),BVA: Min+ Boundary,Qty = 2 item (Rp 15.000),"Subtotal = Rp 30.000, valid keranjang","Subtotal = Rp 30.000, valid keranjang",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-08,BVA Qty Kasir Nominal (5),BVA: Nominal Boundary,Qty = 5 item (Rp 15.000),"Subtotal = Rp 75.000, valid keranjang","Subtotal = Rp 75.000, valid keranjang",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-09,BVA Qty Kasir Max- (39),BVA: Max- Boundary,Qty = 39 item (Rp 15.000),"Subtotal = Rp 585.000, valid keranjang","Subtotal = Rp 585.000, valid keranjang",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-10,BVA Qty Kasir Max (40),BVA: Max Boundary,Qty = 40 item (Rp 15.000),"Subtotal = Rp 600.000, batas stok aman","Subtotal = Rp 600.000, kuantitas maks aman",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-11,BVA Bayar Min Pas (50rb),BVA: Min Boundary,Cash: Rp 50.000 (Total Rp 50rb),"Transaksi sukses, Kembalian = Rp 0","Transaksi sukses, Kembalian = Rp 0",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-12,BVA Bayar Min+ (60rb),BVA: Min+ Boundary,Cash: Rp 60.000 (Total Rp 50rb),"Transaksi sukses, Kembalian = Rp 10.000","Transaksi sukses, Kembalian = Rp 10.000",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-13,BVA Bayar Nominal (100rb),BVA: Nominal Boundary,Cash: Rp 100.000 (Total Rp 50rb),"Transaksi sukses, Kembalian = Rp 50.000","Transaksi sukses, Kembalian = Rp 50.000",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-14,BVA Bayar Max- (9.99jt),BVA: Max- Boundary,Cash: Rp 9.990.000 (Total Rp 50rb),"Transaksi sukses, Kembalian Rp 9.940.000","Transaksi sukses, Kembalian Rp 9.940.000",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-15,BVA Bayar Max (10jt),BVA: Max Boundary,Cash: Rp 10.000.000 (Total Rp 50rb),"Transaksi sukses, Kembalian Rp 9.950.000","Transaksi sukses, Kembalian Rp 9.950.000",Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-16,BVA Harga Produk Min (1rb),BVA: Min Boundary,Price: 1000,Harga Rp 1.000 tersimpan valid,Produk berhasil ditambahkan,Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-17,BVA Harga Min+ (2rb),BVA: Min+ Boundary,Price: 2000,Harga Rp 2.000 tersimpan valid,Produk berhasil ditambahkan,Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-18,BVA Harga Nominal (25rb),BVA: Nominal Boundary,Price: 25000,Harga Rp 25.000 tersimpan valid,Produk berhasil ditambahkan,Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-19,BVA Harga Max- (9.999jt),BVA: Max- Boundary,Price: 9999000,Harga Rp 9.999.000 tersimpan valid,Produk berhasil ditambahkan,Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-20,BVA Harga Max (10jt),BVA: Max Boundary,Price: 10000000,Harga Rp 10.000.000 tersimpan valid,Produk berhasil ditambahkan,Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-21,BVA Restok Min (1 unit),BVA: Min Boundary,Restok: 1 unit,Stok bertambah 1 unit,Stok berhasil ditambahkan (+1 unit),Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-22,BVA Restok Min+ (2 unit),BVA: Min+ Boundary,Restok: 2 unit,Stok bertambah 2 unit,Stok berhasil ditambahkan (+2 unit),Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-23,BVA Restok Nominal (50 unit),BVA: Nominal Boundary,Restok: 50 unit,Stok bertambah 50 unit,Stok berhasil ditambahkan (+50 unit),Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-24,BVA Restok Max- (999 unit),BVA: Max- Boundary,Restok: 999 unit,Stok bertambah 999 unit,Stok berhasil ditambahkan (+999 unit),Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-25,BVA Restok Max (1000 unit),BVA: Max Boundary,Restok: 1000 unit,Stok bertambah 1000 unit,Stok berhasil ditambahkan (+1000 unit),Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-26,BVA Search POS Min (1 char),BVA: Min Boundary,Keyword: L,Daftar menu terkait tampil instan,Filter instan berhasil tampil,Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-27,BVA Search Min+ (2 char),BVA: Min+ Boundary,Keyword: La,Daftar menu terkait tampil instan,Filter instan berhasil tampil,Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-28,BVA Search Nominal (5 char),BVA: Nominal Boundary,Keyword: Latte,Tepat menu kategori Latte tampil,Filter instan berhasil tampil,Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-29,BVA Search Max- (49 char),BVA: Max- Boundary,Keyword: 49 char string,Pencarian memproses tanpa crash,Filter memproses normal,Lulus,22/10/2026 / Ferdi,-,-
+TC-BVA-30,BVA Search Max (50 char),BVA: Max Boundary,Keyword: 50 char string,Batas maksimal input search diterima,Filter memproses normal,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-01,Format Email Kasir Valid,EP: Valid Class,kasir.sukses@smartkasir.com,Format email diterima,Format email diterima,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-02,Format Email Tanpa '@',EP: Weak Robust (Invalid),kasir.smartkasir.com,Ditolak: 'Format email tidak valid',Muncul validasi HTML5/Backend format email,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-03,Registrasi Data Lengkap Valid,EP: Valid Class,"Nama='Budi', Email unik, Pass valid","Akun tersimpan, redirect login dengan alert HIJAU","Akun tersimpan, redirect index.php?error=... (Alert MERAH)",Gagal,22/10/2026 / Ferdi,evidence_INC-SK-MOD3-01.png,INC-SK-MOD3-01
+TC-EP-04,Password != Konfirmasi,EP: Weak Robust (Invalid),"Pass: Kasir123!, Confirm: Beda999!",Ditolak: 'Konfirmasi password tidak cocok',Ditolak: pesan ketidakcocokan tampil,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-05,Email Sudah Terdaftar,EP: Weak Robust (Invalid),admin@smartkasir.com,Ditolak: 'Email sudah terdaftar',Ditolak: pesan duplikasi tampil,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-06,Pembayaran Kasir Uang Pas,EP: Valid Class,"Total: Rp 50.000, Cash: Rp 50.000","Transaksi berhasil, Kembalian = Rp 0","Transaksi berhasil, Kembalian = Rp 0",Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-07,Pembayaran Kasir Uang Lebih,EP: Valid Class,"Total: Rp 50.000, Cash: Rp 100.000","Transaksi berhasil, Kembalian = Rp 50.000","Transaksi berhasil, Kembalian = Rp 50.000",Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-08,Pembayaran Kasir Uang Kurang,EP: Weak Robust (Invalid),"Total: Rp 50.000, Cash: Rp 30.000",Ditolak: 'Nominal pembayaran kurang',Ditolak: alert nominal kurang muncul,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-09,Kuantitas Nol atau Minus,EP: Weak Robust (Invalid),Qty = 0 pada keranjang,Ditolak / item otomatis dihapus,Item otomatis dihapus dari cart,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-10,Kuantitas Melebihi Stok,EP: Weak Robust (Invalid),Qty = 45 (Stok fisik = 40),Ditolak: Alert stok tidak cukup,Muncul alert: Stok tidak cukup! Maksimal 40,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-11,Harga Jual Produk Valid,EP: Valid Class,Harga = Rp 25.000,Harga diterima dan produk tersimpan,Produk berhasil ditambahkan,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-12,Harga Jual Nol atau Minus,EP: Weak Robust (Invalid),Harga = -5000,Ditolak oleh form validasi,Input minus dicegah oleh form HTML5,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-13,Kuantitas Restok Valid,EP: Valid Class,Kuantitas = 20 unit,Stok bertambah 20 unit,Stok berhasil ditambahkan (+20 unit),Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-14,Kuantitas Restok Minus,EP: Weak Robust (Invalid),Kuantitas = -10 unit,Ditolak: Jumlah stok harus lebih dari 0,Ditolak: Jumlah stok harus lebih dari 0,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-15,Rentang Tanggal Valid,EP: Valid Class,"Start: 2026-10-01, End: 2026-10-15",Daftar transaksi periode tampil,Data transaksi tampil terfilter,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-16,Rentang Tanggal Terbalik,EP: Weak Robust (Invalid),"Start: 2026-10-20, End: 2026-10-05",Daftar transaksi kosong tanpa crash,Tabel menampilkan kosong (aman),Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-17,Pencarian Menu POS Cocok,EP: Valid Class,Keyword = Latte,Menampilkan Cafe Latte & Matcha Latte,Produk Cafe Latte & Matcha Latte tampil,Lulus,22/10/2026 / Ferdi,-,-
+TC-EP-18,Pencarian Simbol Injeksi XSS,EP: Weak Robust (Invalid),Keyword = <script>alert(1)</script>,"Karakter disanitasi aman, menu kosong","Karakter disanitasi, tidak ada XSS",Lulus,22/10/2026 / Ferdi,-,-
+
+TEST TRACEABILITY MATRIX,,,,,
+,,,,,
+TTM menghubungkan setiap requirement atau rule dari 01_Proyek dengan test case dan hasil aktualnya pada 04_Rancangan_dan_Eksekusi.,,,,,
+,,,,,
+ID Kondisi / Requirement,Coverage,ID Test Case,Status Ringkas,ID Incident,Catatan
+RQ-001 (Panjang Password Kasir),100% Boundary [6..32],"TC-BVA-01 s/d TC-BVA-05, TC-EP-04",100% Lulus,-,Validasi batas karakter password kasir berfungsi sempurna
+RQ-002 (Registrasi Akun Kasir),100% Partisi Valid & Invalid,"TC-EP-01 s/d TC-EP-03, TC-EP-05","75% Lulus, 25% Gagal",INC-SK-MOD3-01,Defect alert merah pada pendaftaran sukses (telah di-fix & closed)
+RQ-003 (Kuantitas POS Kasir),100% Boundary [1..40] & EP,"TC-BVA-06 s/d TC-BVA-10, TC-EP-09, TC-EP-10",100% Lulus,-,Validasi batas kuantitas keranjang dibatasi aman dari 1 hingga stok fisik (40)
+RQ-004 (Pembayaran Tunai Kasir),100% Boundary & EP Uang,"TC-BVA-11 s/d TC-BVA-15, TC-EP-06 s/d TC-EP-08",100% Lulus,-,Validasi kalkulasi kembalian dan pencegahan transaksi uang kurang aman
+RQ-005 (Harga Jual Master Produk),100% Boundary [1rb..10jt] & EP,"TC-BVA-16 s/d TC-BVA-20, TC-EP-11, TC-EP-12",100% Lulus,-,Harga satuan produk terlindungi dari input angka nol atau negatif
+RQ-006 (Kuantitas Restok Barang),100% Boundary [1..1000] & EP,"TC-BVA-21 s/d TC-BVA-25, TC-EP-13, TC-EP-14",100% Lulus,-,Penambahan stok hanya menerima bilangan bulat positif
+RQ-007 (Rentang Filter Tanggal),100% Partisi Tanggal Valid/Invalid,"TC-EP-15, TC-EP-16",100% Lulus,-,Filter riwayat transaksi aman dan tidak crash saat tanggal terbalik
+RQ-008 (Pencarian Cepat Menu POS),100% Boundary [1..50] & EP,"TC-BVA-26 s/d TC-BVA-30, TC-EP-17, TC-EP-18",100% Lulus,-,Pencarian real-time aman dari injeksi karakter spesial/XSS
+
+INDEKS INCIDENT,,,,,,
+,,,,,,
+"Gunakan satu baris untuk setiap defect yang benar-benar diamati saat eksekusi. Incident Report lengkap tetap dibuat pada dokumen terpisah, lihat file Incident_Report.docx.",,,,,,
+,,,,,,
+ID Incident,ID Test Case,Ringkasan,Severity,Status,Tanggal,Tautan Bukti
+INC-SK-MOD3-01,TC-EP-03,Notifikasi registrasi kasir berhasil di-redirect dengan parameter ?error= sehingga menampilkan alert error merah bertanda seru,Minor,Closed,22/10/2026,evidence_INC-SK-MOD3-01.png

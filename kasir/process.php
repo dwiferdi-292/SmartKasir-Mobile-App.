@@ -29,12 +29,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cart_data'])) {
         $transactionId = $pdo->lastInsertId();
 
         $stmtDetail = $pdo->prepare("INSERT INTO transaction_details (transaction_id, product_id, quantity, price, subtotal) VALUES (?, ?, ?, ?, ?)");
+        $stmtGetStock = $pdo->prepare("SELECT quantity FROM inventory WHERE product_id = ? FOR UPDATE");
         $stmtReduceStock = $pdo->prepare("UPDATE inventory SET quantity = quantity - ? WHERE product_id = ?");
+        $stmtLogStock = $pdo->prepare("INSERT INTO stock_logs (product_id, type, quantity, previous_stock, current_stock, notes, user_id) VALUES (?, 'keluar', ?, ?, ?, ?, ?)");
 
         foreach ($cartData as $item) {
             $sub = $item['price'] * $item['qty'];
             $stmtDetail->execute([$transactionId, $item['id'], $item['qty'], $item['price'], $sub]);
+
+            // Ambil stok sebelumnya & catat mutasi stok
+            $stmtGetStock->execute([$item['id']]);
+            $prevStock = (int)$stmtGetStock->fetchColumn();
+            $newStock = max(0, $prevStock - (int)$item['qty']);
+
             $stmtReduceStock->execute([$item['qty'], $item['id']]);
+            $stmtLogStock->execute([$item['id'], $item['qty'], $prevStock, $newStock, "Penjualan " . $invoiceNumber, $_SESSION['user_id']]);
         }
 
         $pdo->commit();

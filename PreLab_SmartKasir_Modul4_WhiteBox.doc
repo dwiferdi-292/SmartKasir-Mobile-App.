@@ -1,0 +1,428 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>Pre-Lab Modul 4 - White-Box Testing - SmartKasir</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+@page {
+    size: A4;
+    margin: 2.0cm 2.0cm 2.0cm 2.0cm;
+    mso-page-orientation: portrait;
+}
+body {
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.45;
+    color: #111827;
+    margin: 0;
+    padding: 0;
+}
+h1.title {
+    font-size: 18pt;
+    font-weight: bold;
+    color: #1e3a8a;
+    text-align: center;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+h2.subtitle {
+    font-size: 12pt;
+    font-weight: normal;
+    color: #4b5563;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+.meta-box {
+    border: 1.5px solid #1e3a8a;
+    background-color: #f0f7ff;
+    padding: 10px 14px;
+    margin-bottom: 22px;
+}
+.meta-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.meta-table td {
+    border: none;
+    padding: 3px 6px;
+    font-size: 10.5pt;
+}
+h2.heading {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1e3a8a;
+    border-bottom: 1.5px solid #1e3a8a;
+    padding-bottom: 4px;
+    margin-top: 22px;
+    margin-bottom: 10px;
+}
+h3.subheading {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #0f172a;
+    margin-top: 14px;
+    margin-bottom: 6px;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-align: justify;
+}
+table.content-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    margin-bottom: 14px;
+    font-size: 10pt;
+}
+table.content-table th, table.content-table td {
+    border: 1px solid #94a3b8;
+    padding: 6px 8px;
+    vertical-align: top;
+}
+table.content-table th {
+    background-color: #dbeafe;
+    color: #1e3a8a;
+    font-weight: bold;
+}
+.code-area {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 9.5pt;
+    padding: 10px;
+    margin: 8px 0 14px 0;
+    line-height: 1.4;
+}
+.highlight {
+    color: #b45309;
+    font-weight: bold;
+}
+.formula {
+    background-color: #f1f5f9;
+    border-left: 3px solid #2563eb;
+    padding: 8px 12px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<h1 class="title">LEMBAR KERJA PRE-LAB &bull; MODUL 4</h1>
+<h2 class="subtitle">Software Quality Assurance: White-Box Testing (Statement &amp; Branch Coverage)</h2>
+
+<div class="meta-box">
+    <table class="meta-table">
+        <tr>
+            <td style="width: 20%;"><strong>Nama Praktikan</strong></td>
+            <td style="width: 30%;">: MUCHAMMAD DWI FERDI ILHAM ARIFIN</td>
+            <td style="width: 20%;"><strong>Mata Kuliah</strong></td>
+            <td style="width: 30%;">: Praktikum Pengujian Kualitas Perangkat Lunak</td>
+        </tr>
+        <tr>
+            <td><strong>NIM</strong></td>
+            <td>: 202310370311292</td>
+            <td><strong>Kelas / Sesi</strong></td>
+            <td>: PKPL - B / Pre-Lab Session</td>
+        </tr>
+        <tr>
+            <td><strong>Program Studi</strong></td>
+            <td>: Informatika - S1</td>
+            <td><strong>Instansi</strong></td>
+            <td>: Laboratorium Informatika UMM</td>
+        </tr>
+        <tr>
+            <td><strong>Aplikasi Uji</strong></td>
+            <td>: SmartKasir (Point of Sale System)</td>
+            <td><strong>Fitur Terpilih</strong></td>
+            <td>: Validasi Pembayaran &amp; Checkout Kasir (FS-004)</td>
+        </tr>
+    </table>
+</div>
+
+<h2 class="heading">A. Ringkasan &amp; Analisis Konseptual Modul 4</h2>
+<p>
+Modul 4 membahas secara mendalam teknik <strong>White-Box Testing</strong> (Structure-Based Testing) dan implementasi <strong>Unit Testing</strong>:
+</p>
+<ul>
+    <li><strong>White-Box Testing:</strong> Teknik pengujian perangkat lunak yang berfokus pada pemeriksaan struktur internal, alur logika kendali (control flow), dan kode sumber program. Berbeda dengan Black-Box yang mengevaluasi fungsionalitas murni dari input-output, White-Box memerlukan akses langsung ke source code untuk memastikan kebenaran eksekusi setiap branch, condition, dan statement, mendeteksi unreachable/dead code, serta celah keamanan logika.</li>
+    <li><strong>Basis Path Testing &amp; Cyclomatic Complexity:</strong> Dikembangkan oleh Thomas McCabe. Menghitung jumlah jalur eksekusi independen linier melalui rumus $V(G) = E - N + 2P$ atau $V(G) = \text{Jumlah Titik Keputusan (Predicate Nodes)} + 1$. Nilai $V(G)$ menentukan jumlah test case minimum untuk memastikan seluruh alur telah dieksekusi setidaknya satu kali.</li>
+    <li><strong>Statement Coverage:</strong> Mengukur persentase pernyataan executable yang dijalankan: $(\text{Executed Statements} / \text{Total Executable Statements}) \times 100\%$.</li>
+    <li><strong>Branch Coverage:</strong> Mengukur persentase cabang keputusan logika (True dan False) yang terevaluasi: $(\text{Executed Branches} / \text{Total Branches}) \times 100\%$. Memberikan jaminan kualitas yang lebih ketat dibanding Statement Coverage.</li>
+    <li><strong>Pola AAA (Arrange-Act-Assert):</strong> Standar perancangan unit test modern di mana fase <em>Arrange</em> menyiapkan data dan dependensi (mock/stub), <em>Act</em> mengeksekusi satu fungsi unit, dan <em>Assert</em> memvalidasi kebenaran nilai kembalian / status sistem.</li>
+    <li><strong>5 Jenis Test Double:</strong>
+        <ol>
+            <li><em>Dummy:</em> Objek placeholder hanya untuk mengisi parameter konstruktor/method tanpa dipanggil.</li>
+            <li><em>Stub:</em> Memberikan respons statis yang telah ditentukan sebelumnya untuk menggantikan dependensi eksternal (misal respons error gateway).</li>
+            <li><em>Mock:</em> Mensimulasikan perilaku sekaligus memverifikasi interaksi (memastikan method dipanggil dengan parameter tertentu).</li>
+            <li><em>Fake:</em> Implementasi fungsional nyata namun disederhanakan dan berbobot ringan (misal in-memory repository).</li>
+            <li><em>Spy:</em> Mengamati dan merekam panggilan pada objek nyata tanpa mengubah perilaku aslinya.</li>
+        </ol>
+    </li>
+</ul>
+
+<h2 class="heading">B. Spesifikasi Fitur Terpilih &amp; Cuplikan Kode Beranotasi</h2>
+<p>
+Fitur yang dipilih untuk analisis manual White-Box adalah fungsi inti <strong>Pemrosesan Checkout &amp; Validasi Pembayaran Transaksi POS</strong> pada SmartKasir (berasal dari <code>kasir/process.php</code>, mengacu pada requirement <strong>RQ-007, RQ-008, RQ-009</strong>).
+</p>
+
+<div class="code-area">
+function process_checkout($cartData, $totalAmount, $paidAmount, $paymentMethod, $inventoryStock) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S1: Inisialisasi struktur hasil respon transaksi<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$res = ['status' => false, 'message' => '', 'change' => 0, 'invoice' => '']; <span class="highlight">// [S1]</span><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S2: Titik Keputusan 1 (D1) - Validasi apakah keranjang belanja kosong<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (empty($cartData)) {                                                 <span class="highlight">// [S2]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$res['message'] = "Keranjang belanja kosong!";                     <span class="highlight">// [S3]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return $res;                                                        <span class="highlight">// [S4]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S5: Titik Keputusan 2 (D2) - Validasi kecukupan pembayaran tunai<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if ($paidAmount &lt; $totalAmount) {                                       <span class="highlight">// [S5]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$res['message'] = "Uang diterima kurang dari total bayar!";         <span class="highlight">// [S6]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return $res;                                                        <span class="highlight">// [S7]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S8: Titik Keputusan 3 (D3) - Validasi kecukupan stok inventaris<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$hasStock = true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;foreach ($cartData as $item) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($item['qty'] &gt; ($inventoryStock[$item['id']] ?? 0)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$hasStock = false; break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (!$hasStock) {                                                       <span class="highlight">// [S8]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$res['message'] = "Stok produk tidak mencukupi!";                   <span class="highlight">// [S9]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return $res;                                                        <span class="highlight">// [S10]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S11: Titik Keputusan 4 (D4) - Perhitungan kembalian berdasarkan metode bayar<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if ($paymentMethod === "TUNAI") {                                       <span class="highlight">// [S11]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$res['change'] = $paidAmount - $totalAmount;                        <span class="highlight">// [S12]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$res['change'] = 0;                                                 <span class="highlight">// [S13]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S14-S17: Pembuatan nomor invoice, set status berhasil, dan return<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$res['invoice'] = "INV-" . date("YmdHis");                              <span class="highlight">// [S14]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;$res['status'] = true;                                                  <span class="highlight">// [S15]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;$res['message'] = "Transaksi berhasil diproses!";                       <span class="highlight">// [S16]</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;return $res;                                                            <span class="highlight">// [S17]</span><br>
+}
+</div>
+
+<h2 class="heading">C. Analisis Control Flow &amp; Cyclomatic Complexity McCabe</h2>
+<p>
+Fungsi di atas memiliki <strong>4 titik keputusan (Decision Points / Predicate Nodes)</strong>:
+</p>
+<ol>
+    <li><strong>D1 (S2):</strong> <code>empty($cartData)</code> &rarr; Menentukan apakah keranjang valid atau kosong.</li>
+    <li><strong>D2 (S5):</strong> <code>$paidAmount &lt; $totalAmount</code> &rarr; Menentukan apakah uang tunai mencukupi.</li>
+    <li><strong>D3 (S8):</strong> <code>!$hasStock</code> &rarr; Menentukan apakah kuantitas barang melebihi stok gudang.</li>
+    <li><strong>D4 (S11):</strong> <code>$paymentMethod === "TUNAI"</code> &rarr; Menentukan formula kalkulasi nominal kembalian.</li>
+</ol>
+
+<div class="formula">
+Perhitungan Kompleksitas Siklomatis:<br>
+V(G) = Jumlah Titik Keputusan + 1 = 4 + 1 = 5<br>
+Atau melalui graf alir: V(G) = Edges (13) - Nodes (10) + 2(1) = 5
+</div>
+
+<p>
+Berdasarkan nilai <strong>V(G) = 5</strong>, terdapat <strong>5 Basis Path (Jalur Independen)</strong>:
+</p>
+<ul>
+    <li><strong>Path 1:</strong> S1 &rarr; S2 (True) &rarr; S3 &rarr; S4 (Exit)</li>
+    <li><strong>Path 2:</strong> S1 &rarr; S2 (False) &rarr; S5 (True) &rarr; S6 &rarr; S7 (Exit)</li>
+    <li><strong>Path 3:</strong> S1 &rarr; S2 (False) &rarr; S5 (False) &rarr; S8 (True) &rarr; S9 &rarr; S10 (Exit)</li>
+    <li><strong>Path 4:</strong> S1 &rarr; S2 (False) &rarr; S5 (False) &rarr; S8 (False) &rarr; S11 (True) &rarr; S12 &rarr; S14 &rarr; S15 &rarr; S16 &rarr; S17 (Exit)</li>
+    <li><strong>Path 5:</strong> S1 &rarr; S2 (False) &rarr; S5 (False) &rarr; S8 (False) &rarr; S11 (False) &rarr; S13 &rarr; S14 &rarr; S15 &rarr; S16 &rarr; S17 (Exit)</li>
+</ul>
+
+<h2 class="heading">D. Analisis Statement Coverage</h2>
+<p>
+Total Executable Statements = <strong>17 pernyataan</strong> (S1 s.d. S17).
+Dirancang 5 test case representatif untuk mencakup seluruh pernyataan:
+</p>
+
+<table class="content-table">
+    <thead>
+        <tr>
+            <th style="width: 10%;">ID Kasus</th>
+            <th style="width: 25%;">Kondisi / Parameter Input</th>
+            <th style="width: 35%;">Alur Pernyataan Tereksekusi (Execution Path)</th>
+            <th style="width: 30%;">Himpunan Statement Tereksekusi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>TC-SC-01</strong></td>
+            <td>cartData=[], total=0, paid=50000, method="TUNAI", stock=[1=>50]</td>
+            <td>S1 &rarr; S2 (True) &rarr; S3 &rarr; S4</td>
+            <td>{S1, S2, S3, S4}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-SC-02</strong></td>
+            <td>cartData=[item1:qty=2], total=24000, paid=20000, method="TUNAI", stock=[1=>50]</td>
+            <td>S1 &rarr; S2 (False) &rarr; S5 (True) &rarr; S6 &rarr; S7</td>
+            <td>{S1, S2, S5, S6, S7}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-SC-03</strong></td>
+            <td>cartData=[item1:qty=10], total=120000, paid=150000, method="TUNAI", stock=[1=>5]</td>
+            <td>S1 &rarr; S2 (False) &rarr; S5 (False) &rarr; S8 (True) &rarr; S9 &rarr; S10</td>
+            <td>{S1, S2, S5, S8, S9, S10}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-SC-04</strong></td>
+            <td>cartData=[item1:qty=2], total=24000, paid=50000, method="TUNAI", stock=[1=>50]</td>
+            <td>S1 &rarr; S2 (False) &rarr; S5 (False) &rarr; S8 (False) &rarr; S11 (True) &rarr; S12 &rarr; S14 &rarr; S15 &rarr; S16 &rarr; S17</td>
+            <td>{S1, S2, S5, S8, S11, S12, S14, S15, S16, S17}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-SC-05</strong></td>
+            <td>cartData=[item1:qty=1], total=18000, paid=18000, method="QRIS", stock=[1=>50]</td>
+            <td>S1 &rarr; S2 (False) &rarr; S5 (False) &rarr; S8 (False) &rarr; S11 (False) &rarr; S13 &rarr; S14 &rarr; S15 &rarr; S16 &rarr; S17</td>
+            <td>{S1, S2, S5, S8, S11, S13, S14, S15, S16, S17}</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Union (Gabungan) Himpunan Statement yang Dieksekusi:</strong></p>
+<p style="font-family: monospace; background: #f8fafc; padding: 6px;">
+Union = {S1, S2, S3, S4} &cup; {S1, S2, S5, S6, S7} &cup; {S1, S2, S5, S8, S9, S10} &cup; {S1, S2, S5, S8, S11, S12, S14, S15, S16, S17} &cup; {S1, S2, S5, S8, S11, S13, S14, S15, S16, S17} = {S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16, S17}
+</p>
+<ul>
+    <li>Total Executable Statements: 17</li>
+    <li>Jumlah Executed Statements: 17</li>
+</ul>
+<div class="formula">
+Kalkulasi Statement Coverage = (17 / 17) &times; 100% = 100.0% (Lengkap)
+</div>
+
+<h2 class="heading">E. Analisis Branch Coverage</h2>
+<p>
+Terdapat 4 titik keputusan yang menghasilkan <strong>8 cabang (Decision Branches B1 s.d. B8)</strong>:
+</p>
+<table class="content-table">
+    <thead>
+        <tr>
+            <th style="width: 10%;">Decision</th>
+            <th style="width: 30%;">Kondisi Evaluasi</th>
+            <th style="width: 15%;">Cabang True</th>
+            <th style="width: 15%;">Cabang False</th>
+            <th style="width: 30%;">Keterangan Perilaku</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>D1 (S2)</strong></td>
+            <td>empty($cartData)</td>
+            <td><strong>B1 (True)</strong>: Tolak</td>
+            <td><strong>B2 (False)</strong>: Lanjut</td>
+            <td>Memeriksa apakah ada item belanjaan di keranjang kasir.</td>
+        </tr>
+        <tr>
+            <td><strong>D2 (S5)</strong></td>
+            <td>$paidAmount &lt; $totalAmount</td>
+            <td><strong>B3 (True)</strong>: Tolak</td>
+            <td><strong>B4 (False)</strong>: Lanjut</td>
+            <td>Memeriksa kecukupan uang kasir (tunai tidak boleh kurang).</td>
+        </tr>
+        <tr>
+            <td><strong>D3 (S8)</strong></td>
+            <td>!$hasStock</td>
+            <td><strong>B5 (True)</strong>: Tolak</td>
+            <td><strong>B6 (False)</strong>: Lanjut</td>
+            <td>Memeriksa apakah stok fisik mencukupi permintaan kasir.</td>
+        </tr>
+        <tr>
+            <td><strong>D4 (S11)</strong></td>
+            <td>$paymentMethod === "TUNAI"</td>
+            <td><strong>B7 (True)</strong>: Hitung Kembalian</td>
+            <td><strong>B8 (False)</strong>: Kembalian = 0</td>
+            <td>Membedakan perhitungan uang kembalian tunai vs non-tunai.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Matriks Eksekusi Cabang per Kasus Uji:</strong></p>
+<table class="content-table">
+    <thead>
+        <tr>
+            <th style="width: 12%;">Test Case ID</th>
+            <th style="width: 35%;">Alur Evaluasi Percabangan</th>
+            <th style="width: 28%;">Cabang yang Tercakup</th>
+            <th style="width: 25%;">Status Verifikasi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>TC-BC-01</strong></td>
+            <td>D1 &rarr; True (Mencakup B1)</td>
+            <td>{B1}</td>
+            <td>Terverifikasi (Tolak)</td>
+        </tr>
+        <tr>
+            <td><strong>TC-BC-02</strong></td>
+            <td>D1 &rarr; False (B2), D2 &rarr; True (Mencakup B3)</td>
+            <td>{B2, B3}</td>
+            <td>Terverifikasi (Tolak)</td>
+        </tr>
+        <tr>
+            <td><strong>TC-BC-03</strong></td>
+            <td>D1 &rarr; False (B2), D2 &rarr; False (B4), D3 &rarr; True (Mencakup B5)</td>
+            <td>{B2, B4, B5}</td>
+            <td>Terverifikasi (Tolak)</td>
+        </tr>
+        <tr>
+            <td><strong>TC-BC-04</strong></td>
+            <td>D1 &rarr; False (B2), D2 &rarr; False (B4), D3 &rarr; False (B6), D4 &rarr; True (Mencakup B7)</td>
+            <td>{B2, B4, B6, B7}</td>
+            <td>Terverifikasi (Sukses)</td>
+        </tr>
+        <tr>
+            <td><strong>TC-BC-05</strong></td>
+            <td>D1 &rarr; False (B2), D2 &rarr; False (B4), D3 &rarr; False (B6), D4 &rarr; False (Mencakup B8)</td>
+            <td>{B2, B4, B6, B8}</td>
+            <td>Terverifikasi (Sukses)</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Union (Gabungan) Himpunan Cabang yang Dieksekusi:</strong></p>
+<p style="font-family: monospace; background: #f8fafc; padding: 6px;">
+Union Branches = {B1} &cup; {B2, B3} &cup; {B2, B4, B5} &cup; {B2, B4, B6, B7} &cup; {B2, B4, B6, B8} = {B1, B2, B3, B4, B5, B6, B7, B8}
+</p>
+<ul>
+    <li>Total Executable Branches: 8</li>
+    <li>Jumlah Executed Branches: 8</li>
+</ul>
+<div class="formula">
+Kalkulasi Branch Coverage = (8 / 8) &times; 100% = 100.0% (Lengkap)
+</div>
+
+<h2 class="heading">F. Kesimpulan Analisis &amp; Rencana Lab Session</h2>
+<ol>
+    <li>Pengujian struktur kode manual membuktikan fungsi checkout POS SmartKasir memiliki <strong>100% Statement Coverage</strong> dan <strong>100% Branch Coverage</strong> melalui 5 skenario uji independen.</li>
+    <li>Struktur logika fungsi memiliki kompleksitas McCabe yang ideal ($V(G) = 5$), sehingga sangat modular dan siap untuk diimplementasikan ke dalam automated Unit Test berbasis framework PHPUnit.</li>
+    <li>Untuk tahapan Lab Session, akan diterapkan:
+        <ul>
+            <li><strong>Stub:</strong> Menggantikan akses tabel stok inventaris database dengan objek stub in-memory yang mengembalikan stok statis.</li>
+            <li><strong>Mock:</strong> Memvalidasi interaksi bahwa pemotongan stok dan pencatatan audit log mutasi (<code>INSERT INTO stock_logs</code>) terpanggil dengan argumen yang tepat saat transaksi berhasil.</li>
+            <li><strong>Git &amp; GitHub:</strong> Pembuatan branch <code>testing</code> dan penautan commit ke GitHub Issues sesuai standar rubrik laboratorium.</li>
+        </ul>
+    </li>
+</ol>
+
+<p style="text-align: right; margin-top: 30px; font-size: 10pt; color: #475569;">
+Disusun oleh: <strong>Muchammad Dwi Ferdi Ilham Arifin (NIM: 202310370311292)</strong><br>
+Praktikum Pengujian Kualitas Perangkat Lunak &bull; Laboratorium Informatika UMM
+</p>
+
+</body>
+</html>

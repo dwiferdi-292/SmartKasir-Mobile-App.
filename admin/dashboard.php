@@ -27,13 +27,15 @@ $totalTransactions = $pdo->query("SELECT COUNT(*) FROM transactions")->fetchColu
                 <li><a href="dashboard.php" class="active"><i class="fa-solid fa-house"></i> Dashboard</a></li>
                 <li><a href="products.php"><i class="fa-solid fa-boxes-stacked"></i> Produk & Stok</a></li>
                 <li><a href="users.php"><i class="fa-solid fa-users-gear"></i> Kelola User</a></li>
-            </ul>
         </div>
         <div class="main-content">
             <div class="topbar">
-                <h2>DASHBOARD</h2>
+                <div class="d-flex align-center gap-3">
+                    <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <h2>DASHBOARD</h2>
+                </div>
                 <div class="d-flex align-center gap-4">
-                    <a href="../logout.php" class="badge badge-danger"><i class="fa-solid fa-power-off"></i> Logout</a>
+                    <a href="../logout.php" class="btn-logout"><i class="fa-solid fa-power-off"></i> Keluar</a>
                     <div class="user-info">
                         <img src="https://ui-avatars.com/api/?name=<?= urlencode($_SESSION['user_name']) ?>&background=4f46e5&color=fff" alt="Avatar">
                         <?= htmlspecialchars($_SESSION['user_name']) ?>

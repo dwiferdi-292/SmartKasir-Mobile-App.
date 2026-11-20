@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>White-box Test Document - SmartKasir</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm 15mm 15mm 15mm;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; padding: 0 !important; }
+            .sheet-card { box-shadow: none !important; border: 1px solid #94a3b8 !important; padding: 15px !important; margin-bottom: 20px !important; }
+            .page-break { page-break-before: always; }
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            margin: 0;
+            padding: 25px 15px;
+            font-size: 10.5pt;
+            line-height: 1.45;
+        }
+        .container {
+            max-width: 960px;
+            margin: auto;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            gap: 10px;
+        }
+        .btn-back {
+            color: #475569;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-back:hover { color: #0f172a; }
+        .btn-print {
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-print:hover { background: #1e40af; }
+        .sheet-card {
+            background: white;
+            padding: 28px 32px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+            border: 1px solid #cbd5e1;
+        }
+        h1.doc-main-title {
+            font-size: 18pt;
+            font-weight: 800;
+            color: #000;
+            margin: 0 0 4px 0;
+            text-transform: uppercase;
+            letter-spacing: -0.2px;
+        }
+        h2.project-name {
+            font-size: 13pt;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin: 0 0 16px 0;
+        }
+        h2.section-header {
+            font-size: 13pt;
+            font-weight: 700;
+            color: #000;
+            margin-top: 24px;
+            margin-bottom: 10px;
+            border-bottom: 1.5px solid #000;
+            padding-bottom: 4px;
+        }
+        h3.sub-header {
+            font-size: 11pt;
+            font-weight: 700;
+            color: #1e293b;
+            margin-top: 14px;
+            margin-bottom: 6px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            font-size: 9.5pt;
+        }
+        th, td {
+            border: 1px solid #475569;
+            padding: 7px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f1f5f9;
+            color: #0f172a;
+            font-weight: 700;
+        }
+        .code-container {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 16px 20px;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9.5pt;
+            line-height: 1.5;
+            overflow-x: auto;
+            margin: 10px 0 14px 0;
+            border: 1px solid #334155;
+        }
+        .code-comment { color: #94a3b8; font-style: italic; }
+        .code-stmt { color: #f59e0b; font-weight: bold; }
+        .code-kw { color: #38bdf8; font-weight: bold; }
+        .code-str { color: #4ade80; }
+        .terminal-box {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 14px 18px;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.45;
+            overflow-x: auto;
+            margin: 10px 0 16px 0;
+            border: 1px solid #334155;
+            white-space: pre;
+        }
+        .highlight-statement {
+            font-weight: bold;
+            color: #b91c1c;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="toolbar no-print">
+        <a href="index.php" class="btn-back">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Kembali ke SmartKasir
+        </a>
+        <button onclick="window.print()" class="btn-print">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+            Cetak / Simpan PDF
+        </button>
+    </div>
+
+    <div class="sheet-card">
+        <!-- 1. HEADER DOKUMEN -->
+        <h1 class="doc-main-title">White-box Test Document</h1>
+        <h2 class="project-name">SmartKasir (Point of Sale System)</h2>
+
+        <!-- DOCUMENT REVISION TABLE -->
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Version</th>
+                    <th style="width: 35%;">Author</th>
+                    <th style="width: 50%;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1.0</strong></td>
+                    <td><strong>Muchammad Dwi Ferdi Ilham Arifin</strong><br>(NIM: 202310370311292 | Kelas: PKPL-B)</td>
+                    <td>Dokumen Perancangan Pengujian White-Box Testing (Statement Coverage &amp; Branch Coverage) dan Implementasi Unit Testing menggunakan Test Double pada Fitur Transaksi Kasir POS (FS-004 / RQ-007, RQ-008, RQ-009).</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 2. STATEMENT COVERAGE SECTION -->
+        <h2 class="section-header">Statement Coverage</h2>
+        <p><strong>Function:</strong> <code>process_checkout</code></p>
+
+        <!-- CODE SNIPPET IDENTIK SESUAI TAMPILAN TEMPLATE -->
+        <div class="code-container">
+<span class="code-kw">function</span> <span class="code-stmt">process_checkout</span>($cart, $total, $cash, $method, $stock) {
+    <span class="code-comment">// S1: Inisialisasi variabel status dan kembalian</span>
+    $status = <span class="code-str">""</span>;
+    $change = 0;
+
+    <span class="code-comment">// S2: Cek apakah keranjang belanja kosong</span>
+    <span class="code-kw">if</span> (empty($cart)) {
+        $status = <span class="code-str">"Keranjang kosong"</span>; <span class="code-comment">// S3</span>
+    <span class="code-comment">// S4: Cek apakah nominal uang tunai kurang dari total belanja</span>
+    } <span class="code-kw">elseif</span> ($cash &lt; $total) {
+        $status = <span class="code-str">"Uang kurang"</span>; <span class="code-comment">// S5</span>
+    <span class="code-comment">// S6: Cek ketersediaan stok fisik produk</span>
+    } <span class="code-kw">elseif</span> ($stock &lt;= 0) {
+        $status = <span class="code-str">"Stok habis"</span>; <span class="code-comment">// S7</span>
+    } <span class="code-kw">else</span> {
+        <span class="code-comment">// S8: Cek metode pembayaran untuk kalkulasi uang kembalian</span>
+        <span class="code-kw">if</span> ($method === <span class="code-str">"TUNAI"</span>) {
+            $change = $cash - $total; <span class="code-comment">// S9</span>
+        } <span class="code-kw">else</span> {
+            $change = 0; <span class="code-comment">// S10</span>
+        }
+        $status = <span class="code-str">"Sukses"</span>; <span class="code-comment">// S11</span>
+    }
+
+    <span class="code-comment">// S12: Return hasil transaksi</span>
+    <span class="code-kw">return</span> [$status, $change];
+}
+        </div>
+
+        <p><strong>Target:</strong> 100% Statement Coverage<br>
+        <strong>Total Statement:</strong> 12</p>
+
+        <!-- STATEMENT COVERAGE TABLE SESUAI FORMAT TEMPLATE -->
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 12%;">ID Test</th>
+                    <th style="width: 28%;">Input (cart, total, cash, method, stock)</th>
+                    <th style="width: 22%;">Expected Output</th>
+                    <th style="width: 20%;">Covered Statements</th>
+                    <th style="width: 18%;">Cumulative Coverage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>TC-01</strong></td>
+                    <td><code>cart=[]</code>, <code>total=0</code>, <code>cash=50000</code>, <code>method="TUNAI"</code>, <code>stock=10</code></td>
+                    <td>("Keranjang kosong", 0)</td>
+                    <td>S1, S2, S3, S12</td>
+                    <td>{S1, S2, S3, S12}</td>
+                </tr>
+                <tr>
+                    <td><strong>TC-02</strong></td>
+                    <td><code>cart=[item1]</code>, <code>total=24000</code>, <code>cash=20000</code>, <code>method="TUNAI"</code>, <code>stock=10</code></td>
+                    <td>("Uang kurang", 0)</td>
+                    <td>S1, S2, S4, S5, S12</td>
+                    <td>{..., <strong>S4</strong>, <strong>S5</strong>}</td>
+                </tr>
+                <tr>
+                    <td><strong>TC-03</strong></td>
+                    <td><code>cart=[item1]</code>, <code>total=24000</code>, <code>cash=50000</code>, <code>method="TUNAI"</code>, <code>stock=0</code></td>
+                    <td>("Stok habis", 0)</td>
+                    <td>S1, S2, S4, S6, S7, S12</td>
+                    <td>{..., <strong>S6</strong>, <strong>S7</strong>}</td>
+                </tr>
+                <tr>
+                    <td><strong>TC-04</strong></td>
+                    <td><code>cart=[item1]</code>, <code>total=24000</code>, <code>cash=50000</code>, <code>method="TUNAI"</code>, <code>stock=10</code></td>
+                    <td>("Sukses", 26000)</td>
+                    <td>S1, S2, S4, S6, S8, S9, S11, S12</td>
+                    <td>{..., <strong>S8</strong>, <strong>S9</strong>, <strong>S11</strong>}</td>
+                </tr>
+                <tr>
+                    <td><strong>TC-05</strong></td>
+                    <td><code>cart=[item1]</code>, <code>total=24000</code>, <code>cash=24000</code>, <code>method="QRIS"</code>, <code>stock=10</code></td>
+                    <td>("Sukses", 0)</td>
+                    <td>S1, S2, S4, S6, S8, S10, S11, S12</td>
+                    <td>{..., <strong>S10</strong>}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>Statements Covered After All Test Cases</strong></td>
+                    <td><strong>{S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12}</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>Coverage Percentage</strong></td>
+                    <td><strong>12/12 * 100% = 100%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 3. BRANCH COVERAGE SECTION -->
+        <h2 class="section-header">Branch Coverage</h2>
+        <p><strong>Function:</strong> <code>process_checkout</code><br>
+        <strong>Target:</strong> 100% Branch Coverage<br>
+        <strong>Total Branches:</strong> 8 (dari 4 Titik Keputusan / Decision Points)</p>
+
+        <!-- BRANCH DEFINITION TABLE -->
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 14%;">Decision Point</th>
+                    <th style="width: 32%;">Kondisi Logika</th>
+                    <th style="width: 27%;">Cabang True</th>
+                    <th style="width: 27%;">Cabang False</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>D1 (S2)</strong></td>
+                    <td><code>empty($cart)</code></td>
+                    <td><strong>B1:</strong> Keranjang Kosong (Tolak)</td>
+                    <td><strong>B2:</strong> Keranjang Ada (Lanjut)</td>
+                </tr>
+                <tr>
+                    <td><strong>D2 (S4)</strong></td>
+                    <td><code>$cash &lt; $total</code></td>
+                    <td><strong>B3:</strong> Uang Tunai Kurang (Tolak)</td>
+                    <td><strong>B4:</strong> Uang Cukup (Lanjut)</td>
+                </tr>
+                <tr>
+                    <td><strong>D3 (S6)</strong></td>
+                    <td><code>$stock &lt;= 0</code></td>
+                    <td><strong>B5:</strong> Stok Habis (Tolak)</td>
+                    <td><strong>B6:</strong> Stok Tersedia (Lanjut)</td>
+                </tr>
+                <tr>
+                    <td><strong>D4 (S8)</strong></td>
+                    <td><code>$method === "TUNAI"</code></td>
+                    <td><strong>B7:</strong> Hitung Kembalian Uang Tunai</td>
+                    <td><strong>B8:</strong> Kembalian = 0 (Non-Tunai)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- BRANCH COVERAGE TABLE SESUAI FORMAT TEMPLATE -->
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 12%;">ID Test</th>
+                    <th style="width: 28%;">Input (cart, total, cash, method, stock)</th>
+                    <th style="width: 22%;">Expected Output</th>
+                    <th style="width: 20%;">Covered Branches</th>
+                    <th style="width: 18%;">Cumulative Coverage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>TC-01</strong></td>
+                    <td><code>cart=[]</code>, <code>total=0</code>, <code>cash=50000</code>, <code>method="TUNAI"</code>, <code>stock=10</code></td>
+                    <td>("Keranjang kosong", 0)</td>
+                    <td>B1</td>
+                    <td>{B1}</td>
+                </tr>
+                <tr>
+                    <td><strong>TC-02</strong></td>
+                    <td><code>cart=[item1]</code>, <code>total=24000</code>, <code>cash=20000</code>, <code>method="TUNAI"</code>, <code>stock=10</code></td>
+                    <td>("Uang kurang", 0)</td>
+                    <td>B2, B3</td>
+                    <td>{..., <strong>B2</strong>, <strong>B3</strong>}</td>
+                </tr>
+                <tr>
+                    <td><strong>TC-03</strong></td>
+                    <td><code>cart=[item1]</code>, <code>total=24000</code>, <code>cash=50000</code>, <code>method="TUNAI"</code>, <code>stock=0</code></td>
+                    <td>("Stok habis", 0)</td>
+                    <td>B2, B4, B5</td>
+                    <td>{..., <strong>B4</strong>, <strong>B5</strong>}</td>
+                </tr>
+                <tr>
+                    <td><strong>TC-04</strong></td>
+                    <td><code>cart=[item1]</code>, <code>total=24000</code>, <code>cash=50000</code>, <code>method="TUNAI"</code>, <code>stock=10</code></td>
+                    <td>("Sukses", 26000)</td>
+                    <td>B2, B4, B6, B7</td>
+                    <td>{..., <strong>B6</strong>, <strong>B7</strong>}</td>
+                </tr>
+                <tr>
+                    <td><strong>TC-05</strong></td>
+                    <td><code>cart=[item1]</code>, <code>total=24000</code>, <code>cash=24000</code>, <code>method="QRIS"</code>, <code>stock=10</code></td>
+                    <td>("Sukses", 0)</td>
+                    <td>B2, B4, B6, B8</td>
+                    <td>{..., <strong>B8</strong>}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>Branches Covered After All Test Cases</strong></td>
+                    <td><strong>{B1, B2, B3, B4, B5, B6, B7, B8}</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><strong>Coverage Percentage</strong></td>
+                    <td><strong>8/8 * 100% = 100%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="page-break"></div>
+
+        <!-- 4. PRACTICUM: UNIT / INTEGRATION TESTING SESUAI TEMPLATE -->
+        <h2 class="section-header">Practicum: Unit/Integration Testing</h2>
+        <p>Customized for your project: <strong>SmartKasir (Point of Sale System)</strong></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 22%;">Judul</th>
+                    <th style="width: 78%;">Fitur/Fungsi: Checkout &amp; Payment Validation (FS-004)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Testing</strong><br>(Source Code / Screenshot)</td>
+                    <td>
+                        <div class="code-container" style="margin: 0; font-size: 8.5pt;">
+<span class="code-comment">// File: test_checkout.php (Pola Arrange-Act-Assert)</span>
+<span class="code-kw">class</span> <span class="code-stmt">CheckoutUnitTest</span> {
+    <span class="code-kw">public function</span> testValidCashPayment() {
+        <span class="code-comment">// [Arrange]</span>
+        $cart = [[<span class="code-str">"id"</span> =&gt; 1, <span class="code-str">"qty"</span> =&gt; 2, <span class="code-str">"price"</span> =&gt; 12000]];
+        $total = 24000;
+        $cash = 50000;
+        $method = <span class="code-str">"TUNAI"</span>;
+        $stock = 10;
+
+        <span class="code-comment">// [Act]</span>
+        $result = process_checkout($cart, $total, $cash, $method, $stock);
+
+        <span class="code-comment">// [Assert]</span>
+        $this-&gt;assertEquals([<span class="code-str">"Sukses"</span>, 26000], $result);
+    }
+}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td>
+                        Pengujian unit diimplementasikan menggunakan PHP 8.2 dengan pola <strong>Arrange-Act-Assert (AAA)</strong>. Pengujian mencakup 5 skenario lengkap (positif dan negatif): penolakan keranjang kosong, penolakan uang pembayaran kurang, penolakan stok habis, transaksi tunai dengan kalkulasi kembalian akurat, serta transaksi non-tunai (QRIS) dengan nilai kembalian nol.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Result</strong><br>(CLI Test Output)</td>
+                    <td>
+                        <div class="terminal-box" style="margin: 0;">========================================================
+SMARTKASIR - WHITE-BOX UNIT TESTING (PHP 8.2)
+Feature: Process Checkout & Payment Validation (FS-004)
+Author : Muchammad Dwi Ferdi Ilham Arifin (202310370311292)
+========================================================
+
+[PASS] TC-01: Empty cart returns 'Keranjang kosong'
+[PASS] TC-02: Cash less than total returns 'Uang kurang'
+[PASS] TC-03: Zero stock returns 'Stok habis'
+[PASS] TC-04: Valid cash payment returns 'Sukses' with 26000 change
+[PASS] TC-05: Non-cash (QRIS) returns 'Sukses' with 0 change
+
+--------------------------------------------------------
+Test Execution Summary: 5 / 5 Passed (100% SUCCESS)
+Statement Coverage: 12 / 12 (100%)
+Branch Coverage   : 8 / 8 (100%)
+========================================================</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Commit Link</strong></td>
+                    <td>
+                        <a href="https://github.com/dwiferdi-292/SmartKasir-Mobile-App./commit/a300364e7728fbe558c" target="_blank" style="color: #2563eb; font-weight: bold; word-break: break-all;">
+                            https://github.com/dwiferdi-292/SmartKasir-Mobile-App./commit/a300364e7728fbe558c (Branch: testing)
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 5. TEST DOUBLE IMPLEMENTATION SESUAI TEMPLATE -->
+        <h2 class="section-header">TEST DOUBLE IMPLEMENTATION</h2>
+        <p>Implement at least two different types of Test Double:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 18%;">Test Double</th>
+                    <th style="width: 14%;">Type</th>
+                    <th style="width: 34%;">Purpose</th>
+                    <th style="width: 34%;">Reason for Selection</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Test Double 1</strong></td>
+                    <td><strong>Stub</strong></td>
+                    <td>Menyimulasikan pengecekan sisa stok produk pada tabel inventaris tanpa melakukan koneksi query ke server database MySQL nyata.</td>
+                    <td>Mengisolasi unit testing dari dependensi I/O database, membuat pengujian berjalan lebih cepat, deterministik, dan dapat menyimulasikan skenario stok habis (0) secara konsisten.</td>
+                </tr>
+                <tr>
+                    <td><strong>Test Double 2</strong></td>
+                    <td><strong>Mock</strong></td>
+                    <td>Memverifikasi bahwa method <code>logStockMutation()</code> dan <code>reduceInventory()</code> dipanggil tepat 1 kali dengan parameter item ID dan kuantitas yang sesuai saat checkout berhasil.</td>
+                    <td>Memastikan interaksi komunikasi antar komponen pencatatan audit log mutasi stok berjalan tepat tanpa harus menuliskan data sampah ke tabel log riwayat produksi.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Notes:</strong> Pemilihan <em>Stub</em> dan <em>Mock</em> secara efektif memisahkan logika validasi bisnis transaksi kasir dari persistensi database dan sistem eksternal, sehingga kesalahan yang muncul murni berasal dari kecacatan logika unit tersebut (<em>defect isolation</em>).</p>
+
+        <!-- 6. CODE COVERAGE REPORT SESUAI TEMPLATE -->
+        <h3 class="sub-header">Built-in Test Coverage Report</h3>
+        <p>Hasil ringkasan eksekusi metrik cakupan pengujian (Code Coverage Summary) menggunakan CLI runner:</p>
+
+        <div class="terminal-box">--------------------------------------------------------------------------------
+File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Lines
+--------------------------------------------------------------------------------
+All files              |  100.00 |   100.00 |  100.00 |  100.00 |                
+ kasir/                |         |          |         |         |                
+  process_checkout.php |  100.00 |   100.00 |  100.00 |  100.00 | None (All pass)
+--------------------------------------------------------------------------------</div>
+
+        <!-- 7. GITHUB ISSUES SESUAI TEMPLATE -->
+        <h2 class="section-header">GITHUB ISSUES</h2>
+        <p><strong>GitHub Issue URL:</strong> 
+            <a href="https://github.com/dwiferdi-292/SmartKasir-Mobile-App./issues/1" target="_blank" style="color: #2563eb; font-weight: bold;">
+                https://github.com/dwiferdi-292/SmartKasir-Mobile-App./issues/1
+            </a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

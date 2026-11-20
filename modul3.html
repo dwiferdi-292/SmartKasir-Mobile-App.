@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul 3 - Execution Log BVA, EP, dan Test Artifact - SmartKasir</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm 15mm 15mm 15mm;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; padding: 0 !important; }
+            .sheet-card { box-shadow: none !important; border: none !important; padding: 0 !important; }
+            .page-break { page-break-before: always; }
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            margin: 0;
+            padding: 25px 15px;
+            font-size: 10.5pt;
+            line-height: 1.45;
+        }
+        .container {
+            max-width: 1050px;
+            margin: auto;
+        }
+        .header-bar {
+            background: #1e3a8a;
+            color: white;
+            padding: 18px 24px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header-bar h1 {
+            font-size: 16pt;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header-bar p {
+            margin: 4px 0 0 0;
+            font-size: 10pt;
+            opacity: 0.9;
+        }
+        .btn-print {
+            background: #2563eb;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-print:hover { background: #1d4ed8; }
+        .sheet-card {
+            background: white;
+            padding: 30px 35px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        h2.sheet-title {
+            font-size: 13.5pt;
+            font-weight: bold;
+            color: #1e3a8a;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 6px;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        h3.section-title {
+            font-size: 11pt;
+            font-weight: bold;
+            color: #0f172a;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            background: #f1f5f9;
+            padding: 6px 10px;
+            border-left: 4px solid #3b82f6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 18px;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 6px 9px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 9.5pt;
+        }
+        th {
+            background: #b8d5f8;
+            font-weight: bold;
+            color: #0f172a;
+            text-align: center;
+        }
+        .th-orange { background: #fed7aa; }
+        .badge-pass {
+            background: #dcfce7;
+            color: #15803d;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            text-align: center;
+        }
+        .row-removed td {
+            color: #94a3b8;
+            text-decoration: line-through;
+            background: #f8fafc;
+        }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .rule-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 9.5pt;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- TOP HEADER -->
+        <div class="header-bar no-print">
+            <div>
+                <h1>MODUL 3 - EXECUTION LOG BVA, EP, DAN TEST ARTIFACT</h1>
+                <p>Proyek: <strong>SmartKasir (Point of Sale System)</strong> | Praktikan: <strong>MUCHAMMAD DWI FERDI ILHAM ARIFIN (202310370311292)</strong></p>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button onclick="window.print()" class="btn-print">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><path d="M6 14h12v8H6z"></path></svg>
+                    Cetak / Simpan PDF
+                </button>
+                <a href="Module_3_Test_Artifacts.xlsx" download class="btn-print" style="text-decoration:none; background:#059669;">
+                    📊 Download Excel (.xlsx)
+                </a>
+                <a href="incident_report.html" class="btn-print" style="text-decoration:none; background:#4f46e5;">
+                    📋 Incident Report
+                </a>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SHEET 1: 01_Proyek                         -->
+        <!-- ========================================== -->
+        <div class="sheet-card">
+            <h2 class="sheet-title">Sheet: 01_Proyek (Identitas &amp; Test Basis Review)</h2>
+            
+            <h3 class="section-title">A. Identitas Praktikan &amp; Sistem</h3>
+            <table>
+                <tr><td width="25%"><strong>Nama Praktikan</strong></td><td width="75%">MUCHAMMAD DWI FERDI ILHAM ARIFIN</td></tr>
+                <tr><td><strong>NIM</strong></td><td>202310370311292</td></tr>
+                <tr><td><strong>Kelas</strong></td><td>PKPL - B</td></tr>
+                <tr><td><strong>Aplikasi Proyek</strong></td><td>SmartKasir (Sistem Kasir Point-of-Sale Berbasis Web)</td></tr>
+                <tr><td><strong>Peran yang Diuji</strong></td><td>Kasir (Cashier Module / POS)</td></tr>
+                <tr><td><strong>Tautan Hosting Aktif</strong></td><td><a href="https://smartkasir.infinityfreeapp.com/" target="_blank">https://smartkasir.infinityfreeapp.com/</a></td></tr>
+            </table>
+
+            <h3 class="section-title">B. Test-Basis Review &amp; Fitur yang Diuji</h3>
+            <table>
+                <tr><td width="25%"><strong>Fitur yang Diuji</strong></td><td>Validasi Keranjang Belanja &amp; Pembayaran Transaksi Kasir (POS Checkout &amp; Payment Validation)</td></tr>
+                <tr><td><strong>Test Basis Acuan</strong></td><td>RQ-004, RQ-005, RQ-006, RQ-007, RQ-008 (Modul 1 Test Plan &amp; Modul 2 TDS/TTM)</td></tr>
+                <tr><td><strong>Feature Set</strong></td><td>FS-003 (Cart Management) &amp; FS-004 (Checkout &amp; Payment Processing)</td></tr>
+                <tr><td><strong>Jumlah Variabel Input (n)</strong></td><td><strong>n = 3</strong> variabel independen:
+                    <br>&bull; <strong>Q1</strong>: Kuantitas Makanan (French Fries, Rp 12.000)
+                    <br>&bull; <strong>Q2</strong>: Kuantitas Minuman (Cafe Latte, Rp 18.000)
+                    <br>&bull; <strong>C</strong>: Nominal Uang Tunai yang Dibayarkan (Cash Amount, Rp)
+                </td></tr>
+            </table>
+
+            <h3 class="section-title">C. Aturan Domain &amp; Batasan Input</h3>
+            <table>
+                <tr><th width="15%">Aturan</th><th width="30%">Kondisi</th><th width="55%">Makna / Aturan Bisnis</th></tr>
+                <tr><td><strong>C1</strong></td><td>1 &le; Q1 &le; 50</td><td>Kuantitas French Fries di dalam batas stok fisik toko (stok tersedia = 50 porsi).</td></tr>
+                <tr><td><strong>C2</strong></td><td>1 &le; Q2 &le; 50</td><td>Kuantitas Cafe Latte di dalam batas stok fisik toko (stok tersedia = 50 cup).</td></tr>
+                <tr><td><strong>C3</strong></td><td>T = (Q1 &times; 12.000) + (Q2 &times; 18.000)</td><td>Total tagihan belanja dihitung dinamis dari harga satuan produk.</td></tr>
+                <tr><td><strong>C4</strong></td><td>C &ge; T dan C &le; Rp 2.000.000</td><td>Nominal uang tunai pembayaran harus mencukupi total tagihan transaksi.</td></tr>
+            </table>
+
+            <h3 class="section-title">D. Kelas Output (Oracle)</h3>
+            <p>&bull; <strong>Output 1 (Sukses):</strong> Transaksi berhasil diproses, stok inventaris berkurang, struk belanja dicetak, dan uang kembalian dihitung akurat (<em>Kembalian = C - T</em>).<br>
+               &bull; <strong>Output 2 (Tolak Uang Kurang):</strong> Transaksi ditolak dengan notifikasi error <em>"Uang diterima kurang dari total bayar!"</em> (jika C &lt; T).<br>
+               &bull; <strong>Output 3 (Tolak Kuantitas Invalid):</strong> Penambahan kuantitas dibatasi maksimal pada angka sisa stok fisik toko.</p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- ========================================== -->
+        <!-- SHEET 2: 02_BVA                            -->
+        <!-- ========================================== -->
+        <div class="sheet-card">
+            <h2 class="sheet-title">Sheet: 02_BVA (Derivasi 4n+1)</h2>
+            <div class="rule-box">
+                <strong>Aturan Wajib BVA:</strong> Jumlah kasus uji = <strong>4n + 1</strong>, dengan n = 3 maka <strong>4(3) + 1 = 13 kasus unik</strong>. Kandidat mentah berjumlah 5n = 15 baris, kemudian 2 baris all-nominal yang redundan dibuang.
+            </div>
+
+            <h3 class="section-title">1. Nilai 5 Batas Tradisional untuk n = 3 Variabel Independen</h3>
+            <table>
+                <thead>
+                    <tr><th>Variabel</th><th>Nama Input</th><th>Min</th><th>Min+</th><th>Nominal</th><th>Max-</th><th>Max</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td align="center"><strong>Q1</strong></td><td>French Fries (Qty)</td><td align="center">1</td><td align="center">2</td><td align="center">25</td><td align="center">49</td><td align="center">50</td></tr>
+                    <tr><td align="center"><strong>Q2</strong></td><td>Cafe Latte (Qty)</td><td align="center">1</td><td align="center">2</td><td align="center">25</td><td align="center">49</td><td align="center">50</td></tr>
+                    <tr><td align="center"><strong>C</strong></td><td>Uang Tunai (Rp)</td><td align="center">750.000</td><td align="center">751.000</td><td align="center">1.000.000</td><td align="center">1.999.000</td><td align="center">2.000.000</td></tr>
+                </tbody>
+            </table>
+            <p style="font-size: 9pt; color: #64748b; margin-top: -8px;">*Pada kondisi nominal Q1=25, Q2=25, Total Tagihan T = (25&times;12.000) + (25&times;18.000) = Rp 750.000. Maka batas bawah pembayaran valid (Min) adalah Rp 750.000 (uang pas).</p>
+
+            <h3 class="section-title">2. Urutan 15 Baris Kandidat Mentah (5n Sequence) &amp; Keputusan Deduplikasi</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr><th>Raw ID</th><th>Q1</th><th>Q2</th><th>C (Tunai)</th><th>Total Tagihan (T)</th><th>Expected Output</th><th>Deduplication Decision</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td align="center">1</td><td align="center">1</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 462.000</td><td>Sukses, Kembalian Rp 538.000</td><td><strong>Keep (Min Q1)</strong></td></tr>
+                        <tr><td align="center">2</td><td align="center">2</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 474.000</td><td>Sukses, Kembalian Rp 526.000</td><td><strong>Keep (Min+ Q1)</strong></td></tr>
+                        <tr><td align="center">3</td><td align="center">25</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 750.000</td><td>Sukses, Kembalian Rp 250.000</td><td><strong>Keep (Nominal Representative)</strong></td></tr>
+                        <tr><td align="center">4</td><td align="center">49</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 1.038.000</td><td>Tolak (C &lt; T, Uang Kurang)</td><td><strong>Keep (Max- Q1)</strong></td></tr>
+                        <tr><td align="center">5</td><td align="center">50</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 1.050.000</td><td>Tolak (C &lt; T, Uang Kurang)</td><td><strong>Keep (Max Q1)</strong></td></tr>
+                        <tr><td align="center">6</td><td align="center">25</td><td align="center">1</td><td align="center">1.000.000</td><td>Rp 318.000</td><td>Sukses, Kembalian Rp 682.000</td><td><strong>Keep (Min Q2)</strong></td></tr>
+                        <tr><td align="center">7</td><td align="center">25</td><td align="center">2</td><td align="center">1.000.000</td><td>Rp 336.000</td><td>Sukses, Kembalian Rp 664.000</td><td><strong>Keep (Min+ Q2)</strong></td></tr>
+                        <tr class="row-removed"><td align="center">8</td><td align="center">25</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 750.000</td><td>Sukses, Kembalian Rp 250.000</td><td>Remove: duplicate ID 3</td></tr>
+                        <tr><td align="center">9</td><td align="center">25</td><td align="center">49</td><td align="center">1.000.000</td><td>Rp 1.182.000</td><td>Tolak (C &lt; T, Uang Kurang)</td><td><strong>Keep (Max- Q2)</strong></td></tr>
+                        <tr><td align="center">10</td><td align="center">25</td><td align="center">50</td><td align="center">1.000.000</td><td>Rp 1.200.000</td><td>Tolak (C &lt; T, Uang Kurang)</td><td><strong>Keep (Max Q2)</strong></td></tr>
+                        <tr><td align="center">11</td><td align="center">25</td><td align="center">25</td><td align="center">750.000</td><td>Rp 750.000</td><td>Sukses Uang Pas, Kembalian Rp 0</td><td><strong>Keep (Min C)</strong></td></tr>
+                        <tr><td align="center">12</td><td align="center">25</td><td align="center">25</td><td align="center">751.000</td><td>Rp 750.000</td><td>Sukses, Kembalian Rp 1.000</td><td><strong>Keep (Min+ C)</strong></td></tr>
+                        <tr class="row-removed"><td align="center">13</td><td align="center">25</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 750.000</td><td>Sukses, Kembalian Rp 250.000</td><td>Remove: duplicate ID 3</td></tr>
+                        <tr><td align="center">14</td><td align="center">25</td><td align="center">25</td><td align="center">1.999.000</td><td>Rp 750.000</td><td>Sukses, Kembalian Rp 1.249.000</td><td><strong>Keep (Max- C)</strong></td></tr>
+                        <tr><td align="center">15</td><td align="center">25</td><td align="center">25</td><td align="center">2.000.000</td><td>Rp 750.000</td><td>Sukses, Kembalian Rp 1.250.000</td><td><strong>Keep (Max C)</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">3. Tabel Final 13 Kasus Uji BVA Unik (4n+1 = 13)</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr><th class="th-orange">Test Case ID</th><th class="th-orange">Q1</th><th class="th-orange">Q2</th><th class="th-orange">C (Tunai Rp)</th><th class="th-orange">Total Tagihan (T)</th><th class="th-orange">Expected Output</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>TC-BVA-01</strong></td><td align="center">1</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 462.000</td><td>Transaksi Sukses, Kembalian Rp 538.000</td></tr>
+                        <tr><td><strong>TC-BVA-02</strong></td><td align="center">2</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 474.000</td><td>Transaksi Sukses, Kembalian Rp 526.000</td></tr>
+                        <tr><td><strong>TC-BVA-03</strong></td><td align="center">49</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 1.038.000</td><td>Tolak: Uang diterima kurang dari total bayar</td></tr>
+                        <tr><td><strong>TC-BVA-04</strong></td><td align="center">50</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 1.050.000</td><td>Tolak: Uang diterima kurang dari total bayar</td></tr>
+                        <tr><td><strong>TC-BVA-05</strong></td><td align="center">25</td><td align="center">1</td><td align="center">1.000.000</td><td>Rp 318.000</td><td>Transaksi Sukses, Kembalian Rp 682.000</td></tr>
+                        <tr><td><strong>TC-BVA-06</strong></td><td align="center">25</td><td align="center">2</td><td align="center">1.000.000</td><td>Rp 336.000</td><td>Transaksi Sukses, Kembalian Rp 664.000</td></tr>
+                        <tr><td><strong>TC-BVA-07</strong></td><td align="center">25</td><td align="center">49</td><td align="center">1.000.000</td><td>Rp 1.182.000</td><td>Tolak: Uang diterima kurang dari total bayar</td></tr>
+                        <tr><td><strong>TC-BVA-08</strong></td><td align="center">25</td><td align="center">50</td><td align="center">1.000.000</td><td>Rp 1.200.000</td><td>Tolak: Uang diterima kurang dari total bayar</td></tr>
+                        <tr><td><strong>TC-BVA-09</strong></td><td align="center">25</td><td align="center">25</td><td align="center">750.000</td><td>Rp 750.000</td><td>Transaksi Sukses (Uang Pas, Kembalian Rp 0)</td></tr>
+                        <tr><td><strong>TC-BVA-10</strong></td><td align="center">25</td><td align="center">25</td><td align="center">751.000</td><td>Rp 750.000</td><td>Transaksi Sukses, Kembalian Rp 1.000</td></tr>
+                        <tr><td><strong>TC-BVA-11</strong></td><td align="center">25</td><td align="center">25</td><td align="center">1.999.000</td><td>Rp 750.000</td><td>Transaksi Sukses, Kembalian Rp 1.249.000</td></tr>
+                        <tr><td><strong>TC-BVA-12</strong></td><td align="center">25</td><td align="center">25</td><td align="center">2.000.000</td><td>Rp 750.000</td><td>Transaksi Sukses, Kembalian Rp 1.250.000</td></tr>
+                        <tr><td><strong>TC-BVA-13</strong></td><td align="center">25</td><td align="center">25</td><td align="center">1.000.000</td><td>Rp 750.000</td><td>Transaksi Sukses (All-Nominal), Kembalian Rp 250.000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- ========================================== -->
+        <!-- SHEET 3: 03_EP                             -->
+        <!-- ========================================== -->
+        <div class="sheet-card">
+            <h2 class="sheet-title">Sheet: 03_EP (Equivalence Partitioning - Weak Robust)</h2>
+            <div class="rule-box">
+                <strong>Aturan Wajib EP:</strong> Menggunakan teknik <em>Weak Robust</em> dengan asumsi kesalahan tunggal (<em>single-fault assumption</em>), di mana hanya 1 input invalid yang diuji dalam setiap kasus sedangkan input lainnya tetap valid/nominal.
+            </div>
+
+            <h3 class="section-title">1. Tabel Partisi Domain</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr><th>Partisi ID</th><th>Nama / Klasifikasi Partisi</th><th>Aturan / Rentang Nilai</th><th>Nilai Representatif</th><th>Alasan / Oracle</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>P1</strong></td><td>Valid Input: Transaksi Normal</td><td>1 &le; Q1, Q2 &le; 50 dan C &ge; T</td><td>Q1=25, Q2=25, C=1.000.000</td><td>Input dalam batas stok fisik dan pembayaran mencukupi.</td></tr>
+                        <tr><td><strong>P2</strong></td><td>Valid Input: Uang Pas</td><td>1 &le; Q1, Q2 &le; 50 dan C = T</td><td>Q1=10, Q2=10, C=300.000</td><td>Pembayaran bernilai tepat sama dengan tagihan (kembalian 0).</td></tr>
+                        <tr><td><strong>P3</strong></td><td>Valid Input: Uang Kurang (Underpaid)</td><td>1 &le; Q1, Q2 &le; 50 dan C &lt; T</td><td>Q1=25, Q2=25, C=500.000</td><td>Format angka valid namun melanggar aturan kecukupan bayar C &ge; T.</td></tr>
+                        <tr><td><strong>P4</strong></td><td>Invalid Input: Q1 di Bawah Minimum</td><td>Q1 &lt; 1 (Q1 = 0 atau negatif)</td><td>Q1=0, Q2=25, C=1.000.000</td><td>Kuantitas nol melanggar batas bawah domain belanja.</td></tr>
+                        <tr><td><strong>P5</strong></td><td>Invalid Input: Q1 Melebihi Stok</td><td>Q1 &gt; 50 (Melebihi stok fisik)</td><td>Q1=55, Q2=25, C=1.500.000</td><td>Kuantitas melebihi kapasitas stok barang fisik yang ada.</td></tr>
+                        <tr><td><strong>P6</strong></td><td>Invalid Input: Q2 di Bawah Minimum</td><td>Q2 &lt; 1 (Q2 = -1 atau negatif)</td><td>Q1=25, Q2=-1, C=1.000.000</td><td>Nilai minus pada minuman melanggar aturan integritas input.</td></tr>
+                        <tr><td><strong>P7</strong></td><td>Invalid Input: Q2 Melebihi Stok</td><td>Q2 &gt; 50 (Melebihi stok fisik)</td><td>Q1=25, Q2=60, C=1.500.000</td><td>Kuantitas minuman melebihi kapasitas stok fisik yang ada.</td></tr>
+                        <tr><td><strong>P8</strong></td><td>Invalid Input: Uang Tunai Negatif</td><td>C &le; 0</td><td>Q1=25, Q2=25, C=-50000</td><td>Nominal uang tunai negatif melanggar aturan pembayaran kasir.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">2. Tabel Kasus Uji Weak Robust EP dengan Alasan Kelas</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr><th class="th-orange">Test Case ID</th><th class="th-orange">Tipe Kelas (Why)</th><th class="th-orange">Partisi</th><th class="th-orange">Nilai Representatif</th><th class="th-orange">Expected Output</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>TC-EP-01</strong></td><td>Valid normal transaction</td><td align="center">P1</td><td>Q1=25, Q2=25, C=1.000.000</td><td>Transaksi Berhasil, Kembalian Rp 250.000, Cetak Struk</td></tr>
+                        <tr><td><strong>TC-EP-02</strong></td><td>Valid exact payment</td><td align="center">P2</td><td>Q1=10, Q2=10, C=300.000</td><td>Transaksi Berhasil, Kembalian Rp 0, Cetak Struk</td></tr>
+                        <tr><td><strong>TC-EP-03</strong></td><td>Valid underpaid</td><td align="center">P3</td><td>Q1=25, Q2=25, C=500.000</td><td>Tolak: Pesan "Uang diterima kurang dari total bayar!"</td></tr>
+                        <tr><td><strong>TC-EP-04</strong></td><td>Invalid Q1 below lower bound</td><td align="center">P4</td><td>Q1=0, Q2=25, C=1.000.000</td><td>Tolak penambahan item / Kuantitas minimal 1</td></tr>
+                        <tr><td><strong>TC-EP-05</strong></td><td>Invalid Q1 above upper bound</td><td align="center">P5</td><td>Q1=55, Q2=25, C=1.500.000</td><td>Tolak: Kuantitas dibatasi maksimal sisa stok (50)</td></tr>
+                        <tr><td><strong>TC-EP-06</strong></td><td>Invalid Q2 below lower bound</td><td align="center">P6</td><td>Q1=25, Q2=-1, C=1.000.000</td><td>Tolak penambahan item / Nilai minus tidak diizinkan</td></tr>
+                        <tr><td><strong>TC-EP-07</strong></td><td>Invalid Q2 above upper bound</td><td align="center">P7</td><td>Q1=25, Q2=60, C=1.500.000</td><td>Tolak: Kuantitas dibatasi maksimal sisa stok (50)</td></tr>
+                        <tr><td><strong>TC-EP-08</strong></td><td>Invalid C below lower bound</td><td align="center">P8</td><td>Q1=25, Q2=25, C=-50000</td><td>Tolak: Uang tunai tidak valid / tombol bayar dinonaktifkan</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- ========================================== -->
+        <!-- SHEET 4: 04_Rancangan_dan_Eksekusi         -->
+        <!-- ========================================== -->
+        <div class="sheet-card">
+            <h2 class="sheet-title">Sheet: 04_Rancangan_dan_Eksekusi (Sheet Utama Pengujian)</h2>
+            <div class="rule-box">
+                <strong>Aturan Wajib:</strong> Sheet ini memadukan kolom perancangan test case dari 02_BVA &amp; 03_EP dengan kolom hasil aktual eksekusi langsung. Status: <strong>Lulus</strong> (sesuai expected), <strong>Gagal</strong> (berbeda / defect), <strong>Terblokir</strong> (kendala prasyarat).
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Test Case ID</th>
+                            <th>Test Basis</th>
+                            <th>Teknik</th>
+                            <th>Data &amp; Langkah Pengujian</th>
+                            <th>Expected Result</th>
+                            <th>Actual Result</th>
+                            <th>Status</th>
+                            <th>Tgl Eksekusi</th>
+                            <th>Penguji</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>TC-BVA-01</strong></td><td>RQ-004</td><td>BVA (Min a)</td><td>Login kasir, pilih 1 porsi F.Fries, 25 C.Latte, bayar Rp 1.000.000</td><td>Total Rp 462.000, kembalian Rp 538.000</td><td>Sesuai, struk terbit, kembalian Rp 538.000</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-02</strong></td><td>RQ-004</td><td>BVA (Min+ a)</td><td>Pilih 2 F.Fries, 25 C.Latte, bayar Rp 1.000.000</td><td>Total Rp 474.000, kembalian Rp 526.000</td><td>Sesuai, struk terbit, kembalian Rp 526.000</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-03</strong></td><td>RQ-008</td><td>BVA (Max- a)</td><td>Pilih 49 F.Fries, 25 C.Latte, input C=Rp 1.000.000 (T=Rp 1.038.000)</td><td>Tolak: Uang diterima kurang dari total bayar</td><td>Muncul notifikasi error uang kurang, checkout dicegah</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-04</strong></td><td>RQ-006</td><td>BVA (Max a)</td><td>Pilih 50 F.Fries, 25 C.Latte, input C=Rp 1.000.000 (T=Rp 1.050.000)</td><td>Tolak pembayaran (C &lt; T)</td><td>Transaksi dicegah karena uang kurang</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-05</strong></td><td>RQ-004</td><td>BVA (Min b)</td><td>Pilih 25 F.Fries, 1 C.Latte, bayar Rp 1.000.000</td><td>Total Rp 318.000, kembalian Rp 682.000</td><td>Sesuai, kembalian Rp 682.000</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-06</strong></td><td>RQ-004</td><td>BVA (Min+ b)</td><td>Pilih 25 F.Fries, 2 C.Latte, bayar Rp 1.000.000</td><td>Total Rp 336.000, kembalian Rp 664.000</td><td>Sesuai, kembalian Rp 664.000</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-07</strong></td><td>RQ-008</td><td>BVA (Max- b)</td><td>Pilih 25 F.Fries, 49 C.Latte, input C=Rp 1.000.000 (T=Rp 1.182.000)</td><td>Tolak: Uang diterima kurang dari total bayar</td><td>Notifikasi uang kurang tampil, transaksi ditolak</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-08</strong></td><td>RQ-006</td><td>BVA (Max b)</td><td>Pilih 25 F.Fries, 50 C.Latte, input C=Rp 1.000.000 (T=Rp 1.200.000)</td><td>Tolak pembayaran (C &lt; T)</td><td>Transaksi dicegah karena uang kurang</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-09</strong></td><td>RQ-007</td><td>BVA (Min c)</td><td>Pilih 25 F.Fries, 25 C.Latte, bayar pas Rp 750.000</td><td>Sukses uang pas, kembalian Rp 0</td><td>Transaksi sukses uang pas, kembalian Rp 0</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-10</strong></td><td>RQ-007</td><td>BVA (Min+ c)</td><td>Pilih 25 F.Fries, 25 C.Latte, bayar Rp 751.000</td><td>Sukses, kembalian Rp 1.000</td><td>Transaksi sukses, kembalian Rp 1.000</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-11</strong></td><td>RQ-007</td><td>BVA (Max- c)</td><td>Pilih 25 F.Fries, 25 C.Latte, bayar Rp 1.999.000</td><td>Sukses, kembalian Rp 1.249.000</td><td>Transaksi sukses, kembalian Rp 1.249.000</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-12</strong></td><td>RQ-007</td><td>BVA (Max c)</td><td>Pilih 25 F.Fries, 25 C.Latte, bayar batas maks Rp 2.000.000</td><td>Sukses, kembalian Rp 1.250.000</td><td>Transaksi sukses, kembalian Rp 1.250.000</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-BVA-13</strong></td><td>RQ-007</td><td>BVA (Nominal)</td><td>Pilih 25 F.Fries, 25 C.Latte, bayar Rp 1.000.000</td><td>Sukses all-nominal, kembalian Rp 250.000</td><td>Transaksi normal sukses, potong stok</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-EP-01</strong></td><td>RQ-004</td><td>EP P1</td><td>Input nominal valid Q1=25, Q2=25, C=Rp 1.000.000</td><td>Sukses, potong stok, cetak struk</td><td>Transaksi sukses dicatat ke DB</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-EP-02</strong></td><td>RQ-007</td><td>EP P2</td><td>Input Q1=10, Q2=10, C=Rp 300.000 (T=Rp 300.000)</td><td>Sukses uang pas tanpa kembalian</td><td>Transaksi sukses uang pas tanpa kembalian</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-EP-03</strong></td><td>RQ-008</td><td>EP P3</td><td>Input Q1=25, Q2=25, C=Rp 500.000 (T=Rp 750.000)</td><td>Tolak: Notifikasi uang kurang</td><td>Muncul pesan error "Uang diterima kurang dari total bayar!"</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-EP-04</strong></td><td>RQ-005</td><td>EP P4</td><td>Input kuantitas Q1 = 0</td><td>Tolak kuantitas nol</td><td>Kuantitas keranjang otomatis minimal 1</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-EP-05</strong></td><td>RQ-006</td><td>EP P5</td><td>Input kuantitas Q1 = 55 (melebihi stok 50)</td><td>Kuantitas dibatasi maksimal stok 50</td><td>Sistem menahan penambahan tepat pada 50</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-EP-06</strong></td><td>RQ-005</td><td>EP P6</td><td>Input kuantitas Q2 = -1</td><td>Tolak kuantitas minus</td><td>Input minus dicegah oleh browser dan script</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-EP-07</strong></td><td>RQ-006</td><td>EP P7</td><td>Input kuantitas Q2 = 60 (melebihi stok 50)</td><td>Kuantitas dibatasi maksimal stok 50</td><td>Sistem membatasi tepat pada stok 50</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                        <tr><td><strong>TC-EP-08</strong></td><td>RQ-008</td><td>EP P8</td><td>Input nominal uang tunai negatif (C = -50000)</td><td>Tolak uang tunai negatif</td><td>Tombol bayar dinonaktifkan</td><td><span class="badge-pass">Lulus</span></td><td>2026-10-21</td><td>M. Dwi Ferdi</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- ========================================== -->
+        <!-- SHEET 5: 05_Traceability                   -->
+        <!-- ========================================== -->
+        <div class="sheet-card">
+            <h2 class="sheet-title">Sheet: 05_Traceability (Test Traceability Matrix)</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Requirement ID</th>
+                            <th>Feature Set</th>
+                            <th>Test Condition</th>
+                            <th>Designed Test Case IDs</th>
+                            <th>Execution Status</th>
+                            <th>Incident ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>RQ-004</strong></td><td>FS-003 – Cart Management</td><td>TCond-004 (Tambah produk berstok)</td><td>TC-BVA-01, TC-BVA-02, TC-BVA-05, TC-BVA-06, TC-EP-01</td><td><span class="badge-pass">Lulus (100%)</span></td><td align="center">-</td></tr>
+                        <tr><td><strong>RQ-005</strong></td><td>FS-003 – Cart Management</td><td>TCond-005 (Cegah stok nol/minus)</td><td>TC-EP-04, TC-EP-06</td><td><span class="badge-pass">Lulus (100%)</span></td><td align="center">-</td></tr>
+                        <tr><td><strong>RQ-006</strong></td><td>FS-003 – Cart Management</td><td>TCond-006 (Batas kuantitas maks stok)</td><td>TC-BVA-04, TC-BVA-08, TC-EP-05, TC-EP-07</td><td><span class="badge-pass">Lulus (100%)</span></td><td align="center">-</td></tr>
+                        <tr><td><strong>RQ-007</strong></td><td>FS-004 – Payment Processing</td><td>TCond-007 (Kalkulasi tagihan &amp; kembalian)</td><td>TC-BVA-09, TC-BVA-10, TC-BVA-11, TC-BVA-12, TC-BVA-13, TC-EP-02</td><td><span class="badge-pass">Lulus (100%)</span></td><td align="center">-</td></tr>
+                        <tr><td><strong>RQ-008</strong></td><td>FS-004 – Payment Processing</td><td>TCond-008 (Validasi uang kurang)</td><td>TC-BVA-03, TC-BVA-07, TC-EP-03, TC-EP-08</td><td><span class="badge-pass">Lulus (100%)</span></td><td align="center">-</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <!-- ========================================== -->
+        <!-- SHEET 6: 06_Indeks_Incident                -->
+        <!-- ========================================== -->
+        <div class="sheet-card">
+            <h2 class="sheet-title">Sheet: 06_Indeks_Incident &amp; Incident Report Resmi</h2>
+            <div class="rule-box">
+                <strong>Aturan Wajib:</strong> Incident hanya dibuat untuk defect yang benar-benar diamati selama pengujian dinamis, bukan fiktif.
+            </div>
+
+            <h3 class="section-title">1. Tabel Indeks Insiden (06_Indeks_Incident)</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr><th>Incident ID</th><th>Related Test Case</th><th>Summary / Deskripsi Cacat</th><th>Severity</th><th>Status</th><th>Tgl Dilaporkan</th><th>Tindak Lanjut</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>INC-SK-001</strong></td><td>TC-EP-03</td><td>Alert registrasi sukses sebelumnya tampil warna merah (parameter error) bukannya hijau.</td><td>Minor</td><td><span class="badge-pass">Resolved</span></td><td>2026-10-21</td><td>Diperbaiki ke parameter ?success= dan alert warna hijau.</td></tr>
+                        <tr><td><strong>INC-SK-002</strong></td><td>TC-BVA-04</td><td>Tombol logout ganda di sidebar dan topbar pada dashboard.</td><td>Trivial</td><td><span class="badge-pass">Resolved</span></td><td>2026-10-21</td><td>Dihapus dari sidebar, tersisa 1 tombol di kanan atas.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-title">2. Laporan Insiden Formal (ISO/IEC/IEEE 29119-2 Incident Report Template)</h3>
+            <div style="border: 1px solid #cbd5e1; border-radius: 6px; padding: 15px 20px; background: #fdfdfd; margin-top: 10px;">
+                <p><strong>Incident ID:</strong> INC-SK-001 &nbsp;|&nbsp; <strong>Tanggal:</strong> 2026-10-21 &nbsp;|&nbsp; <strong>Pelapor:</strong> MUCHAMMAD DWI FERDI ILHAM ARIFIN</p>
+                <p><strong>Test Basis &amp; Environment:</strong> RQ-002, PHP 8.2 / Chrome 129, Web live https://smartkasir.infinityfreeapp.com/</p>
+                <p><strong>Summary:</strong> Notifikasi sukses pendaftaran akun baru pada form registrasi diarahkan dengan styling alert error berwarna merah.</p>
+                <p><strong>Steps to Reproduce:</strong><br>
+                1. Buka halaman registrasi <code>register.php</code>.<br>
+                2. Masukkan nama, email baru, password, dan pilih peran Kasir.<br>
+                3. Klik tombol "Daftar Akun Baru".<br>
+                4. Amati pesan notifikasi pada halaman login <code>index.php</code>.</p>
+                <p><strong>Expected Result:</strong> Muncul pesan sukses berwarna hijau (alert success) dengan ikon centang.</p>
+                <p><strong>Actual Result:</strong> Muncul kotak berwarna merah dengan pesan <em>"Registrasi berhasil! Silakan login."</em> yang menyerupai pesan kegagalan login.</p>
+                <p><strong>Severity:</strong> Minor (kosmetik UI / UX feedback).</p>
+                <p><strong>Status &amp; Tindakan:</strong> <strong>RESOLVED (Closed).</strong> Kode di <code>register.php</code> telah diganti menggunakan parameter <code>?success=</code> dan <code>index.php</code> telah ditambahkan elemen <code>.alert.success</code> hijau.</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

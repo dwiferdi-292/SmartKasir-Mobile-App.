@@ -21,6 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
 
             $stmtInv = $pdo->prepare("INSERT INTO inventory (product_id, quantity, min_stock) VALUES (?, ?, ?)");
             $stmtInv->execute([$productId, $qty, $min_stock]);
+
+            if ($qty > 0) {
+                $stmtLog = $pdo->prepare("INSERT INTO stock_logs (product_id, type, quantity, previous_stock, current_stock, notes, user_id) VALUES (?, 'masuk', ?, 0, ?, 'Stok Awal Produk Baru', ?)");
+                $stmtLog->execute([$productId, $qty, $qty, $_SESSION['user_id']]);
+            }
             
             $pdo->commit();
             header("Location: products.php?success=Produk berhasil ditambahkan");
@@ -40,7 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         $id = $_POST['product_id'];
         $tambah = (int)$_POST['tambah_stok'];
         if ($tambah > 0) {
+            $stmtPrev = $pdo->prepare("SELECT quantity FROM inventory WHERE product_id = ?");
+            $stmtPrev->execute([$id]);
+            $prevStock = (int)$stmtPrev->fetchColumn();
+            $newStock = $prevStock + $tambah;
+
             $pdo->prepare("UPDATE inventory SET quantity = quantity + ? WHERE product_id = ?")->execute([$tambah, $id]);
+            $pdo->prepare("INSERT INTO stock_logs (product_id, type, quantity, previous_stock, current_stock, notes, user_id) VALUES (?, 'masuk', ?, ?, ?, 'Restok Produk oleh Admin', ?)")->execute([$id, $tambah, $prevStock, $newStock, $_SESSION['user_id']]);
             header("Location: products.php?success=Stok berhasil ditambahkan (+$tambah unit)");
         } else {
             header("Location: products.php?error=Jumlah tambah stok harus lebih dari 0");
@@ -67,13 +78,15 @@ $products = $pdo->query("SELECT p.*, i.quantity, i.min_stock FROM products p LEF
                 <li><a href="dashboard.php"><i class="fa-solid fa-house"></i> Dashboard</a></li>
                 <li><a href="products.php" class="active"><i class="fa-solid fa-boxes-stacked"></i> Produk & Stok</a></li>
                 <li><a href="users.php"><i class="fa-solid fa-users-gear"></i> Kelola User</a></li>
-            </ul>
         </div>
         <div class="main-content">
             <div class="topbar">
-                <h2>PRODUK & INVENTARIS</h2>
+                <div class="d-flex align-center gap-3">
+                    <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <h2>PRODUK & INVENTARIS</h2>
+                </div>
                 <div class="d-flex align-center gap-4">
-                    <a href="../logout.php" class="badge badge-danger"><i class="fa-solid fa-power-off"></i> Logout</a>
+                    <a href="../logout.php" class="btn-logout"><i class="fa-solid fa-power-off"></i> Keluar</a>
                     <div class="user-info">
                         <img src="https://ui-avatars.com/api/?name=<?= urlencode($_SESSION['user_name']) ?>&background=4f46e5&color=fff" alt="Avatar">
                         <?= htmlspecialchars($_SESSION['user_name']) ?>

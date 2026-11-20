@@ -1,0 +1,939 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>TEST DESIGN SPECIFICATION (TDS) - SmartKasir</title>
+<style>
+    body { 
+        font-family: 'Calibri', 'Arial', sans-serif; 
+        line-height: 1.4; 
+        color: #000; 
+        margin: 40px 50px; 
+        font-size: 11pt;
+    }
+    h1.doc-title { 
+        font-size: 20pt; 
+        font-weight: bold; 
+        margin-bottom: 25px; 
+        color: #000; 
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+    }
+    h2.section-title { 
+        font-size: 15pt; 
+        font-weight: bold; 
+        margin-top: 25px; 
+        margin-bottom: 12px; 
+        color: #000; 
+    }
+    p { 
+        margin-bottom: 8px; 
+        line-height: 1.45;
+    }
+    .fs-block {
+        margin-bottom: 18px;
+    }
+    .fs-title {
+        font-weight: bold;
+        font-size: 11.5pt;
+        margin-bottom: 4px;
+    }
+    .fs-detail {
+        margin-left: 0;
+        margin-bottom: 3px;
+    }
+    table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        margin-top: 10px; 
+        margin-bottom: 20px; 
+    }
+    th, td { 
+        border: 1px solid #000; 
+        padding: 7px 10px; 
+        text-align: left; 
+        vertical-align: top; 
+        font-size: 10.5pt; 
+    }
+    th { 
+        background-color: #b8d5f8; 
+        font-weight: bold; 
+        color: #000;
+    }
+    .meta-box {
+        background-color: #f8fafc;
+        border: 1px solid #cbd5e1;
+        padding: 12px 18px;
+        margin-bottom: 25px;
+        font-size: 10.5pt;
+    }
+    .meta-box table {
+        margin: 0;
+    }
+    .meta-box th, .meta-box td {
+        border: none;
+        padding: 4px 8px;
+        background: transparent;
+    }
+    .divider {
+        page-break-after: always;
+        margin: 40px 0;
+        border-top: 2px dashed #94a3b8;
+    }
+</style>
+</head>
+<body>
+
+    <!-- ============================================================== -->
+    <!-- BAGIAN 1: LAB SESSION (PROYEK PERSONAL: SMARTKASIR)            -->
+    <!-- SESUAI 100% PERSIS TEMPLATE MODUL 2                           -->
+    <!-- ============================================================== -->
+
+    <div class="meta-box">
+        <table>
+            <tr><td width="25%"><strong>Nama Praktikan</strong></td><td width="75%">: MUCHAMMAD DWI FERDI ILHAM ARIFIN</td></tr>
+            <tr><td><strong>NIM</strong></td><td>: 202310370311292</td></tr>
+            <tr><td><strong>Kelas</strong></td><td>: PKPL - B</td></tr>
+            <tr><td><strong>Aplikasi Proyek</strong></td><td>: SmartKasir (Point of Sale System)</td></tr>
+            <tr><td><strong>Peran yang Diuji</strong></td><td>: Kasir (Cashier)</td></tr>
+            <tr><td><strong>Dokumen</strong></td><td>: Test Design Specification (TDS) &amp; Test Traceability Matrix (TTM) - Lab Session</td></tr>
+        </table>
+    </div>
+
+    <h1 class="doc-title">TEST DESIGN SPECIFICATION (TDS)</h1>
+
+    <h2 class="section-title">1. Requirements</h2>
+    <p><strong>RQ-001:</strong> The system shall allow cashiers to log in using valid registered email and password credentials.</p>
+    <p><strong>RQ-002:</strong> The system shall validate login attempts, rejecting invalid credentials and displaying an appropriate error message.</p>
+    <p><strong>RQ-003:</strong> The system shall provide real-time product search by product name or SKU keyword on the POS interface.</p>
+    <p><strong>RQ-004:</strong> The system shall allow cashiers to add in-stock products to the order cart and dynamically calculate quantities and subtotals.</p>
+    <p><strong>RQ-005:</strong> The system shall prevent out-of-stock products (stock = 0) from being added to the cart and restrict cart quantity from exceeding available physical inventory.</p>
+    <p><strong>RQ-006:</strong> The system shall calculate the total bill dynamically and determine the exact change based on received payment amount.</p>
+    <p><strong>RQ-007:</strong> The system shall validate cash payments and reject checkout if the received cash amount is less than the total bill.</p>
+    <p><strong>RQ-008:</strong> The system shall process checkout transactions atomically, decrement inventory, and generate printable receipts.</p>
+    <p><strong>RQ-009:</strong> The system shall allow cashiers to review historical sales orders, filter by date range, inspect itemized details, and reprint receipts.</p>
+    <p><strong>RQ-010:</strong> The system shall provide real-time stock monitoring, critical low-stock alerts, quick restock, and stock adjustment (stock opname) with mutation audit logs.</p>
+    <p><strong>RQ-011:</strong> The system shall provide responsive navigation across cashier modules and allow cashiers to log out securely from any screen.</p>
+
+    <h2 class="section-title">2. Feature Sets</h2>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-001 – Cashier Authentication</div>
+        <div class="fs-detail">Objective: Authenticate and authorize cashier access into the POS system.</div>
+        <div class="fs-detail">Priority: High</div>
+        <div class="fs-detail">Traceability: RQ-001, RQ-002</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-002 – Product Catalog &amp; Search</div>
+        <div class="fs-detail">Objective: Display retail menu catalog and filter products dynamically.</div>
+        <div class="fs-detail">Priority: Medium</div>
+        <div class="fs-detail">Traceability: RQ-003</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-003 – Cart Management</div>
+        <div class="fs-detail">Objective: Manage order items, enforce stock limits, and prevent out-of-stock selection.</div>
+        <div class="fs-detail">Priority: High</div>
+        <div class="fs-detail">Traceability: RQ-004, RQ-005</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-004 – Checkout &amp; Payment Processing</div>
+        <div class="fs-detail">Objective: Calculate billings, validate payment sufficiency, and record sales transactions.</div>
+        <div class="fs-detail">Priority: High</div>
+        <div class="fs-detail">Traceability: RQ-006, RQ-007, RQ-008</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-005 – Receipt Printing</div>
+        <div class="fs-detail">Objective: Generate checkout receipts and support reprinting historical invoices.</div>
+        <div class="fs-detail">Priority: High</div>
+        <div class="fs-detail">Traceability: RQ-008, RQ-009</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-006 – Order History</div>
+        <div class="fs-detail">Objective: Review sales records, filter transactions by dates, and inspect item details.</div>
+        <div class="fs-detail">Priority: Medium</div>
+        <div class="fs-detail">Traceability: RQ-009</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-007 – Cashier Stock Management</div>
+        <div class="fs-detail">Objective: Monitor stock levels, perform quick restock, and record stock opname adjustments.</div>
+        <div class="fs-detail">Priority: High</div>
+        <div class="fs-detail">Traceability: RQ-010</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-008 – Session &amp; Navigation</div>
+        <div class="fs-detail">Objective: Provide responsive navigation and secure session logout.</div>
+        <div class="fs-detail">Priority: High</div>
+        <div class="fs-detail">Traceability: RQ-011</div>
+    </div>
+
+    <h2 class="section-title">3. Test Conditions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="12%">ID</th>
+                <th width="12%">Feature Set</th>
+                <th width="44%">Description</th>
+                <th width="14%">Priority</th>
+                <th width="18%">Traceability</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>TCond-001</td>
+                <td>FS-001</td>
+                <td>Log in with valid cashier email and correct password</td>
+                <td>High</td>
+                <td>RQ-001</td>
+            </tr>
+            <tr>
+                <td>TCond-002</td>
+                <td>FS-001</td>
+                <td>Log in with unregistered email or incorrect password</td>
+                <td>High</td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td>TCond-003</td>
+                <td>FS-001</td>
+                <td>Log in with empty email or empty password fields</td>
+                <td>Medium</td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td>TCond-004</td>
+                <td>FS-002</td>
+                <td>Search product by exact or partial product name</td>
+                <td>Medium</td>
+                <td>RQ-003</td>
+            </tr>
+            <tr>
+                <td>TCond-005</td>
+                <td>FS-002</td>
+                <td>Search product with keyword that yields no match</td>
+                <td>Low</td>
+                <td>RQ-003</td>
+            </tr>
+            <tr>
+                <td>TCond-006</td>
+                <td>FS-003</td>
+                <td>Add in-stock product to order cart</td>
+                <td>High</td>
+                <td>RQ-004</td>
+            </tr>
+            <tr>
+                <td>TCond-007</td>
+                <td>FS-003</td>
+                <td>Attempt to add out-of-stock product (quantity = 0) to cart</td>
+                <td>High</td>
+                <td>RQ-005</td>
+            </tr>
+            <tr>
+                <td>TCond-008</td>
+                <td>FS-003</td>
+                <td>Increase cart item quantity beyond available physical stock</td>
+                <td>High</td>
+                <td>RQ-005</td>
+            </tr>
+            <tr>
+                <td>TCond-009</td>
+                <td>FS-004</td>
+                <td>Calculate total billing and change for cash payment with exact amount</td>
+                <td>High</td>
+                <td>RQ-006</td>
+            </tr>
+            <tr>
+                <td>TCond-010</td>
+                <td>FS-004</td>
+                <td>Calculate change for cash payment with amount greater than total bill</td>
+                <td>High</td>
+                <td>RQ-006</td>
+            </tr>
+            <tr>
+                <td>TCond-011</td>
+                <td>FS-004</td>
+                <td>Submit checkout with cash amount less than total bill (underpayment)</td>
+                <td>High</td>
+                <td>RQ-007</td>
+            </tr>
+            <tr>
+                <td>TCond-012</td>
+                <td>FS-004</td>
+                <td>Process valid checkout, reduce inventory stock, and save transaction</td>
+                <td>High</td>
+                <td>RQ-008</td>
+            </tr>
+            <tr>
+                <td>TCond-013</td>
+                <td>FS-005</td>
+                <td>Generate and display printed receipt upon checkout completion</td>
+                <td>High</td>
+                <td>RQ-008</td>
+            </tr>
+            <tr>
+                <td>TCond-014</td>
+                <td>FS-005</td>
+                <td>Reprint historical receipt from order history page</td>
+                <td>Medium</td>
+                <td>RQ-009</td>
+            </tr>
+            <tr>
+                <td>TCond-015</td>
+                <td>FS-006</td>
+                <td>View sales transactions filtered by date preset (Today, 7 Days, 30 Days)</td>
+                <td>Medium</td>
+                <td>RQ-009</td>
+            </tr>
+            <tr>
+                <td>TCond-016</td>
+                <td>FS-006</td>
+                <td>View itemized product breakdown modal for a selected invoice</td>
+                <td>Medium</td>
+                <td>RQ-009</td>
+            </tr>
+            <tr>
+                <td>TCond-017</td>
+                <td>FS-007</td>
+                <td>Display warning badge indicators for critical low-stock and out-of-stock items</td>
+                <td>High</td>
+                <td>RQ-010</td>
+            </tr>
+            <tr>
+                <td>TCond-018</td>
+                <td>FS-007</td>
+                <td>Perform quick restock and verify inventory increment and stock log creation</td>
+                <td>Medium</td>
+                <td>RQ-010</td>
+            </tr>
+            <tr>
+                <td>TCond-019</td>
+                <td>FS-007</td>
+                <td>Perform physical stock adjustment (stock opname) with reason notes</td>
+                <td>Medium</td>
+                <td>RQ-010</td>
+            </tr>
+            <tr>
+                <td>TCond-020</td>
+                <td>FS-008</td>
+                <td>Click logout button to terminate cashier session and redirect to login</td>
+                <td>High</td>
+                <td>RQ-011</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">4. Coverage Items</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="12%">ID</th>
+                <th width="28%">Description</th>
+                <th width="22%">Related Test Condition</th>
+                <th width="16%">Priority</th>
+                <th width="22%">Traceability</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CI-001</td>
+                <td>Cashier Email field</td>
+                <td>TCond-001</td>
+                <td>High</td>
+                <td>RQ-001</td>
+            </tr>
+            <tr>
+                <td>CI-002</td>
+                <td>Cashier Password field</td>
+                <td>TCond-001</td>
+                <td>High</td>
+                <td>RQ-001</td>
+            </tr>
+            <tr>
+                <td>CI-003</td>
+                <td>Login authentication error alert</td>
+                <td>TCond-002</td>
+                <td>High</td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td>CI-004</td>
+                <td>Empty input validation</td>
+                <td>TCond-003</td>
+                <td>Medium</td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td>CI-005</td>
+                <td>Product Search input field</td>
+                <td>TCond-004</td>
+                <td>Medium</td>
+                <td>RQ-003</td>
+            </tr>
+            <tr>
+                <td>CI-006</td>
+                <td>Add-to-cart click handler</td>
+                <td>TCond-006</td>
+                <td>High</td>
+                <td>RQ-004</td>
+            </tr>
+            <tr>
+                <td>CI-007</td>
+                <td>Disabled card state for out-of-stock</td>
+                <td>TCond-007</td>
+                <td>High</td>
+                <td>RQ-005</td>
+            </tr>
+            <tr>
+                <td>CI-008</td>
+                <td>Max stock boundary limit</td>
+                <td>TCond-008</td>
+                <td>High</td>
+                <td>RQ-005</td>
+            </tr>
+            <tr>
+                <td>CI-009</td>
+                <td>Total Bill calculation field</td>
+                <td>TCond-009</td>
+                <td>High</td>
+                <td>RQ-006</td>
+            </tr>
+            <tr>
+                <td>CI-010</td>
+                <td>Change calculation formula</td>
+                <td>TCond-010</td>
+                <td>High</td>
+                <td>RQ-006</td>
+            </tr>
+            <tr>
+                <td>CI-011</td>
+                <td>Underpayment validation blocker</td>
+                <td>TCond-011</td>
+                <td>High</td>
+                <td>RQ-007</td>
+            </tr>
+            <tr>
+                <td>CI-012</td>
+                <td>Transactions database insert</td>
+                <td>TCond-012</td>
+                <td>High</td>
+                <td>RQ-008</td>
+            </tr>
+            <tr>
+                <td>CI-013</td>
+                <td>Inventory stock decrement</td>
+                <td>TCond-012</td>
+                <td>High</td>
+                <td>RQ-008</td>
+            </tr>
+            <tr>
+                <td>CI-014</td>
+                <td>Print receipt layout rendering</td>
+                <td>TCond-013</td>
+                <td>High</td>
+                <td>RQ-008</td>
+            </tr>
+            <tr>
+                <td>CI-015</td>
+                <td>Reprint historical receipt button</td>
+                <td>TCond-014</td>
+                <td>Medium</td>
+                <td>RQ-009</td>
+            </tr>
+            <tr>
+                <td>CI-016</td>
+                <td>Order history date filter chips</td>
+                <td>TCond-015</td>
+                <td>Medium</td>
+                <td>RQ-009</td>
+            </tr>
+            <tr>
+                <td>CI-017</td>
+                <td>Order detail modal dialog</td>
+                <td>TCond-016</td>
+                <td>Medium</td>
+                <td>RQ-009</td>
+            </tr>
+            <tr>
+                <td>CI-018</td>
+                <td>Low-stock warning badge counter</td>
+                <td>TCond-017</td>
+                <td>High</td>
+                <td>RQ-010</td>
+            </tr>
+            <tr>
+                <td>CI-019</td>
+                <td>Restock modal and stock_logs insert</td>
+                <td>TCond-018</td>
+                <td>Medium</td>
+                <td>RQ-010</td>
+            </tr>
+            <tr>
+                <td>CI-020</td>
+                <td>Stock opname adjustment form</td>
+                <td>TCond-019</td>
+                <td>Medium</td>
+                <td>RQ-010</td>
+            </tr>
+            <tr>
+                <td>CI-021</td>
+                <td>Session logout button</td>
+                <td>TCond-020</td>
+                <td>High</td>
+                <td>RQ-011</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">5. Test Traceability Matrix (TTM)</h2>
+    <p>The following example demonstrates the application of a Test Traceability Matrix (TTM) based on the Test Design Specification presented in this document.</p>
+    <table>
+        <thead>
+            <tr>
+                <th width="15%">Requirement</th>
+                <th width="18%">Feature Set</th>
+                <th width="22%">Test Condition</th>
+                <th width="45%">Coverage Item</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>RQ-001</td>
+                <td>FS-001</td>
+                <td>TCond-001</td>
+                <td>CI-001, CI-002</td>
+            </tr>
+            <tr>
+                <td>RQ-002</td>
+                <td>FS-001</td>
+                <td>TCond-002</td>
+                <td>CI-003</td>
+            </tr>
+            <tr>
+                <td>RQ-002</td>
+                <td>FS-001</td>
+                <td>TCond-003</td>
+                <td>CI-004</td>
+            </tr>
+            <tr>
+                <td>RQ-003</td>
+                <td>FS-002</td>
+                <td>TCond-004</td>
+                <td>CI-005</td>
+            </tr>
+            <tr>
+                <td>RQ-003</td>
+                <td>FS-002</td>
+                <td>TCond-005</td>
+                <td>CI-005</td>
+            </tr>
+            <tr>
+                <td>RQ-004</td>
+                <td>FS-003</td>
+                <td>TCond-006</td>
+                <td>CI-006</td>
+            </tr>
+            <tr>
+                <td>RQ-005</td>
+                <td>FS-003</td>
+                <td>TCond-007</td>
+                <td>CI-007</td>
+            </tr>
+            <tr>
+                <td>RQ-005</td>
+                <td>FS-003</td>
+                <td>TCond-008</td>
+                <td>CI-008</td>
+            </tr>
+            <tr>
+                <td>RQ-006</td>
+                <td>FS-004</td>
+                <td>TCond-009</td>
+                <td>CI-009</td>
+            </tr>
+            <tr>
+                <td>RQ-006</td>
+                <td>FS-004</td>
+                <td>TCond-010</td>
+                <td>CI-010</td>
+            </tr>
+            <tr>
+                <td>RQ-007</td>
+                <td>FS-004</td>
+                <td>TCond-011</td>
+                <td>CI-011</td>
+            </tr>
+            <tr>
+                <td>RQ-008</td>
+                <td>FS-004</td>
+                <td>TCond-012</td>
+                <td>CI-012, CI-013</td>
+            </tr>
+            <tr>
+                <td>RQ-008</td>
+                <td>FS-005</td>
+                <td>TCond-013</td>
+                <td>CI-014</td>
+            </tr>
+            <tr>
+                <td>RQ-009</td>
+                <td>FS-005</td>
+                <td>TCond-014</td>
+                <td>CI-015</td>
+            </tr>
+            <tr>
+                <td>RQ-009</td>
+                <td>FS-006</td>
+                <td>TCond-015</td>
+                <td>CI-016</td>
+            </tr>
+            <tr>
+                <td>RQ-009</td>
+                <td>FS-006</td>
+                <td>TCond-016</td>
+                <td>CI-017</td>
+            </tr>
+            <tr>
+                <td>RQ-010</td>
+                <td>FS-007</td>
+                <td>TCond-017</td>
+                <td>CI-018</td>
+            </tr>
+            <tr>
+                <td>RQ-010</td>
+                <td>FS-007</td>
+                <td>TCond-018</td>
+                <td>CI-019</td>
+            </tr>
+            <tr>
+                <td>RQ-010</td>
+                <td>FS-007</td>
+                <td>TCond-019</td>
+                <td>CI-020</td>
+            </tr>
+            <tr>
+                <td>RQ-011</td>
+                <td>FS-008</td>
+                <td>TCond-020</td>
+                <td>CI-021</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">6. Test Design Technique Summary</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="18%">Test Condition ID</th>
+                <th width="32%">Test Design Technique</th>
+                <th width="50%">Rationale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>TCond-001</td>
+                <td>Equivalence Partitioning</td>
+                <td>Classify valid cashier credentials from invalid combinations.</td>
+            </tr>
+            <tr>
+                <td>TCond-002</td>
+                <td>Equivalence Partitioning</td>
+                <td>Verify system error response for invalid email or wrong password partition.</td>
+            </tr>
+            <tr>
+                <td>TCond-003</td>
+                <td>Equivalence Partitioning</td>
+                <td>Verify mandatory input validation for empty credential fields.</td>
+            </tr>
+            <tr>
+                <td>TCond-004</td>
+                <td>Equivalence Partitioning</td>
+                <td>Separate matching search terms from non-matching queries.</td>
+            </tr>
+            <tr>
+                <td>TCond-006</td>
+                <td>Equivalence Partitioning</td>
+                <td>Verify cart addition for available inventory items (stock &gt; 0).</td>
+            </tr>
+            <tr>
+                <td>TCond-007</td>
+                <td>Boundary Value Analysis</td>
+                <td>Verify boundary condition when stock reaches zero (stock = 0).</td>
+            </tr>
+            <tr>
+                <td>TCond-008</td>
+                <td>Boundary Value Analysis</td>
+                <td>Verify boundary limits where cart quantity equals stock vs exceeds stock (stock + 1).</td>
+            </tr>
+            <tr>
+                <td>TCond-009</td>
+                <td>Boundary Value Analysis</td>
+                <td>Verify boundary condition when paid amount exactly equals total bill (change = 0).</td>
+            </tr>
+            <tr>
+                <td>TCond-010</td>
+                <td>Equivalence Partitioning</td>
+                <td>Verify change calculation when paid amount is greater than total bill.</td>
+            </tr>
+            <tr>
+                <td>TCond-011</td>
+                <td>Boundary Value Analysis</td>
+                <td>Verify rejection boundary when paid amount is less than total bill (bill - 1).</td>
+            </tr>
+            <tr>
+                <td>TCond-012</td>
+                <td>Use Case Testing</td>
+                <td>Verify end-to-end checkout flow, database commit, and inventory reduction.</td>
+            </tr>
+            <tr>
+                <td>TCond-015</td>
+                <td>Equivalence Partitioning</td>
+                <td>Classify date range filters (Today, 7 Days, 30 Days) for sales records.</td>
+            </tr>
+            <tr>
+                <td>TCond-017</td>
+                <td>Boundary Value Analysis</td>
+                <td>Verify alert triggers at stock boundary thresholds (stock &le; min_stock).</td>
+            </tr>
+            <tr>
+                <td>TCond-018</td>
+                <td>Equivalence Partitioning</td>
+                <td>Verify positive integer restock inputs and audit log generation.</td>
+            </tr>
+            <tr>
+                <td>TCond-020</td>
+                <td>Use Case Testing</td>
+                <td>Verify complete user session destruction and redirection flow upon logout.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- ============================================================== -->
+    <!-- BAGIAN 2: PRE-LAB (ONLINE COURSE REGISTRATION SYSTEM)          -->
+    <!-- SESUAI 100% PERSIS TEMPLATE MODUL 2                           -->
+    <!-- ============================================================== -->
+
+    <div class="meta-box">
+        <table>
+            <tr><td width="25%"><strong>Tugas</strong></td><td width="75%">: Pre-Lab Modul 2 (Wajib Dikerjakan dari Rumah)</td></tr>
+            <tr><td><strong>Studi Kasus</strong></td><td>: Online Course Registration System</td></tr>
+            <tr><td><strong>Nama / NIM</strong></td><td>: MUCHAMMAD DWI FERDI ILHAM ARIFIN (202310370311292) - PKPL B</td></tr>
+        </table>
+    </div>
+
+    <h1 class="doc-title">TEST DESIGN SPECIFICATION (TDS) - PRE-LAB</h1>
+
+    <h2 class="section-title">1. Requirements</h2>
+    <p><strong>RQ-001:</strong> The system shall allow students to register for an available course.</p>
+    <p><strong>RQ-002:</strong> The system shall prevent students from registering for a course that has reached maximum capacity.</p>
+    <p><strong>RQ-003:</strong> The system shall prevent students from registering for the same course twice.</p>
+    <p><strong>RQ-004:</strong> The system shall allow students to view the list of courses they have successfully registered for.</p>
+    <p><strong>RQ-005:</strong> The system shall display an appropriate message indicating that no registration records are available when no courses have been registered.</p>
+
+    <h2 class="section-title">2. Feature Sets</h2>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-001 – Course Registration</div>
+        <div class="fs-detail">Objective: Manage student course enrollment and enforce capacity and duplicate constraints.</div>
+        <div class="fs-detail">Priority: High</div>
+        <div class="fs-detail">Traceability: RQ-001, RQ-002, RQ-003</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-002 – Registered Courses Management</div>
+        <div class="fs-detail">Objective: Display enrolled courses and handle empty registration history.</div>
+        <div class="fs-detail">Priority: Medium</div>
+        <div class="fs-detail">Traceability: RQ-004, RQ-005</div>
+    </div>
+
+    <h2 class="section-title">3. Test Conditions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="14%">ID</th>
+                <th width="14%">Feature Set</th>
+                <th width="42%">Description</th>
+                <th width="14%">Priority</th>
+                <th width="16%">Traceability</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>TCond-001</td>
+                <td>FS-001</td>
+                <td>Register for an available course with remaining capacity</td>
+                <td>High</td>
+                <td>RQ-001</td>
+            </tr>
+            <tr>
+                <td>TCond-002</td>
+                <td>FS-001</td>
+                <td>Register for a course that has reached maximum capacity</td>
+                <td>High</td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td>TCond-003</td>
+                <td>FS-001</td>
+                <td>Register for a course that the student has already registered for (duplicate)</td>
+                <td>High</td>
+                <td>RQ-003</td>
+            </tr>
+            <tr>
+                <td>TCond-004</td>
+                <td>FS-002</td>
+                <td>View registered courses when student has one or more enrolled courses</td>
+                <td>Medium</td>
+                <td>RQ-004</td>
+            </tr>
+            <tr>
+                <td>TCond-005</td>
+                <td>FS-002</td>
+                <td>View registered courses when student has zero enrolled courses</td>
+                <td>Low</td>
+                <td>RQ-005</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">4. Coverage Items</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="12%">ID</th>
+                <th width="28%">Description</th>
+                <th width="22%">Related Test Condition</th>
+                <th width="16%">Priority</th>
+                <th width="22%">Traceability</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CI-001</td>
+                <td>Course registration button</td>
+                <td>TCond-001</td>
+                <td>High</td>
+                <td>RQ-001</td>
+            </tr>
+            <tr>
+                <td>CI-002</td>
+                <td>Capacity limit validation</td>
+                <td>TCond-002</td>
+                <td>High</td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td>CI-003</td>
+                <td>Duplicate enrollment check</td>
+                <td>TCond-003</td>
+                <td>High</td>
+                <td>RQ-003</td>
+            </tr>
+            <tr>
+                <td>CI-004</td>
+                <td>Registered courses table list</td>
+                <td>TCond-004</td>
+                <td>Medium</td>
+                <td>RQ-004</td>
+            </tr>
+            <tr>
+                <td>CI-005</td>
+                <td>Empty registration message notification</td>
+                <td>TCond-005</td>
+                <td>Low</td>
+                <td>RQ-005</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">5. Test Traceability Matrix (TTM)</h2>
+    <p>The following example demonstrates the application of a Test Traceability Matrix (TTM) based on the Test Design Specification presented in this document.</p>
+    <table>
+        <thead>
+            <tr>
+                <th width="18%">Requirement</th>
+                <th width="22%">Feature Set</th>
+                <th width="25%">Test Condition</th>
+                <th width="35%">Coverage Item</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>RQ-001</td>
+                <td>FS-001</td>
+                <td>TCond-001</td>
+                <td>CI-001</td>
+            </tr>
+            <tr>
+                <td>RQ-002</td>
+                <td>FS-001</td>
+                <td>TCond-002</td>
+                <td>CI-002</td>
+            </tr>
+            <tr>
+                <td>RQ-003</td>
+                <td>FS-001</td>
+                <td>TCond-003</td>
+                <td>CI-003</td>
+            </tr>
+            <tr>
+                <td>RQ-004</td>
+                <td>FS-002</td>
+                <td>TCond-004</td>
+                <td>CI-004</td>
+            </tr>
+            <tr>
+                <td>RQ-005</td>
+                <td>FS-002</td>
+                <td>TCond-005</td>
+                <td>CI-005</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">6. Test Design Technique Summary</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="20%">Test Condition ID</th>
+                <th width="32%">Test Design Technique</th>
+                <th width="48%">Rationale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>TCond-001</td>
+                <td>Equivalence Partitioning</td>
+                <td>Verify successful course enrollment under valid available capacity partition.</td>
+            </tr>
+            <tr>
+                <td>TCond-002</td>
+                <td>Boundary Value Analysis</td>
+                <td>Verify capacity boundary when course enrollment reaches maximum limit.</td>
+            </tr>
+            <tr>
+                <td>TCond-003</td>
+                <td>Equivalence Partitioning</td>
+                <td>Distinguish duplicate registration attempt from new course enrollment.</td>
+            </tr>
+            <tr>
+                <td>TCond-004</td>
+                <td>Equivalence Partitioning</td>
+                <td>Verify populated course table display when registration count &ge; 1.</td>
+            </tr>
+            <tr>
+                <td>TCond-005</td>
+                <td>Equivalence Partitioning</td>
+                <td>Verify empty state message rendering when registration count = 0.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

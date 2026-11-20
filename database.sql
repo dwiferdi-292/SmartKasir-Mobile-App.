@@ -47,6 +47,32 @@ CREATE TABLE transaction_details (
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
+CREATE TABLE stock_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    type ENUM('masuk', 'keluar', 'penyesuaian') NOT NULL,
+    quantity INT NOT NULL,
+    previous_stock INT NOT NULL DEFAULT 0,
+    current_stock INT NOT NULL DEFAULT 0,
+    notes VARCHAR(255) NULL,
+    user_id INT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+CREATE TABLE password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    token VARCHAR(100) NOT NULL,
+    otp_code VARCHAR(10) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX (email),
+    INDEX (token),
+    INDEX (otp_code)
+);
+
 -- Insert dummy users (password: 'password')
 INSERT INTO users (name, email, password, role) VALUES 
 ('Super Admin', 'admin@smartkasir.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),

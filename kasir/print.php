@@ -1,6 +1,6 @@
 <?php
 require_once '../auth.php';
-checkAuth('kasir');
+checkAuth(['kasir', 'admin', 'owner']);
 require_once '../config.php';
 
 if (!isset($_GET['id'])) {
@@ -49,8 +49,10 @@ $kembalian = $trx['paid_amount'] - $trx['total_amount'];
 </head>
 <body onload="window.print()">
     <div class="no-print" style="text-align: center; margin-bottom: 20px;">
-        <button onclick="window.print()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">Cetak Struk</button>
-        <a href="pos.php" style="padding: 10px 20px; font-size: 16px; text-decoration: none; background: #e2e8f0; color: #000; border: 1px solid #cbd5e1; margin-left: 10px;">Kembali ke POS</a>
+        <button onclick="window.print()" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background: var(--primary-color, #4f46e5); color: #fff; border: none; border-radius: 4px; font-weight: 600;">Cetak Struk</button>
+        <a href="pos.php" style="padding: 10px 20px; font-size: 16px; text-decoration: none; background: #e2e8f0; color: #000; border: 1px solid #cbd5e1; margin-left: 10px; border-radius: 4px; font-weight: 600;">Kembali ke POS</a>
+        <a href="orders.php" style="padding: 10px 20px; font-size: 16px; text-decoration: none; background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; margin-left: 10px; border-radius: 4px; font-weight: 600;">Riwayat Pemesanan</a>
+        <a href="../logout.php" style="padding: 10px 20px; font-size: 16px; text-decoration: none; background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; margin-left: 10px; border-radius: 4px; font-weight: 600;"><i class="fa-solid fa-power-off"></i> Keluar</a>
     </div>
 
     <div class="receipt">

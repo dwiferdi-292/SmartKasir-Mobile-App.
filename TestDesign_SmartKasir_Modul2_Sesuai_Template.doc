@@ -1,0 +1,441 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>TEST DESIGN SPECIFICATION (TDS) - SMARTKASIR</title>
+<style>
+    @page {
+        size: A4;
+        margin: 2.5cm 2.5cm 2.5cm 2.5cm;
+    }
+    body { 
+        font-family: 'Calibri', 'Segoe UI', Arial, sans-serif; 
+        line-height: 1.4; 
+        color: #111827; 
+        margin: 30px 40px; 
+        font-size: 11pt;
+    }
+    h1.doc-title { 
+        font-size: 19pt; 
+        font-weight: 800; 
+        margin-top: 0;
+        margin-bottom: 6px; 
+        color: #000000; 
+        text-transform: uppercase;
+        letter-spacing: -0.3px;
+    }
+    .doc-meta {
+        font-size: 10.5pt;
+        color: #374151;
+        margin-bottom: 24px;
+        line-height: 1.45;
+        border-bottom: 1px solid #d1d5db;
+        padding-bottom: 10px;
+    }
+    h2.section-title { 
+        font-size: 14pt; 
+        font-weight: bold; 
+        margin-top: 24px; 
+        margin-bottom: 12px; 
+        color: #000000; 
+    }
+    p { 
+        margin-bottom: 8px; 
+        line-height: 1.45;
+        text-align: justify;
+    }
+    .fs-block {
+        margin-bottom: 18px;
+    }
+    .fs-title {
+        font-weight: bold;
+        font-size: 11pt;
+        color: #000000;
+        margin-bottom: 4px;
+    }
+    .fs-detail {
+        margin-bottom: 3px;
+        font-size: 10.5pt;
+        color: #1f2937;
+    }
+    table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        margin-top: 10px; 
+        margin-bottom: 22px; 
+    }
+    th, td { 
+        border: 1px solid #000000; 
+        padding: 8px 10px; 
+        text-align: left; 
+        vertical-align: top; 
+        font-size: 10pt; 
+        line-height: 1.35;
+    }
+    th { 
+        background-color: #b8d5f8; 
+        font-weight: bold; 
+        color: #000000;
+    }
+    .page-break {
+        page-break-before: always;
+    }
+</style>
+</head>
+<body>
+
+    <!-- JUDUL DAN IDENTITAS SESUAI TEMPLATE PDF -->
+    <h1 class="doc-title">TEST DESIGN SPECIFICATION (TDS)</h1>
+    <div class="doc-meta">
+        <strong>Modul 2 – SmartKasir (Point of Sale System).</strong> Nama: <strong>MUCHAMMAD DWI FERDI ILHAM ARIFIN</strong> | NIM: <strong>202310370311292</strong> | Kelas: <strong>PKPL-B</strong>
+    </div>
+
+    <!-- 1. REQUIREMENTS -->
+    <h2 class="section-title">1. Requirements</h2>
+    <p><strong>RQ-001:</strong> Sistem harus memungkinkan kasir melakukan login dengan memasukkan alamat email dan kata sandi yang valid dan terdaftar.</p>
+    <p><strong>RQ-002:</strong> Sistem harus menolak upaya login dan menampilkan notifikasi kesalahan jika kasir memasukkan kata sandi salah atau email tidak terdaftar.</p>
+    <p><strong>RQ-003:</strong> Sistem harus memungkinkan kasir mencari produk menu secara langsung (*real-time*) berdasarkan kata kunci nama produk atau kode SKU.</p>
+    <p><strong>RQ-004:</strong> Sistem harus memungkinkan kasir menambahkan produk yang memiliki stok tersedia ke dalam keranjang pesanan serta menghitung kuantitas dan subtotal harga secara otomatis.</p>
+    <p><strong>RQ-005:</strong> Sistem harus mencegah penambahan produk dengan status stok habis (stok = 0) ke dalam keranjang belanja.</p>
+    <p><strong>RQ-006:</strong> Sistem harus mencegah penambahan kuantitas produk dalam keranjang belanja melebihi batas ketersediaan sisa stok fisik di toko.</p>
+    <p><strong>RQ-007:</strong> Sistem harus menghitung total tagihan belanja dan menghitung nominal uang kembalian secara otomatis berdasarkan nominal uang tunai yang diterima dari pelanggan.</p>
+    <p><strong>RQ-008:</strong> Sistem harus memvalidasi pembayaran tunai dan menolak transaksi checkout apabila uang tunai yang diterima kurang dari total nilai belanjaan.</p>
+    <p><strong>RQ-009:</strong> Sistem harus memproses transaksi penjualan, mengurangi stok inventaris produk di database secara atomik, dan menerbitkan struk transaksi resmi.</p>
+    <p><strong>RQ-010:</strong> Sistem harus memungkinkan kasir melihat daftar riwayat pemesanan/transaksi lampau, melihat detail item belanjaan, dan mencetak ulang (*reprint*) struk transaksi.</p>
+    <p><strong>RQ-011:</strong> Sistem harus memungkinkan kasir memantau level ketersediaan stok produk, menambah stok fisik (*quick restock*), dan mencatat riwayat mutasi stok ke tabel log.</p>
+    <p><strong>RQ-012:</strong> Sistem harus menyediakan tombol keluar (*logout*) yang dapat diakses dengan aman di pojok kanan atas untuk mengakhiri sesi kasir.</p>
+
+    <!-- 2. FEATURE SETS -->
+    <h2 class="section-title">2. Feature Sets</h2>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-001 – Cashier Authentication</div>
+        <div class="fs-detail"><strong>Objective:</strong> Mengelola otentikasi login kasir ke dalam sistem POS serta memvalidasi kredensial pengguna.</div>
+        <div class="fs-detail"><strong>Priority:</strong> High</div>
+        <div class="fs-detail"><strong>Traceability:</strong> RQ-001, RQ-002</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-002 – Product Catalog &amp; Search</div>
+        <div class="fs-detail"><strong>Objective:</strong> Menampilkan katalog menu barang dagangan dan memfilter produk secara real-time berdasarkan kata kunci pencarian.</div>
+        <div class="fs-detail"><strong>Priority:</strong> Medium</div>
+        <div class="fs-detail"><strong>Traceability:</strong> RQ-003</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-003 – Cart &amp; Stock Boundary Management</div>
+        <div class="fs-detail"><strong>Objective:</strong> Mengatur item belanjaan kasir, pembatasan kuantitas agar tidak melebihi stok, dan penolakan produk berstok kosong.</div>
+        <div class="fs-detail"><strong>Priority:</strong> High</div>
+        <div class="fs-detail"><strong>Traceability:</strong> RQ-004, RQ-005, RQ-006</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-004 – Checkout &amp; Payment Processing</div>
+        <div class="fs-detail"><strong>Objective:</strong> Menghitung total tagihan, memvalidasi kecukupan pembayaran tunai, menghitung kembalian, memotong stok inventaris, dan mencetak struk transaksi.</div>
+        <div class="fs-detail"><strong>Priority:</strong> High</div>
+        <div class="fs-detail"><strong>Traceability:</strong> RQ-007, RQ-008, RQ-009</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-005 – Order History &amp; Reprint</div>
+        <div class="fs-detail"><strong>Objective:</strong> Menampilkan rekapitulasi riwayat transaksi penjualan kasir, rincian item, dan pencetakan ulang invoice belanja.</div>
+        <div class="fs-detail"><strong>Priority:</strong> Medium</div>
+        <div class="fs-detail"><strong>Traceability:</strong> RQ-010</div>
+    </div>
+
+    <div class="fs-block">
+        <div class="fs-title">FS-006 – Stock Management &amp; Session</div>
+        <div class="fs-detail"><strong>Objective:</strong> Memantau sisa stok fisik toko, penambahan stok cepat (*quick restock*), pencatatan kartu audit mutasi stok, serta penutupan sesi login (*logout*).</div>
+        <div class="fs-detail"><strong>Priority:</strong> High</div>
+        <div class="fs-detail"><strong>Traceability:</strong> RQ-011, RQ-012</div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- 3. TEST CONDITIONS -->
+    <h2 class="section-title">3. Test Conditions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="14%">ID</th>
+                <th width="16%">Feature Set</th>
+                <th width="42%">Description</th>
+                <th width="12%">Priority</th>
+                <th width="16%">Traceability</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>TCond-001</td>
+                <td>FS-001</td>
+                <td>Melakukan login dengan email dan kata sandi kasir yang valid serta terdaftar</td>
+                <td>High</td>
+                <td>RQ-001</td>
+            </tr>
+            <tr>
+                <td>TCond-002</td>
+                <td>FS-001</td>
+                <td>Melakukan login dengan kata sandi salah atau email tidak terdaftar (sistem menolak dan menampilkan pesan error)</td>
+                <td>High</td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td>TCond-003</td>
+                <td>FS-002</td>
+                <td>Melakukan pencarian produk menggunakan kata kunci nama yang tersedia di katalog menu</td>
+                <td>Medium</td>
+                <td>RQ-003</td>
+            </tr>
+            <tr>
+                <td>TCond-004</td>
+                <td>FS-003</td>
+                <td>Menambahkan produk yang berstatus stok tersedia (stok &gt; 0) ke dalam keranjang pesanan</td>
+                <td>High</td>
+                <td>RQ-004</td>
+            </tr>
+            <tr>
+                <td>TCond-005</td>
+                <td>FS-003</td>
+                <td>Menambahkan produk yang berstatus stok habis (stok = 0) ke keranjang (sistem memblokir dan tombol nonaktif)</td>
+                <td>High</td>
+                <td>RQ-005</td>
+            </tr>
+            <tr>
+                <td>TCond-006</td>
+                <td>FS-003</td>
+                <td>Meningkatkan kuantitas produk dalam keranjang melebihi sisa stok fisik toko (sistem membatasi pada angka stok maksimal)</td>
+                <td>High</td>
+                <td>RQ-006</td>
+            </tr>
+            <tr>
+                <td>TCond-007</td>
+                <td>FS-004</td>
+                <td>Melakukan pembayaran tunai dengan nominal uang pas atau uang lebih (sistem menghitung kembalian secara tepat)</td>
+                <td>High</td>
+                <td>RQ-007, RQ-009</td>
+            </tr>
+            <tr>
+                <td>TCond-008</td>
+                <td>FS-004</td>
+                <td>Melakukan pembayaran tunai dengan nominal uang kurang dari total tagihan (sistem menolak proses bayar)</td>
+                <td>High</td>
+                <td>RQ-008</td>
+            </tr>
+            <tr>
+                <td>TCond-009</td>
+                <td>FS-005</td>
+                <td>Melihat daftar riwayat pemesanan transaksi penjualan kasir dan mencetak ulang struk (*reprint receipt*)</td>
+                <td>Medium</td>
+                <td>RQ-010</td>
+            </tr>
+            <tr>
+                <td>TCond-010</td>
+                <td>FS-006</td>
+                <td>Melakukan penambahan stok fisik via Quick Restock dan verifikasi catatan log mutasi barang</td>
+                <td>High</td>
+                <td>RQ-011</td>
+            </tr>
+            <tr>
+                <td>TCond-011</td>
+                <td>FS-006</td>
+                <td>Menekan tombol Keluar (*Logout*) di pojok kanan atas dan memastikan sesi login kasir dihapus secara aman</td>
+                <td>High</td>
+                <td>RQ-012</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- 4. COVERAGE ITEMS -->
+    <h2 class="section-title">4. Coverage Items</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="14%">ID</th>
+                <th width="38%">Description</th>
+                <th width="20%">Related Test Condition</th>
+                <th width="12%">Priority</th>
+                <th width="16%">Traceability</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CI-001</td>
+                <td>Pemeriksaan validitas email dan enkripsi kata sandi akun kasir saat autentikasi</td>
+                <td>TCond-001</td>
+                <td>High</td>
+                <td>RQ-001</td>
+            </tr>
+            <tr>
+                <td>CI-002</td>
+                <td>Penolakan login ketika kredensial salah, disertai tampilan pesan notifikasi error merah</td>
+                <td>TCond-002</td>
+                <td>High</td>
+                <td>RQ-002</td>
+            </tr>
+            <tr>
+                <td>CI-003</td>
+                <td>Penyaringan katalog produk kasir berdasarkan kecocokan kata kunci pencarian</td>
+                <td>TCond-003</td>
+                <td>Medium</td>
+                <td>RQ-003</td>
+            </tr>
+            <tr>
+                <td>CI-004</td>
+                <td>Penambahan item ke keranjang dan kalkulasi subtotal harga pesanan</td>
+                <td>TCond-004</td>
+                <td>High</td>
+                <td>RQ-004</td>
+            </tr>
+            <tr>
+                <td>CI-005</td>
+                <td>Pencegahan penambahan produk berstok kosong (badge stok habis &amp; tombol disabled)</td>
+                <td>TCond-005</td>
+                <td>High</td>
+                <td>RQ-005</td>
+            </tr>
+            <tr>
+                <td>CI-006</td>
+                <td>Pembatasan nilai kuantitas maksimum keranjang tepat pada sisa stok fisik produk</td>
+                <td>TCond-006</td>
+                <td>High</td>
+                <td>RQ-006</td>
+            </tr>
+            <tr>
+                <td>CI-007</td>
+                <td>Kalkulasi total nilai belanjaan dan perhitungan otomatis nominal uang kembalian</td>
+                <td>TCond-007</td>
+                <td>High</td>
+                <td>RQ-007</td>
+            </tr>
+            <tr>
+                <td>CI-008</td>
+                <td>Penolakan transaksi checkout ketika nominal uang tunai yang diinput kurang dari total tagihan</td>
+                <td>TCond-008</td>
+                <td>High</td>
+                <td>RQ-008</td>
+            </tr>
+            <tr>
+                <td>CI-009</td>
+                <td>Eksekusi transaksi atomik, pengurangan saldo stok inventaris, dan penerbitan tampilan struk resmi</td>
+                <td>TCond-007</td>
+                <td>High</td>
+                <td>RQ-009</td>
+            </tr>
+            <tr>
+                <td>CI-010</td>
+                <td>Tampilan tabel data riwayat pemesanan kasir dan fungsionalitas cetak ulang struk</td>
+                <td>TCond-009</td>
+                <td>Medium</td>
+                <td>RQ-010</td>
+            </tr>
+            <tr>
+                <td>CI-011</td>
+                <td>Form input penambahan stok produk (*Quick Restock*) dan perekaman audit mutasi stok ke database</td>
+                <td>TCond-010</td>
+                <td>High</td>
+                <td>RQ-011</td>
+            </tr>
+            <tr>
+                <td>CI-012</td>
+                <td>Pemusnahan sesi aktif pengguna dan pengalihan ke halaman login awal (*logout action*)</td>
+                <td>TCond-011</td>
+                <td>High</td>
+                <td>RQ-012</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- 5. TEST TRACEABILITY MATRIX (TTM) -->
+    <h2 class="section-title">5. Test Traceability Matrix (TTM)</h2>
+    <p>Matriks berikut menelusuri setiap software requirement pada SmartKasir (Point of Sale System) ke feature set, test condition, dan coverage item terkait, berdasarkan Test Design Specification pada dokumen ini.</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th width="16%">Requirement</th>
+                <th width="20%">Feature Set</th>
+                <th width="24%">Test Condition</th>
+                <th width="40%">Coverage Item</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>RQ-001</td>
+                <td>FS-001</td>
+                <td>TCond-001</td>
+                <td>CI-001</td>
+            </tr>
+            <tr>
+                <td>RQ-002</td>
+                <td>FS-001</td>
+                <td>TCond-002</td>
+                <td>CI-002</td>
+            </tr>
+            <tr>
+                <td>RQ-003</td>
+                <td>FS-002</td>
+                <td>TCond-003</td>
+                <td>CI-003</td>
+            </tr>
+            <tr>
+                <td>RQ-004</td>
+                <td>FS-003</td>
+                <td>TCond-004</td>
+                <td>CI-004</td>
+            </tr>
+            <tr>
+                <td>RQ-005</td>
+                <td>FS-003</td>
+                <td>TCond-005</td>
+                <td>CI-005</td>
+            </tr>
+            <tr>
+                <td>RQ-006</td>
+                <td>FS-003</td>
+                <td>TCond-006</td>
+                <td>CI-006</td>
+            </tr>
+            <tr>
+                <td>RQ-007</td>
+                <td>FS-004</td>
+                <td>TCond-007</td>
+                <td>CI-007</td>
+            </tr>
+            <tr>
+                <td>RQ-008</td>
+                <td>FS-004</td>
+                <td>TCond-008</td>
+                <td>CI-008</td>
+            </tr>
+            <tr>
+                <td>RQ-009</td>
+                <td>FS-004</td>
+                <td>TCond-007</td>
+                <td>CI-009</td>
+            </tr>
+            <tr>
+                <td>RQ-010</td>
+                <td>FS-005</td>
+                <td>TCond-009</td>
+                <td>CI-010</td>
+            </tr>
+            <tr>
+                <td>RQ-011</td>
+                <td>FS-006</td>
+                <td>TCond-010</td>
+                <td>CI-011</td>
+            </tr>
+            <tr>
+                <td>RQ-012</td>
+                <td>FS-006</td>
+                <td>TCond-011</td>
+                <td>CI-012</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

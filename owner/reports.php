@@ -39,17 +39,19 @@ foreach($transactions as $t) {
             <ul class="sidebar-menu">
                 <li><a href="dashboard.php"><i class="fa-solid fa-chart-pie"></i> Analitik Bisnis</a></li>
                 <li><a href="reports.php" class="active"><i class="fa-solid fa-file-invoice"></i> Laporan Keuangan</a></li>
-            </ul>
-            <div style="padding: 20px; border-top: 1px solid var(--border-color);">
-                <a href="../logout.php" class="badge badge-danger" style="width: 100%; justify-content: center; padding: 10px;"><i class="fa-solid fa-power-off"></i> Logout Akses</a>
-            </div>
         </div>
         <div class="main-content">
             <div class="topbar">
-                <h2>LAPORAN KEUANGAN</h2>
-                <div class="user-info">
-                    <img src="https://ui-avatars.com/api/?name=<?= urlencode($_SESSION['user_name']) ?>&background=f59e0b&color=fff" alt="Avatar">
-                    <?= htmlspecialchars($_SESSION['user_name']) ?> (Owner)
+                <div class="d-flex align-center gap-3">
+                    <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <h2>LAPORAN KEUANGAN</h2>
+                </div>
+                <div class="d-flex align-center gap-3">
+                    <a href="../logout.php" class="btn-logout"><i class="fa-solid fa-power-off"></i> Keluar</a>
+                    <div class="user-info">
+                        <img src="https://ui-avatars.com/api/?name=<?= urlencode($_SESSION['user_name']) ?>&background=f59e0b&color=fff" alt="Avatar">
+                        <?= htmlspecialchars($_SESSION['user_name']) ?> (Owner)
+                    </div>
                 </div>
             </div>
             <div class="content-area">

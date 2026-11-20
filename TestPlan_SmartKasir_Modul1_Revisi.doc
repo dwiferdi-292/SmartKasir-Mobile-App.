@@ -1,0 +1,206 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>Test Plan - SmartKasir (Revisi Sesuai Modul 2)</title>
+<style>
+    body { font-family: 'Arial', sans-serif; line-height: 1.5; color: #000; margin: 30px; }
+    h1 { text-align: center; color: #000; font-size: 20pt; margin-bottom: 0; font-weight: bold; }
+    .subtitle { text-align: center; font-size: 13pt; margin-top: 5px; margin-bottom: 30px; color: #333; font-weight: bold; }
+    h2 { color: #000; padding-bottom: 5px; margin-top: 25px; font-size: 14pt; font-weight: bold; border-bottom: 2px solid #000; }
+    h3 { color: #222; font-size: 12pt; margin-top: 20px; margin-bottom: 10px; font-weight: bold; }
+    p, li { font-size: 11pt; text-align: justify; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 20px; }
+    th, td { border: 1px solid #000; padding: 8px; text-align: left; vertical-align: top; font-size: 10.5pt; }
+    th { background-color: #e2e8f0; font-weight: bold; text-align: center; }
+    .highlight { background-color: #fef9c3; font-weight: bold; }
+</style>
+</head>
+<body>
+
+    <h1>Dokumen Rencana Pengujian (Test Plan)</h1>
+    <div class="subtitle">Aplikasi SmartKasir (Revisi Sinkronisasi Modul 1 & Modul 2)</div>
+
+    <table>
+        <tr><th colspan="2" style="background:#e2e8f0; font-size:11pt;">METADATA TEST PLAN</th></tr>
+        <tr><td width="30%"><strong>Identifikasi Test Plan</strong></td><td width="70%">TP-SMARTKASIR-MOD1-202310370311292</td></tr>
+        <tr><td><strong>Nama Aplikasi</strong></td><td>SmartKasir</td></tr>
+        <tr><td><strong>Versi</strong></td><td>v1.2 (Revamped with Order History & Stock Management)</td></tr>
+        <tr><td><strong>Peran yang Dipilih untuk Diuji</strong></td><td>Kasir</td></tr>
+        <tr><td><strong>Nama Praktikan</strong></td><td>MUCHAMMAD DWI FERDI ILHAM ARIFIN</td></tr>
+        <tr><td><strong>NIM</strong></td><td>202310370311292</td></tr>
+        <tr><td><strong>Kelas</strong></td><td>PKPL - B</td></tr>
+        <tr><td><strong>Tanggal Dibuat / Revisi</strong></td><td>16 Oktober 2026</td></tr>
+        <tr><td><strong>Status</strong></td><td>Final (Telah Disesuaikan dengan Modul 2)</td></tr>
+    </table>
+
+    <h2>1. Konteks Pengujian</h2>
+    
+    <h3>1.1 Item Uji</h3>
+    <table>
+        <tr><th width="30%">Bidang</th><th width="70%">Deskripsi</th></tr>
+        <tr><td>Nama Aplikasi</td><td>SmartKasir</td></tr>
+        <tr><td>Platform</td><td>Web Application (Desktop & Mobile Responsive)</td></tr>
+        <tr><td>Versi</td><td>v1.2</td></tr>
+        <tr><td>URL Deployment / Akses</td><td><strong>https://smartkasir.infinityfreeapp.com/</strong> (atau http://localhost/SMARTKASIR/)</td></tr>
+        <tr><td>Tumpukan Teknologi</td><td>PHP Native (PDO), MySQL, HTML5, CSS3 Vanilla, FontAwesome, JavaScript</td></tr>
+        <tr><td>Deskripsi Singkat</td><td>SmartKasir adalah sistem Point-of-Sale (POS) berbasis web yang dirancang untuk mengelola transaksi penjualan ritel, inventaris stok barang secara otomatis, serta pelacakan riwayat pemesanan secara real-time.</td></tr>
+    </table>
+
+    <h3>1.2 Cakupan Pengujian</h3>
+    <p><strong>Fitur dalam Cakupan (In-Scope) - Peran Kasir:</strong></p>
+    <table>
+        <thead>
+            <tr><th width="5%">No.</th><th width="25%">Nama Fitur</th><th width="15%">Jenis Fitur</th><th width="55%">Deskripsi Singkat</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Login Kasir</td><td>Autentikasi</td><td>Kasir masuk ke sistem menggunakan email dan password terdaftar, dilengkapi auto-fallback dan quick demo.</td></tr>
+            <tr><td>2</td><td>Register Akun Kasir</td><td>Autentikasi</td><td>Pendaftaran akun baru dengan pemilihan hak akses (Kasir).</td></tr>
+            <tr><td>3</td><td>Forgot Password</td><td>Autentikasi</td><td>Pembaruan password langsung menggunakan verifikasi email yang terdaftar pada database.</td></tr>
+            <tr><td>4</td><td>Pencarian Produk Real-Time</td><td>Katalog POS</td><td>Mencari nama produk atau kode SKU secara instan melalui search bar di halaman POS.</td></tr>
+            <tr><td>5</td><td>Tambah ke Keranjang Belanja</td><td>Transaksi POS</td><td>Menambahkan item produk ke keranjang belanja via JavaScript beserta kalkulasi otomatis kuantitas & subtotal.</td></tr>
+            <tr><td>6</td><td>Validasi Stok Kosong</td><td>Validasi Stok</td><td>Sistem menolak dan menonaktifkan (*disable*) produk yang stoknya 0 (Habis).</td></tr>
+            <tr><td>7</td><td>Kalkulasi Tagihan & Uang Diterima</td><td>Transaksi POS</td><td>Sistem menghitung total tagihan, validasi pembayaran, dan menghitung nominal kembalian.</td></tr>
+            <tr><td>8</td><td>Pemrosesan Checkout & Struk</td><td>Transaksi POS</td><td>Memproses checkout pesanan, mengurangi stok secara atomik, dan mencetak struk transaksi.</td></tr>
+            <tr class="highlight"><td>9</td><td>Riwayat Pemesanan Kasir (Fitur Baru)</td><td>Manajemen Pesanan</td><td>Melihat daftar seluruh transaksi penjualan kasir, filter rentang tanggal, pencarian nomor faktur, dan cetak ulang (*reprint*) struk.</td></tr>
+            <tr class="highlight"><td>10</td><td>Manajemen Stok Kasir (Fitur Baru)</td><td>Kontrol Stok</td><td>Memantau sisa stok real-time, indikator stok menipis/habis, restok cepat, penyesuaian stok opname fisik, serta riwayat mutasi kartu stok.</td></tr>
+            <tr class="highlight"><td>11</td><td>Navigasi Tab & Tombol Keluar (Logout)</td><td>Akses & Sesi</td><td>Navigasi tab terintegrasi antar halaman kasir yang responsif mobile dan tombol keluar (*logout*) yang selalu terlihat jelas.</td></tr>
+        </tbody>
+    </table>
+
+    <p><strong>Di Luar Cakupan (Out-of-Scope):</strong></p>
+    <table>
+        <thead>
+            <tr><th width="5%">No.</th><th width="35%">Fitur / Aspek</th><th width="60%">Alasan Pengecualian</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Master Data CRUD Produk & HPP Modal</td><td>Penambahan master SKU baru, penetapan harga pokok (HPP), dan penghapusan master produk hanya dapat diakses oleh peran Admin.</td></tr>
+            <tr><td>2</td><td>Manajemen Akun Pengguna Global</td><td>Pengelolaan, reset password akun lain, dan penghapusan pengguna hanya dapat diakses oleh peran Admin.</td></tr>
+            <tr><td>3</td><td>Dashboard Analitik Keuangan Eksekutif</td><td>Laporan laba rugi bulanan dan analitik performa toko hanya dapat diakses oleh peran Owner.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>1.3 Peran yang Dipilih untuk Diuji</h3>
+    <table>
+        <tr><th width="30%">Bidang</th><th width="70%">Detail</th></tr>
+        <tr><td>Nama Peran</td><td>Kasir (Cashier Operator)</td></tr>
+        <tr><td>Deskripsi Peran</td><td>Operator harian yang bertugas melayani transaksi pembelian pelanggan, memantau ketersediaan stok di toko, mengecek riwayat pesanan, dan mencetak struk.</td></tr>
+        <tr><td>Fitur yang Dapat Diakses</td><td>Login, Register, Forgot Password, POS (Katalog, Keranjang, Checkout, Struk), Riwayat Pemesanan, Manajemen Stok Kasir, dan Logout.</td></tr>
+        <tr><td>Alasan Pemilihan</td><td>Role Kasir mencakup seluruh alur bisnis inti (*core business process*) sistem SmartKasir. Interaksi data sangat dinamis meliputi manipulasi keranjang, validasi pembayaran, pemotongan stok otomatis, hingga penelusuran riwayat transaksi.</td></tr>
+    </table>
+
+    <h3>1.4 Asumsi dan Batasan</h3>
+    <table>
+        <thead><tr><th width="20%">Jenis</th><th width="80%">Deskripsi</th></tr></thead>
+        <tbody>
+            <tr><td>Asumsi</td><td>Database telah memiliki setidaknya 10 produk menu makanan dan minuman valid yang dihasilkan dari seeder otomatis pada kasir/pos.php.</td></tr>
+            <tr><td>Asumsi</td><td>Fitur Forgot Password melakukan reset sandi secara langsung ke database demi kemudahan pengujian praktikum.</td></tr>
+            <tr><td>Batasan</td><td>Pengujian fungsionalitas murni dilakukan dari sudut pandang hak akses dan interaksi peran Kasir.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>2. Daftar Risiko & Mitigasi</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="8%">ID Risiko</th>
+                <th width="32%">Deskripsi Risiko</th>
+                <th width="10%">Jenis</th>
+                <th width="8%">Dampak</th>
+                <th width="8%">Peluang</th>
+                <th width="8%">Skor</th>
+                <th width="26%">Strategi Mitigasi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>R-01</td><td>Input nominal uang diterima lebih kecil dari total tagihan namun transaksi tetap terproses.</td><td>Produk</td><td>5</td><td>3</td><td>15</td><td>Validasi ketat sisi frontend dan backend (process.php) dengan Boundary Value Analysis (BVA).</td></tr>
+            <tr><td>R-02</td><td>Produk bersisa stok 0 masih dapat dipaksa masuk ke keranjang belanja.</td><td>Produk</td><td>4</td><td>2</td><td>8</td><td>Validasi ketersediaan stok fisik di database sebelum transaksi dieksekusi.</td></tr>
+            <tr><td>R-03</td><td>Data transaksi tidak tersimpan namun stok barang terpotong saat koneksi jaringan terputus.</td><td>Produk</td><td>5</td><td>2</td><td>10</td><td>Menggunakan transaksi atomik database PDO (BeginTransaction, Commit, Rollback).</td></tr>
+            <tr><td>R-04</td><td>Pendaftaran akun dengan email yang sudah ada menyebabkan fatal error.</td><td>Produk</td><td>3</td><td>3</td><td>9</td><td>Pengecekan duplikasi email sebelum query INSERT dijalankan.</td></tr>
+            <tr><td>R-05</td><td>Sesi kasir tidak berakhir saat browser ditutup tanpa logout.</td><td>Produk</td><td>4</td><td>2</td><td>8</td><td>Penyediaan tombol 'Keluar' yang selalu terlihat jelas di seluruh halaman kasir.</td></tr>
+            <tr class="highlight"><td>R-06</td><td>Selisih antara stok fisik di toko dan sistem akibat barang rusak/hilang tidak dapat dikoreksi kasir.</td><td>Produk</td><td>4</td><td>3</td><td>12</td><td>Penyediaan fitur Penyesuaian Stok (Stok Opname) dan pencatatan mutasi di stock.php.</td></tr>
+            <tr class="highlight"><td>R-07</td><td>Pelanggan komplain struk hilang dan meminta cetak ulang faktur transaksi sebelumnya.</td><td>Produk</td><td>3</td><td>3</td><td>9</td><td>Penyediaan fitur pencarian invoice dan tombol cetak ulang struk di orders.php.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>3. Strategi Pengujian</h2>
+    <h3>3.1 Pendekatan Keseluruhan</h3>
+    <table>
+        <tr><th width="30%">Bidang</th><th width="70%">Deskripsi</th></tr>
+        <tr><td>Pendekatan Pengujian</td><td>Black Box Testing berbasis spesifikasi kebutuhan perangkat lunak (ISO/IEC/IEEE 29119-4).</td></tr>
+        <tr><td>Tingkat Pengujian</td><td>System Testing & Integration Testing pada peran Kasir.</td></tr>
+        <tr><td>Teknik Pengujian Utama</td><td>Equivalence Partitioning (EP), Boundary Value Analysis (BVA), dan Use Case Testing.</td></tr>
+        <tr><td>Fitur Berprioritas Tinggi</td><td>Autentikasi Login, Validasi Pembayaran, Transaksi Checkout POS, Pemotongan Stok Otomatis, dan Kontrol Stok Kritis.</td></tr>
+    </table>
+
+    <h3>3.2 Kriteria</h3>
+    <table>
+        <thead><tr><th width="30%">Jenis Kriteria</th><th width="70%">Deskripsi</th></tr></thead>
+        <tbody>
+            <tr><td>Kriteria Masuk</td><td>Aplikasi aktif di hosting (smartkasir.infinityfreeapp.com) atau lokal Laragon, koneksi database stabil, dan data awal produk telah terisi.</td></tr>
+            <tr><td>Kriteria Keluar</td><td>Seluruh skenario uji untuk 11 fitur cakupan kasir telah dieksekusi, dicatat dalam Test Traceability Matrix (TTM), dan tidak ditemukan *critical blocker*.</td></tr>
+            <tr><td>Kriteria Lolos</td><td>Sistem merespons sesuai *expected result*, data transaksi dan mutasi stok tersimpan akurat, dan validasi error tertangani dengan baik.</td></tr>
+            <tr><td>Kriteria Gagal</td><td>Terdapat crash/fatal error (HTTP 500/SQL error), salah hitung tagihan, uang kurang berhasil checkout, atau stok menjadi minus.</td></tr>
+            <tr><td>Pengujian Ulang</td><td>Test case yang gagal diuji ulang secara manual setelah kode diperbaiki.</td></tr>
+            <tr><td>Pengujian Regresi</td><td>Skenario transaksi penjualan standar (*Happy Path*) selalu dijalankan ulang setiap kali dilakukan perubahan kode antarmuka/backend.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>4. Lingkungan Pengujian</h2>
+    
+    <h3>4.1 Perangkat Keras</h3>
+    <table>
+        <tr><th width="30%">Item</th><th width="70%">Detail</th></tr>
+        <tr><td>Perangkat Pengujian Utama</td><td>Laptop ASUS (Intel Core i5, RAM 16 GB, OS Windows 11)</td></tr>
+        <tr><td>Perangkat Pengujian Mobile</td><td>Smartphone Android / iOS (Pengujian Responsif & Touch Scrolling)</td></tr>
+    </table>
+
+    <h3>4.2 Perangkat Lunak & Alat</h3>
+    <table>
+        <thead><tr><th width="30%">Alat / Perangkat Lunak</th><th width="25%">Versi / Detail</th><th width="45%">Tujuan</th></tr></thead>
+        <tbody>
+            <tr><td>Browser Desktop</td><td>Google Chrome / Microsoft Edge</td><td>Eksekusi pengujian antarmuka dan interaksi keranjang JS</td></tr>
+            <tr><td>Browser Mobile</td><td>Google Chrome Mobile / Safari</td><td>Pengujian responsif, touch scroll, dan layout HP</td></tr>
+            <tr><td>Web & DB Server</td><td>Laragon (Apache & MySQL) / InfinityFree Linux Server</td><td>Menjalankan backend PHP PDO dan database MySQL</td></tr>
+            <tr><td>Dokumentasi</td><td>Microsoft Word / Google Docs</td><td>Penyusunan Test Plan dan Test Design Specification</td></tr>
+        </tbody>
+    </table>
+
+    <h3>4.3 Data Uji</h3>
+    <table>
+        <thead><tr><th width="30%">Jenis Data</th><th width="70%">Deskripsi</th></tr></thead>
+        <tbody>
+            <tr><td>Akun Kasir Valid</td><td><strong>Email:</strong> kasir@smartkasir.com | <strong>Password:</strong> password</td></tr>
+            <tr><td>Akun Tidak Valid</td><td>Email tidak terdaftar, password salah, atau format email tanpa @.</td></tr>
+            <tr><td>Katalog Produk Uji</td><td>10 Menu Makanan & Minuman (Kopi Susu Gula Aren, Americano, French Fries, Chicken Wings, Nasi Goreng, Mie Goreng, dll.).</td></tr>
+            <tr><td>Nominal Pembayaran Uji</td><td>Nominal pas, nominal lebih (kembalian &gt; 0), nominal kurang (ditolak), dan angka 0/negatif.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>5. Keterhubungan dengan Modul 2 (Jadwal & Luaran Pengujian)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th width="15%">Modul</th>
+                <th width="35%">Aktivitas Pengujian Utama</th>
+                <th width="25%">Luaran Utama</th>
+                <th width="25%">Status Keterhubungan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Modul 1</strong></td>
+                <td>Perencanaan Pengujian (Test Planning), Analisis Risiko, Penentuan Lingkup, dan Registrasi Proyek.</td>
+                <td>Dokumen Test Plan (TP-SMARTKASIR-MOD1)</td>
+                <td>Selesai (Direvisi & Diselaraskan)</td>
+            </tr>
+            <tr>
+                <td><strong>Modul 2</strong></td>
+                <td>Spesifikasi Desain Pengujian (Test Design Specification) dan Matriks Keterlacakan Kebutuhan (Test Traceability Matrix).</td>
+                <td>Dokumen TDS & TTM (TDS-TTM-SMARTKASIR-MOD2)</td>
+                <td>Selesai (100% Selaras dengan 11 Fitur Kasir)</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

@@ -100,4 +100,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    // --- MOBILE SIDEBAR TOGGLE LOGIC ---
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.createElement('div');
+    overlay.className = 'sidebar-overlay';
+    document.body.appendChild(overlay);
+
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+    }
+
+    overlay.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    });
 });

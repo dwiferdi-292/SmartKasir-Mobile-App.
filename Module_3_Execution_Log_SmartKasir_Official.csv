@@ -1,0 +1,117 @@
+"MODUL 3 - EXECUTION LOG BVA, EP, DAN TEST ARTIFACT",,,,,,,
+,,,,,,,
+"Workbook ini adalah execution log untuk proyek SmartKasir (Point of Sale System). Berdasarkan kaidah ISO/IEC/IEEE 29119-2 Dynamic Test Process, workbook ini mencatat perancangan hingga hasil eksekusi pengujian fungsional black-box menggunakan teknik Boundary Value Analysis (BVA) dan Equivalence Partitioning (EP) Weak Robust Coverage.",,,,,,,
+,,,,,,,
+ATURAN WAJIB,,,,,,,
+No.,Aturan,Pemeriksaan,,,,,
+1,BVA = 4n+1,"n adalah jumlah variabel input independen pada fitur yang diuji (n = 3, maka 4n+1 = 13 kasus unik).",,,,,
+2,EP tidak punya rumus jumlah baku,Jumlah partisi dan test case EP mengikuti hasil analisis partisi domain fitur SmartKasir (8 partisi).,,,,,
+3,Weak Robust = satu invalid per kasus,Input lain tetap valid ketika satu partisi invalid diuji (Single-Fault Assumption).,,,,,
+4,Rancangan dan eksekusi satu sheet,04_Rancangan_dan_Eksekusi memuat kolom desain dan kolom hasil aktual bersama.,,,,,
+5,Incident hanya untuk defect yang diamati,Defect INC-SK-MOD3-01 diamati nyata saat verifikasi eksekusi pada antarmuka sistem.,,,,,
+,,,,,,,
+DEFINISI STATUS,,,,,,,
+Status,Gunakan ketika,Tindakan,,,,,
+Lulus,Hasil aktual sama dengan hasil yang diharapkan,Simpan catatan eksekusi.,,,,,
+Gagal,Hasil aktual berbeda,Lampirkan bukti dan buat Incident Report bila merupakan defect.,,,,,
+Terblokir,Eksekusi tidak dapat diselesaikan,Catat prasyarat atau kendala lingkungan. Bukan otomatis defect.,,,,,
+,,,,,,,
+IDENTITAS PROYEK,,,,,,,
+Bidang,Isian,,,,,,
+Nama aplikasi,SmartKasir (Point of Sale System),,,,,,
+Tester,Muchammad Dwi Ferdi Ilham Arifin,,,,,,
+NIM,202310370311292,,,,,,
+Versi / build,v1.0.0-prod (Build 2026.10),,,,,,
+Kelas,PKPL - B (Software Quality Assurance),,,,,,
+,,,,,,,
+FITUR YANG DIUJI: daftar setiap fitur/input berapa n-nya dan berapa partisi EP-nya,,,,,,,
+Fitur / Input,n (variabel BVA),4n+1,Jumlah Partisi EP,Requirement / Rule Dasar,,,
+"Validasi Keranjang Belanja & Checkout Pembayaran Kasir (Q1: Kuantitas Makanan, Q2: Kuantitas Minuman, C: Nominal Pembayaran Tunai)",3,13,8,"RQ-004, RQ-005, RQ-006, RQ-007, RQ-008: Transaksi valid jika 1 <= Q1, Q2 <= 50 (stok fisik) dan C >= Total Belanja (T = 12.000*Q1 + 18.000*Q2). Transaksi ditolak jika stok tidak mencukupi atau uang tunai kurang."
+,,,,,,,
+BOUNDARY VALUE ANALYSIS - EXECUTION LOG,,,,,,,
+Fitur yang diuji: Validasi Transaksi Checkout & Pembayaran Kasir POS,n = 3,4n+1 = 13,,,,,
+"Tabel Derivasi Mekanis BVA: 5n Kandidat Mentah (15 Baris) Menjadi 13 Kasus Unik",,,,,,,
+Raw ID,Q1 (French Fries @12k),Q2 (Cafe Latte @18k),C (Nominal Tunai),Total Tagihan (T),Expected Output,Deduplication Decision,Test Case ID
+1,1,25,1000000,Rp 462.000,"Sukses, Kembalian Rp 538.000",Keep (Min Q1),TC-BVA-01
+2,2,25,1000000,Rp 474.000,"Sukses, Kembalian Rp 526.000",Keep (Min+ Q1),TC-BVA-02
+3,25,25,1000000,Rp 750.000,"Sukses, Kembalian Rp 250.000",Keep (Nominal representative),TC-BVA-13
+4,49,25,1000000,Rp 1.038.000,Tolak: Uang tunai kurang (C < T),Keep (Max- Q1),TC-BVA-03
+5,50,25,1000000,Rp 1.050.000,Tolak: Uang tunai kurang (C < T),Keep (Max Q1),TC-BVA-04
+6,25,1,1000000,Rp 318.000,"Sukses, Kembalian Rp 682.000",Keep (Min Q2),TC-BVA-05
+7,25,2,1000000,Rp 336.000,"Sukses, Kembalian Rp 664.000",Keep (Min+ Q2),TC-BVA-06
+8,25,25,1000000,Rp 750.000,"Sukses, Kembalian Rp 250.000",Remove: duplicate tuple ID 3,-
+9,25,49,1000000,Rp 1.182.000,Tolak: Uang tunai kurang (C < T),Keep (Max- Q2),TC-BVA-07
+10,25,50,1000000,Rp 1.200.000,Tolak: Uang tunai kurang (C < T),Keep (Max Q2),TC-BVA-08
+11,25,25,750000,Rp 750.000,"Sukses uang pas, Kembalian Rp 0",Keep (Min C),TC-BVA-09
+12,25,25,751000,Rp 750.000,"Sukses, Kembalian Rp 1.000",Keep (Min+ C),TC-BVA-10
+13,25,25,1000000,Rp 750.000,"Sukses, Kembalian Rp 250.000",Remove: duplicate tuple ID 3,-
+14,25,25,1999000,Rp 750.000,"Sukses, Kembalian Rp 1.249.000",Keep (Max- C),TC-BVA-11
+15,25,25,2000000,Rp 750.000,"Sukses, Kembalian Rp 1.250.000",Keep (Max C),TC-BVA-12
+,,,,,,,
+"Daftar 13 Test Case BVA Unik (Telah Dikonfirmasi Rumus 4n+1 = 4(3)+1 = 13)",,,,,,,
+Test Case ID,Variabel,Titik Batas,Nilai Uji,Kolom Lain (nominal),Hasil yang Diharapkan,Hasil Aktual
+TC-BVA-01,Q1 (French Fries),Min (1),1,"Q2=25, C=1.000.000 (T=462.000)","Transaksi sukses, Kembalian Rp 538.000","Transaksi sukses, Kembalian Rp 538.000"
+TC-BVA-02,Q1 (French Fries),Min+ (2),2,"Q2=25, C=1.000.000 (T=474.000)","Transaksi sukses, Kembalian Rp 526.000","Transaksi sukses, Kembalian Rp 526.000"
+TC-BVA-03,Q1 (French Fries),Max- (49),49,"Q2=25, C=1.000.000 (T=1.038.000)",Tolak: Uang diterima kurang dari total bayar,Notifikasi error uang kurang muncul
+TC-BVA-04,Q1 (French Fries),Max (50),50,"Q2=25, C=1.000.000 (T=1.050.000)",Tolak: Uang diterima kurang dari total bayar,Notifikasi error uang kurang muncul
+TC-BVA-05,Q2 (Cafe Latte),Min (1),1,"Q1=25, C=1.000.000 (T=318.000)","Transaksi sukses, Kembalian Rp 682.000","Transaksi sukses, Kembalian Rp 682.000"
+TC-BVA-06,Q2 (Cafe Latte),Min+ (2),2,"Q1=25, C=1.000.000 (T=336.000)","Transaksi sukses, Kembalian Rp 664.000","Transaksi sukses, Kembalian Rp 664.000"
+TC-BVA-07,Q2 (Cafe Latte),Max- (49),49,"Q1=25, C=1.000.000 (T=1.182.000)",Tolak: Uang diterima kurang dari total bayar,Notifikasi error uang kurang muncul
+TC-BVA-08,Q2 (Cafe Latte),Max (50),50,"Q1=25, C=1.000.000 (T=1.200.000)",Tolak: Uang diterima kurang dari total bayar,Notifikasi error uang kurang muncul
+TC-BVA-09,C (Uang Tunai),Min (Uang Pas),750000,"Q1=25, Q2=25 (T=750.000)","Transaksi sukses uang pas, Kembalian Rp 0","Transaksi sukses, Kembalian Rp 0"
+TC-BVA-10,C (Uang Tunai),Min+ (Pas + 1rb),751000,"Q1=25, Q2=25 (T=750.000)","Transaksi sukses, Kembalian Rp 1.000","Transaksi sukses, Kembalian Rp 1.000"
+TC-BVA-11,C (Uang Tunai),Max- (2jt - 1rb),1999000,"Q1=25, Q2=25 (T=750.000)","Transaksi sukses, Kembalian Rp 1.249.000","Transaksi sukses, Kembalian Rp 1.249.000"
+TC-BVA-12,C (Uang Tunai),Max (Batas Kas 2jt),2000000,"Q1=25, Q2=25 (T=750.000)","Transaksi sukses, Kembalian Rp 1.250.000","Transaksi sukses, Kembalian Rp 1.250.000"
+TC-BVA-13,All-Nominal,Nominal,Q1=25; Q2=25; C=1000000,"T = Rp 750.000","Transaksi normal sukses, Kembalian Rp 250.000","Transaksi sukses, Kembalian Rp 250.000"
+,,,,,,,
+EQUIVALENCE PARTITIONING - EXECUTION LOG,,,,,,,
+Fitur yang diuji: Validasi Keranjang Belanja & Checkout Pembayaran Kasir (Weak Robust Coverage),,,,,,,
+Test Case ID,Partisi,Rule / Rentang,Valid?,Nilai Uji (Perwakilan),Hasil yang Diharapkan,,
+TC-EP-01,P1: Valid Normal Transaction,1 <= Q1, Q2 <= 50 dan C > T,Valid,"Q1=25, Q2=25, C=1.000.000 (T=750.000)","Transaksi berhasil, Kembalian Rp 250.000, struk terbit",,
+TC-EP-02,P2: Valid Exact Payment,1 <= Q1, Q2 <= 50 dan C = T,Valid,"Q1=10, Q2=10, C=300.000 (T=300.000)","Transaksi berhasil uang pas, Kembalian Rp 0, struk terbit",,
+TC-EP-03,P3: Valid Input Underpaid,1 <= Q1, Q2 <= 50 dan C < T,Valid (Input Sah tapi Rule Pembayaran Ditolak),"Q1=25, Q2=25, C=500.000 (T=750.000)",Tolak: Alert 'Uang diterima kurang dari total bayar!',,
+TC-EP-04,P4: Invalid Q1 Below Minimum,Q1 < 1 (Q1 = 0 / negatif),Invalid,"Q1=0, Q2=25, C=1.000.000",Tolak: Kuantitas item tidak boleh 0 (minimal 1),,
+TC-EP-05,P5: Invalid Q1 Above Maximum,Q1 > 50 (Melebihi sisa stok fisik),Invalid,"Q1=55, Q2=25, C=1.500.000",Tolak: Kuantitas melebihi sisa stok (maksimal 50),,
+TC-EP-06,P6: Invalid Q2 Below Minimum,Q2 < 1 (Q2 minus / tidak wajar),Invalid,"Q1=25, Q2=-1, C=1.000.000",Tolak: Kuantitas tidak valid / minus dicegah form,,
+TC-EP-07,P7: Invalid Q2 Above Maximum,Q2 > 50 (Melebihi sisa stok fisik),Invalid,"Q1=25, Q2=60, C=1.500.000",Tolak: Kuantitas melebihi sisa stok (maksimal 50),,
+TC-EP-08,P8: Invalid C Below Minimum,C <= 0 (Nominal uang negatif/nol),Invalid,"Q1=25, Q2=25, C=-50000",Tolak: Nominal pembayaran tunai tidak valid / tombol bayar disable,,
+,,,,,,,
+EXECUTION LOG - RANCANGAN DAN EKSEKUSI TEST CASE,,,,,,,,,
+Prakondisi untuk seluruh test case: Server web Laragon (Apache & MySQL) aktif; Database smartkasir memuat stok French Fries (50 unit @12.000) dan Cafe Latte (50 unit @18.000); Browser Chrome membuka http://localhost/SMARTKASIR/kasir/pos.php dalam sesi login kasir aktif.,,,,,,,,,
+ID Test Case,Dasar/Kondisi,Teknik & Coverage,Data Uji,Hasil yang Diharapkan,Hasil Aktual,Status,Tanggal / Tester,Tautan Bukti,ID Incident
+TC-BVA-01,RQ-004 (Tambah item berstok),BVA (Min Q1),"Q1=1, Q2=25, C=1.000.000","Transaksi sukses, Kembalian Rp 538.000","Transaksi sukses, Kembalian Rp 538.000",Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-02,RQ-004 (Tambah item berstok),BVA (Min+ Q1),"Q1=2, Q2=25, C=1.000.000","Transaksi sukses, Kembalian Rp 526.000","Transaksi sukses, Kembalian Rp 526.000",Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-03,RQ-008 (Validasi uang kurang),BVA (Max- Q1),"Q1=49, Q2=25, C=1.000.000",Tolak: Uang diterima kurang dari total bayar,Notifikasi error uang kurang muncul,Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-04,RQ-006 & RQ-008,BVA (Max Q1),"Q1=50, Q2=25, C=1.000.000",Tolak: Uang diterima kurang dari total bayar,Notifikasi error uang kurang muncul,Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-05,RQ-004 (Tambah item berstok),BVA (Min Q2),"Q1=25, Q2=1, C=1.000.000","Transaksi sukses, Kembalian Rp 682.000","Transaksi sukses, Kembalian Rp 682.000",Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-06,RQ-004 (Tambah item berstok),BVA (Min+ Q2),"Q1=25, Q2=2, C=1.000.000","Transaksi sukses, Kembalian Rp 664.000","Transaksi sukses, Kembalian Rp 664.000",Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-07,RQ-008 (Validasi uang kurang),BVA (Max- Q2),"Q1=25, Q2=49, C=1.000.000",Tolak: Uang diterima kurang dari total bayar,Notifikasi error uang kurang muncul,Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-08,RQ-006 & RQ-008,BVA (Max Q2),"Q1=25, Q2=50, C=1.000.000",Tolak: Uang diterima kurang dari total bayar,Notifikasi error uang kurang muncul,Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-09,RQ-007 (Kalkulasi tagihan pas),BVA (Min C),"Q1=25, Q2=25, C=750.000","Transaksi sukses, Kembalian Rp 0","Transaksi sukses, Kembalian Rp 0",Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-10,RQ-007 (Kalkulasi kembalian),BVA (Min+ C),"Q1=25, Q2=25, C=751.000","Transaksi sukses, Kembalian Rp 1.000","Transaksi sukses, Kembalian Rp 1.000",Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-11,RQ-007 (Kalkulasi kembalian),BVA (Max- C),"Q1=25, Q2=25, C=1.999.000","Transaksi sukses, Kembalian Rp 1.249.000","Transaksi sukses, Kembalian Rp 1.249.000",Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-12,RQ-007 (Batas penerimaan kas),BVA (Max C),"Q1=25, Q2=25, C=2.000.000","Transaksi sukses, Kembalian Rp 1.250.000","Transaksi sukses, Kembalian Rp 1.250.000",Lulus,2026-10-21 / Ferdi,-,-
+TC-BVA-13,RQ-007 & RQ-009,BVA (Nominal),"Q1=25, Q2=25, C=1.000.000","Transaksi sukses, Kembalian Rp 250.000, potong stok","Transaksi sukses, stok terpotong, struk terbit",Lulus,2026-10-21 / Ferdi,-,-
+TC-EP-01,RQ-004 & RQ-009,EP (P1: Valid Normal),"Q1=25, Q2=25, C=1.000.000","Transaksi sukses, Kembalian Rp 250.000, struk terbit","Transaksi sukses, DB terupdate atomik",Lulus,2026-10-21 / Ferdi,-,-
+TC-EP-02,RQ-007 (Uang Pas),EP (P2: Valid Exact),"Q1=10, Q2=10, C=300.000","Transaksi sukses, Kembalian Rp 0, struk terbit","Transaksi sukses, Kembalian Rp 0",Lulus,2026-10-21 / Ferdi,-,-
+TC-EP-03,RQ-008 (Uang Kurang),EP (P3: Valid Underpaid),"Q1=25, Q2=25, C=500.000",Tolak: Alert 'Uang diterima kurang dari total bayar!',Pesan penolakan muncul di UI POS,Lulus,2026-10-21 / Ferdi,-,-
+TC-EP-04,RQ-005 (Cegah Qty Nol),EP (P4: Invalid Q1 Min),"Q1=0, Q2=25, C=1.000.000",Tolak: Kuantitas minimal 1 item,Kuantitas keranjang otomatis minimal 1,Lulus,2026-10-21 / Ferdi,-,-
+TC-EP-05,RQ-006 (Batas Maks Stok),EP (P5: Invalid Q1 Max),"Q1=55, Q2=25, C=1.500.000",Tolak: Kuantitas dibatasi maksimal stok 50,Sistem menolak kelebihan dan membatasi di 50,Lulus,2026-10-21 / Ferdi,-,-
+TC-EP-06,RQ-005 (Cegah Qty Minus),EP (P6: Invalid Q2 Min),"Q1=25, Q2=-1, C=1.000.000",Tolak: Kuantitas tidak valid,Input minus dicegah oleh form & script POS,Lulus,2026-10-21 / Ferdi,-,-
+TC-EP-07,RQ-006 (Batas Maks Stok),EP (P7: Invalid Q2 Max),"Q1=25, Q2=60, C=1.500.000",Tolak: Kuantitas dibatasi maksimal stok 50,Sistem membatasi kuantitas tepat pada angka 50,Lulus,2026-10-21 / Ferdi,-,-
+TC-EP-08,RQ-008 (Uang Negatif),EP (P8: Invalid C Min),"Q1=25, Q2=25, C=-50000",Tolak: Nominal uang tunai tidak valid,Tombol checkout bayar dinonaktifkan,Lulus,2026-10-21 / Ferdi,-,-
+TC-EXT-01,RQ-002 (Registrasi Kasir),EP (Partisi Valid Akun Baru),"Nama='Kasir Baru', Email='kasir.sukses@smartkasir.com', Pass='Kasir123!'","Akun tersimpan, redirect index.php?success=... (Alert HIJAU)","Akun tersimpan tapi URL redirect ?error=... (Alert MERAH)",Gagal,2026-10-21 / Ferdi,evidence_INC-SK-MOD3-01.png,INC-SK-MOD3-01
+,,,,,,,
+TEST TRACEABILITY MATRIX,,,,,
+ID Kondisi / Requirement,Coverage,ID Test Case,Status Ringkas,ID Incident,Catatan
+RQ-004 (Tambah Produk Berstok),"100% BVA & EP [Min, Min+, Nominal]","TC-BVA-01, TC-BVA-02, TC-BVA-05, TC-BVA-06, TC-EP-01",100% Lulus,-,Kuantitas valid dapat ditambahkan ke keranjang dan dihitung subtotalnya
+RQ-005 (Cegah Kuantitas Nol/Minus),100% Weak Robust Invalid Min,"TC-EP-04, TC-EP-06",100% Lulus,-,Sistem mencegah kuantitas 0 atau angka negatif masuk keranjang
+RQ-006 (Batas Maksimal Stok Fisik),100% BVA & Weak Robust Invalid Max,"TC-BVA-04, TC-BVA-08, TC-EP-05, TC-EP-07",100% Lulus,-,Sistem membatasi kuantitas belanja maksimal sejumlah stok toko (50 unit)
+RQ-007 (Kalkulasi Tagihan & Kembalian),100% BVA Batas Uang & EP Uang Pas,"TC-BVA-09, TC-BVA-10, TC-BVA-11, TC-BVA-12, TC-BVA-13, TC-EP-02",100% Lulus,-,Kalkulasi otomatis total belanja dan nominal kembalian akurat hingga Rp 1
+RQ-008 (Validasi Kecukupan Uang Tunai),100% BVA Batas Uang & EP Uang Kurang,"TC-BVA-03, TC-BVA-07, TC-EP-03, TC-EP-08",100% Lulus,-,Transaksi checkout ditolak bila nominal bayar tunai kurang dari total belanja
+RQ-002 (Feedback Registrasi Akun Kasir),100% Equivalence Partitioning Kredensial,TC-EXT-01,Gagal (Defect Diamati),INC-SK-MOD3-01,Parameter URL salah kirim (?error= bukannya ?success=) memicu alert merah
+,,,,,,,
+INDEKS INCIDENT,,,,,,,
+ID Incident,ID Test Case,Ringkasan,Severity,Status,Tanggal,Tautan Bukti,Tindak Lanjut Solusi
+INC-SK-MOD3-01,TC-EXT-01,Notifikasi registrasi kasir berhasil di-redirect dengan parameter ?error= sehingga memicu alert bootstrap berwarna merah bertanda seru bukannya alert hijau sukses.,Minor,Resolved,2026-10-21,evidence_INC-SK-MOD3-01.png,"Diperbaiki pada auth/register logic: mengubah parameter redirect dari ?error= menjadi ?success= dan disesuaikan penanganan CSS alert-success."
+

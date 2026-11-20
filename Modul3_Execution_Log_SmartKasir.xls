@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Title>Modul 3 - Execution Log BVA, EP, dan Test Artifact</Title>
+  <Subject>Software Quality Assurance (SQA) - Modul 3</Subject>
+  <Author>MUCHAMMAD DWI FERDI ILHAM ARIFIN</Author>
+  <Company>Informatics Laboratory - UMM</Company>
+ </DocumentProperties>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Center"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="TitleStyle">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Font ss:FontName="Calibri" ss:Size="16" ss:Bold="1" ss:Color="#1E3A8A"/>
+  </Style>
+  <Style ss:ID="SubTitleStyle">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Font ss:FontName="Calibri" ss:Size="11" ss:Italic="1" ss:Color="#4B5563"/>
+  </Style>
+  <Style ss:ID="SectionHeader">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Font ss:FontName="Calibri" ss:Size="13" ss:Bold="1" ss:Color="#0F172A"/>
+   <Interior ss:Color="#E2E8F0" ss:Pattern="Solid"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#94A3B8"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="TableHeader">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Font ss:FontName="Calibri" ss:Size="10" ss:Bold="1" ss:Color="#0F172A"/>
+   <Interior ss:Color="#B8D5F8" ss:Pattern="Solid"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="TableHeaderOrange">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+   <Font ss:FontName="Calibri" ss:Size="10" ss:Bold="1" ss:Color="#0F172A"/>
+   <Interior ss:Color="#FED7AA" ss:Pattern="Solid"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="TableCell">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Font ss:FontName="Calibri" ss:Size="10" ss:Color="#000000"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="TableCellCenter">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
+   <Font ss:FontName="Calibri" ss:Size="10" ss:Color="#000000"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="TableCellBold">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top"/>
+   <Font ss:FontName="Calibri" ss:Size="10" ss:Bold="1" ss:Color="#000000"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="StatusPass">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Font ss:FontName="Calibri" ss:Size="10" ss:Bold="1" ss:Color="#15803D"/>
+   <Interior ss:Color="#DCFCE7" ss:Pattern="Solid"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="StatusFail">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Font ss:FontName="Calibri" ss:Size="10" ss:Bold="1" ss:Color="#B91C1C"/>
+   <Interior ss:Color="#FEE2E2" ss:Pattern="Solid"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#CBD5E1"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="RowRemoved">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top"/>
+   <Font ss:FontName="Calibri" ss:Size="10" ss:Color="#9CA3AF" ss:StrikeThrough="1"/>
+   <Interior ss:Color="#F3F4F6" ss:Pattern="Solid"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#E5E7EB"/>
+   </Borders>
+  </Style>
+ </Styles>
+
+ <!-- ============================================================== -->
+ <!-- SHEET 1: 01_Proyek                                             -->
+ <!-- ============================================================== -->
+ <Worksheet ss:Name="01_Proyek">
+  <Table ss:DefaultColumnWidth="120" ss:DefaultRowHeight="20">
+   <Column ss:Width="180"/>
+   <Column ss:Width="420"/>
+   <Row ss:Height="26">
+    <Cell ss:MergeAcross="1" ss:StyleID="TitleStyle"><Data ss:Type="String">01_PROYEK: IDENTITAS PROYEK &amp; REVIEW TEST BASIS</Data></Cell>
+   </Row>
+   <Row ss:Height="18">
+    <Cell ss:MergeAcross="1" ss:StyleID="SubTitleStyle"><Data ss:Type="String">Praktikum Software Quality Assurance (SQA) - Modul 3 Black Box Functional Testing</Data></Cell>
+   </Row>
+   <Row ss:Height="10"></Row>
+
+   <!-- IDENTITAS -->
+   <Row ss:Height="22"><Cell ss:MergeAcross="1" ss:StyleID="SectionHeader"><Data ss:Type="String">A. Identitas Praktikan &amp; Sistem</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Nama Praktikan</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">MUCHAMMAD DWI FERDI ILHAM ARIFIN</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">NIM</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">202310370311292</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Kelas</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">PKPL - B</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Aplikasi Proyek</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">SmartKasir (Point of Sale System)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Peran yang Diuji</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Kasir (Cashier Module / POS)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">URL Deployment Aktif</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">https://smartkasir.infinityfreeapp.com/</Data></Cell></Row>
+   <Row ss:Height="12"></Row>
+
+   <!-- TEST BASIS REVIEW -->
+   <Row ss:Height="22"><Cell ss:MergeAcross="1" ss:StyleID="SectionHeader"><Data ss:Type="String">B. Review Test Basis &amp; Fitur yang Diuji</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Fitur yang Diuji</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Validasi Keranjang Belanja &amp; Pembayaran Transaksi Kasir (POS Checkout &amp; Payment)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Kebutuhan Acuan (Test Basis)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">RQ-004, RQ-005, RQ-006, RQ-007, RQ-008 (Modul 1 &amp; Modul 2 TDS/TTM)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Kumpulan Fitur (Feature Set)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">FS-003 (Cart Management) &amp; FS-004 (Checkout &amp; Payment Processing)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Jumlah Variabel Input (n)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">3 Variabel Independen (Q1 = Kuantitas Menu Makanan, Q2 = Kuantitas Menu Minuman, C = Nominal Uang Tunai)</Data></Cell></Row>
+   <Row ss:Height="12"></Row>
+
+   <!-- ATURAN DOMAIN -->
+   <Row ss:Height="22"><Cell ss:MergeAcross="1" ss:StyleID="SectionHeader"><Data ss:Type="String">C. Aturan Domain &amp; Batasan Input</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Aturan C1 (Input Q1)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">1 &lt;= Q1 &lt;= 50 (Kuantitas French Fries, batas stok fisik toko = 50 porsi, Harga = Rp 12.000)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Aturan C2 (Input Q2)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">1 &lt;= Q2 &lt;= 50 (Kuantitas Cafe Latte, batas stok fisik toko = 50 cup, Harga = Rp 18.000)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Aturan C3 (Rumus Total Tagihan T)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Total Tagihan T = (Q1 * 12.000) + (Q2 * 18.000)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Aturan C4 (Input Uang Tunai C)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">C &gt;= T dan C &lt;= Rp 2.000.000 (Nominal uang tunai harus cukup membayar total belanja)</Data></Cell></Row>
+   <Row ss:Height="12"></Row>
+
+   <!-- OUTPUT CLASSES -->
+   <Row ss:Height="22"><Cell ss:MergeAcross="1" ss:StyleID="SectionHeader"><Data ss:Type="String">D. Kelas Output yang Dihasilkan</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Output 1 (Valid Success)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Berhasil: Stok terpotong, struk belanja tercetak, dan uang kembalian dihitung akurat (Kembalian = C - T)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Output 2 (Reject Underpaid)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Penolakan Pembayaran: Muncul peringatan error "Uang diterima kurang dari total bayar!" (C &lt; T)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Output 3 (Reject Out-of-Stock)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Penolakan Kuantitas: Kuantitas dibatasi maksimal sisa stok fisik toko (Q &gt; 50 tidak dapat ditambahkan)</Data></Cell></Row>
+  </Table>
+ </Worksheet>
+
+ <!-- ============================================================== -->
+ <!-- SHEET 2: 02_BVA                                                -->
+ <!-- ============================================================== -->
+ <Worksheet ss:Name="02_BVA">
+  <Table ss:DefaultColumnWidth="100" ss:DefaultRowHeight="20">
+   <Column ss:Width="70"/>
+   <Column ss:Width="80"/>
+   <Column ss:Width="80"/>
+   <Column ss:Width="120"/>
+   <Column ss:Width="130"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="160"/>
+   <Row ss:Height="26">
+    <Cell ss:MergeAcross="6" ss:StyleID="TitleStyle"><Data ss:Type="String">02_BVA: DERIVASI BOUNDARY VALUE ANALYSIS (RUMUS WAJIB 4n+1)</Data></Cell>
+   </Row>
+   <Row ss:Height="18">
+    <Cell ss:MergeAcross="6" ss:StyleID="SubTitleStyle"><Data ss:Type="String">Turunan 5n kandidat mentah dieleminasi (n-1) tuple all-nominal hingga tersisa tepat 4n+1 kasus unik.</Data></Cell>
+   </Row>
+   <Row ss:Height="10"></Row>
+
+   <!-- PARAMETER BVA -->
+   <Row ss:Height="22"><Cell ss:MergeAcross="6" ss:StyleID="SectionHeader"><Data ss:Type="String">1. Parameter Variabel &amp; 5 Nilai Batas Tradisional</Data></Cell></Row>
+   <Row>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Variabel</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Nama Input</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Min</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Min+</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Nominal</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Max-</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Max</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">a (Q1)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">French Fries (Qty)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">49</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">50</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">b (Q2)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Cafe Latte (Qty)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">49</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">50</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">c (C)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Uang Tunai (Rp)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">750000</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">751000</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1999000</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">2000000</Data></Cell>
+   </Row>
+   <Row><Cell ss:MergeAcross="6" ss:StyleID="SubTitleStyle"><Data ss:Type="String">Catatan: Pada kondisi nominal Q1=25, Q2=25, Total Tagihan T = (25*12.000) + (25*18.000) = Rp 750.000. Maka Min pembayaran = Rp 750.000 (uang pas).</Data></Cell></Row>
+   <Row ss:Height="12"></Row>
+
+   <!-- TABEL 15 RAW SEQUENCE -->
+   <Row ss:Height="22"><Cell ss:MergeAcross="6" ss:StyleID="SectionHeader"><Data ss:Type="String">2. Derivasi 15 Raw Sequence &amp; Keputusan Deduplikasi (5n = 15)</Data></Cell></Row>
+   <Row>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Raw ID</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Q1 (F. Fries)</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Q2 (C. Latte)</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">C (Tunai Rp)</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Total Tagihan (T)</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Expected Output</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Deduplication Decision</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 462.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 538.000</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Min a)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 474.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 526.000</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Min+ a)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 750.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 250.000</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Nominal Representative)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">49</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 1.038.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak (C &lt; T, Uang Kurang)</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Max- a)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">50</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 1.050.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak (C &lt; T, Uang Kurang)</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Max a)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 318.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 682.000</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Min b)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 336.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 664.000</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Min+ b)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="String">Rp 750.000</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="String">Sukses, Kembalian Rp 250.000</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="String">Remove: duplicate ID 3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">49</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 1.182.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak (C &lt; T, Uang Kurang)</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Max- b)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">50</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 1.200.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak (C &lt; T, Uang Kurang)</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Max b)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">750000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 750.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses (Uang Pas, Kembalian Rp 0)</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Min c)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">12</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">751000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 750.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 1.000</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Min+ c)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="Number">13</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="Number">1000000</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="String">Rp 750.000</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="String">Sukses, Kembalian Rp 250.000</Data></Cell>
+    <Cell ss:StyleID="RowRemoved"><Data ss:Type="String">Remove: duplicate ID 3</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">14</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1999000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 750.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 1.249.000</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Max- c)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">15</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">2000000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 750.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 1.250.000</Data></Cell>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">Keep (Max c)</Data></Cell>
+   </Row>
+   <Row ss:Height="12"></Row>
+
+   <!-- HASIL AKHIR 13 KASUS UNIK -->
+   <Row ss:Height="22"><Cell ss:MergeAcross="6" ss:StyleID="SectionHeader"><Data ss:Type="String">3. Hasil Akhir 13 Unique Traditional BVA Cases (Rumus: 4n + 1 = 4(3) + 1 = 13)</Data></Cell></Row>
+   <Row>
+    <Cell ss:StyleID="TableHeaderOrange"><Data ss:Type="String">Test Case ID</Data></Cell>
+    <Cell ss:StyleID="TableHeaderOrange"><Data ss:Type="String">Q1 (F. Fries)</Data></Cell>
+    <Cell ss:StyleID="TableHeaderOrange"><Data ss:Type="String">Q2 (C. Latte)</Data></Cell>
+    <Cell ss:StyleID="TableHeaderOrange"><Data ss:Type="String">C (Tunai Rp)</Data></Cell>
+    <Cell ss:StyleID="TableHeaderOrange"><Data ss:Type="String">Total Tagihan (T)</Data></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="TableHeaderOrange"><Data ss:Type="String">Expected Output</Data></Cell>
+   </Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-01</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 462.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Sukses, Kembalian Rp 538.000</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-02</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">2</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 474.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Sukses, Kembalian Rp 526.000</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-03</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">49</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 1.038.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Tolak Pembayaran: Uang diterima kurang dari total bayar</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-04</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">50</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 1.050.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Tolak Pembayaran: Uang diterima kurang dari total bayar</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-05</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 318.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Sukses, Kembalian Rp 682.000</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-06</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">2</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 336.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Sukses, Kembalian Rp 664.000</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-07</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">49</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 1.182.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Tolak Pembayaran: Uang diterima kurang dari total bayar</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-08</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">50</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 1.200.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Tolak Pembayaran: Uang diterima kurang dari total bayar</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-09</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">750000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 750.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Sukses (Uang Pas, Kembalian Rp 0)</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-10</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">751000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 750.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Sukses, Kembalian Rp 1.000</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-11</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1999000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 750.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Sukses, Kembalian Rp 1.249.000</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-12</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">2000000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 750.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Sukses, Kembalian Rp 1.250.000</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-13</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">25</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="Number">1000000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Rp 750.000</Data></Cell><Cell ss:MergeAcross="1" ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Sukses (All-Nominal), Kembalian Rp 250.000</Data></Cell></Row>
+  </Table>
+ </Worksheet>
+
+ <!-- ============================================================== -->
+ <!-- SHEET 3: 03_EP                                                 -->
+ <!-- ============================================================== -->
+ <Worksheet ss:Name="03_EP">
+  <Table ss:DefaultColumnWidth="120" ss:DefaultRowHeight="20">
+   <Column ss:Width="75"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="180"/>
+   <Column ss:Width="140"/>
+   <Column ss:Width="220"/>
+   <Row ss:Height="26">
+    <Cell ss:MergeAcross="4" ss:StyleID="TitleStyle"><Data ss:Type="String">03_EP: EQUIVALENCE PARTITIONING (WEAK ROBUST COVERAGE)</Data></Cell>
+   </Row>
+   <Row ss:Height="18">
+    <Cell ss:MergeAcross="4" ss:StyleID="SubTitleStyle"><Data ss:Type="String">Setiap partisi mewakili kelas perlakuan sistem. Weak Robust menguji 1 invalid per kasus dengan single-fault assumption.</Data></Cell>
+   </Row>
+   <Row ss:Height="10"></Row>
+
+   <!-- TABEL DEFINISI PARTISI -->
+   <Row ss:Height="22"><Cell ss:MergeAcross="4" ss:StyleID="SectionHeader"><Data ss:Type="String">1. Definisi Partisi Domain SmartKasir (Partisi Valid &amp; Invalid)</Data></Cell></Row>
+   <Row>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Partisi ID</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Klasifikasi / Nama Partisi</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Aturan / Rentang Nilai</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Nilai Representatif</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Alasan (Why / Oracle Rationale)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">P1</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Valid Input: Transaksi Normal</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">1 &lt;= Q1, Q2 &lt;= 50 dan C &gt;= T</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">Q1=25, Q2=25, C=1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Semua input berada di dalam batas stok dan uang mencukupi tagihan.</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">P2</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Valid Input: Uang Pas (Kembalian Nol)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">1 &lt;= Q1, Q2 &lt;= 50 dan C = T</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">Q1=10, Q2=10, C=300.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Uang tunai persis sama dengan total tagihan, transaksi diproses tanpa kembalian.</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">P3</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Valid Input: Uang Tunai Kurang (Underpaid)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">1 &lt;= Q1, Q2 &lt;= 50 dan C &lt; T</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">Q1=25, Q2=25, C=500.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Nilai input valid secara format, tetapi gagal memenuhi aturan bisnis pembayaran C &gt;= T.</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">P4</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Invalid Input: Q1 di Bawah Minimum</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Q1 &lt; 1 (Q1 = 0 atau nilai negatif)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">Q1=0, Q2=25, C=1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Kuantitas nol melanggar batas bawah domain keranjang belanja.</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">P5</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Invalid Input: Q1 Melebihi Maksimum Stok</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Q1 &gt; 50 (Melebihi sisa fisik toko)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">Q1=55, Q2=25, C=1.500.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Kuantitas melebihi kapasitas fisik stok barang yang tersedia (stok = 50).</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">P6</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Invalid Input: Q2 di Bawah Minimum</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Q2 &lt; 1 (Q2 = -1 atau nilai negatif)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">Q1=25, Q2=-1, C=1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Nilai kuantitas minuman negatif melanggar aturan integritas input.</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">P7</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Invalid Input: Q2 Melebihi Maksimum Stok</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Q2 &gt; 50 (Melebihi sisa fisik toko)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">Q1=25, Q2=60, C=1.500.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Kuantitas minuman melebihi kapasitas stok fisik yang ada di toko.</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">P8</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Invalid Input: Pembayaran Tunai Negatif</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">C &lt;= 0 (Nominal tunai tidak masuk akal)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">Q1=25, Q2=25, C=-50000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input uang tunai bernilai minus/negatif melanggar aturan dasar pembayaran kasir.</Data></Cell>
+   </Row>
+   <Row ss:Height="12"></Row>
+
+   <!-- TABEL KASUS UJI WEAK ROBUST EP -->
+   <Row ss:Height="22"><Cell ss:MergeAcross="4" ss:StyleID="SectionHeader"><Data ss:Type="String">2. Tabel Kasus Uji Weak Robust EP dengan Alasan Kelas (Single-Fault Assumption)</Data></Cell></Row>
+   <Row>
+    <Cell ss:StyleID="TableHeaderOrange"><Data ss:Type="String">Test Case ID</Data></Cell>
+    <Cell ss:StyleID="TableHeaderOrange"><Data ss:Type="String">Tipe Kelas (Class Type / Why)</Data></Cell>
+    <Cell ss:StyleID="TableHeaderOrange"><Data ss:Type="String">Partisi Diuji</Data></Cell>
+    <Cell ss:StyleID="TableHeaderOrange"><Data ss:Type="String">Nilai Representatif</Data></Cell>
+    <Cell ss:StyleID="TableHeaderOrange"><Data ss:Type="String">Expected Result</Data></Cell>
+   </Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-01</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Valid input: Transaksi Normal</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">P1 (Valid)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Q1=25, Q2=25, C=1.000.000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Berhasil, Kembalian Rp 250.000, Cetak Struk</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-02</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Valid input: Uang Pas</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">P2 (Valid)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Q1=10, Q2=10, C=300.000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi Berhasil, Kembalian Rp 0, Cetak Struk</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-03</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Valid input: Pelanggan Bayar Kurang</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">P3 (Valid Range)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Q1=25, Q2=25, C=500.000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak: Pesan "Uang diterima kurang dari total bayar!"</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-04</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Invalid input: Q1 below lower bound</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">P4 (Invalid Q1)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Q1=0, Q2=25, C=1.000.000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak penambahan item / Kuantitas minimal 1</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-05</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Invalid input: Q1 above upper bound</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">P5 (Invalid Q1)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Q1=55, Q2=25, C=1.500.000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak: Kuantitas dibatasi maksimal stok 50 porsi</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-06</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Invalid input: Q2 below lower bound</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">P6 (Invalid Q2)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Q1=25, Q2=-1, C=1.000.000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak penambahan item / Nilai minus tidak diizinkan</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-07</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Invalid input: Q2 above upper bound</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">P7 (Invalid Q2)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Q1=25, Q2=60, C=1.500.000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak: Kuantitas dibatasi maksimal stok 50 cup</Data></Cell></Row>
+   <Row><Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-08</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Invalid input: C below lower bound</Data></Cell><Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">P8 (Invalid C)</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Q1=25, Q2=25, C=-50000</Data></Cell><Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak: Uang tunai tidak valid / tombol bayar dinonaktifkan</Data></Cell></Row>
+  </Table>
+ </Worksheet>
+
+ <!-- ============================================================== -->
+ <!-- SHEET 4: 04_Rancangan_dan_Eksekusi (SHEET UTAMA)               -->
+ <!-- ============================================================== -->
+ <Worksheet ss:Name="04_Rancangan_dan_Eksekusi">
+  <Table ss:DefaultColumnWidth="90" ss:DefaultRowHeight="20">
+   <Column ss:Width="80"/>
+   <Column ss:Width="70"/>
+   <Column ss:Width="90"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="65"/>
+   <Column ss:Width="75"/>
+   <Column ss:Width="100"/>
+   <Column ss:Width="100"/>
+   <Column ss:Width="75"/>
+   <Row ss:Height="26">
+    <Cell ss:MergeAcross="10" ss:StyleID="TitleStyle"><Data ss:Type="String">04_RANCANGAN_DAN_EKSEKUSI: SHEET UTAMA PENGUJIAN</Data></Cell>
+   </Row>
+   <Row ss:Height="18">
+    <Cell ss:MergeAcross="10" ss:StyleID="SubTitleStyle"><Data ss:Type="String">Memuat gabungan kolom perancangan (BVA &amp; EP) serta hasil eksekusi aktual langsung di sistem SmartKasir.</Data></Cell>
+   </Row>
+   <Row ss:Height="10"></Row>
+
+   <!-- HEADER GABUNGAN -->
+   <Row ss:Height="25">
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Test Case ID</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Test Basis</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Teknik Uji</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Prasyarat &amp; Data Uji</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Expected Result</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Actual Result</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Status</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Tgl Eksekusi</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Penguji</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Evidence Link</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Incident ID</Data></Cell>
+   </Row>
+
+   <!-- BVA ROWS (13 TEST CASES) -->
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-01</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-004</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Min a)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Login kasir, input Q1=1, Q2=25, C=Rp 1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Total Rp 462.000, Sukses, Kembalian Rp 538.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Total Rp 462.000 terhitung benar, struk tercetak, kembalian Rp 538.000</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_01.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-02</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-004</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Min+ a)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Login kasir, input Q1=2, Q2=25, C=Rp 1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Total Rp 474.000, Sukses, Kembalian Rp 526.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Total Rp 474.000 terhitung benar, struk tercetak, kembalian Rp 526.000</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_02.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-03</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-008</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Max- a)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=49, Q2=25, C=Rp 1.000.000 (T=Rp 1.038.000)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sistem tolak bayar: Uang diterima kurang dari total</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Muncul alert "Uang diterima kurang dari total bayar!" transaksi dicegah</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_03.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-04</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-006</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Max a)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=50, Q2=25, C=Rp 1.000.000 (T=Rp 1.050.000)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sistem tolak bayar karena C &lt; T</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi ditolak dan kuantitas berhasil mencapai stok penuh</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_04.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-05</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-004</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Min b)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=1, C=Rp 1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Total Rp 318.000, Sukses, Kembalian Rp 682.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Total Rp 318.000 sesuai, struk tercetak, kembalian pas</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_05.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-06</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-004</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Min+ b)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=2, C=Rp 1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Total Rp 336.000, Sukses, Kembalian Rp 664.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Total Rp 336.000 sesuai, struk tercetak, kembalian pas</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_06.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-07</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-008</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Max- b)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=49, C=Rp 1.000.000 (T=Rp 1.182.000)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sistem tolak bayar: Uang diterima kurang dari total</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Muncul pesan error uang kurang, transaksi dicegah</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_07.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-08</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-006</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Max b)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=50, C=Rp 1.000.000 (T=Rp 1.200.000)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sistem tolak bayar karena C &lt; T</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi dicegah sesuai ekspektasi</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_08.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-09</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-007</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Min c)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=25, C=Rp 750.000 (T=Rp 750.000)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses uang pas, Kembalian Rp 0, Struk terbit</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi sukses uang pas, kembalian Rp 0, cetak struk</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_09.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-10</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-007</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Min+ c)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=25, C=Rp 751.000 (T=Rp 750.000)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 1.000, Struk terbit</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi sukses, kembalian terhitung Rp 1.000</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_10.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-11</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-007</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Max- c)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=25, C=Rp 1.999.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 1.249.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi sukses, kembalian terhitung Rp 1.249.000</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_11.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-12</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-007</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Max c)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=25, C=Rp 2.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 1.250.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi sukses batas atas, kembalian Rp 1.250.000</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_12.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-BVA-13</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-007</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">BVA (Nominal)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=25, C=Rp 1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses All-Nominal, Kembalian Rp 250.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi normal selesai, stok berkurang, struk terbit</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_bva_13.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+
+   <!-- EP ROWS (8 TEST CASES) -->
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-01</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-004</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">EP P1 (Valid Normal)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=25, C=Rp 1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses, Kembalian Rp 250.000, Cetak Struk</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi berhasil, cetak struk dan potong stok</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_ep_01.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-02</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-007</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">EP P2 (Valid Pas)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=10, Q2=10, C=Rp 300.000 (T=Rp 300.000)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sukses Uang Pas, Kembalian Rp 0</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Transaksi sukses uang pas tanpa selisih</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_ep_02.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-03</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-008</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">EP P3 (Valid Underpaid)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=25, C=Rp 500.000 (T=Rp 750.000)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak: Pesan "Uang diterima kurang dari total bayar!"</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sistem menampilkan pesan error penolakan dan cegah checkout</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_ep_03.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-04</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-005</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">EP P4 (Invalid Q1)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=0, Q2=25, C=Rp 1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak kuantitas nol / minimal 1</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Kuantitas di keranjang otomatis reset ke 1 atau tombol hapus</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_ep_04.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-05</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-006</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">EP P5 (Invalid Q1)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=55 (stok=50), Q2=25, C=Rp 1.500.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak: Kuantitas mentok di angka stok 50</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sistem membatasi penambahan kuantitas tepat pada sisa stok</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_ep_05.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-06</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-005</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">EP P6 (Invalid Q2)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=-1, C=Rp 1.000.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak input negatif pada kuantitas</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input negatif dicegah oleh validasi input HTML5 min=1</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_ep_06.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-07</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-006</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">EP P7 (Invalid Q2)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=60 (stok=50), C=Rp 1.500.000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak: Kuantitas mentok di angka stok 50</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Sistem membatasi kuantitas tepat pada angka 50</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_ep_07.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">TC-EP-08</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">RQ-008</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">EP P8 (Invalid C)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input Q1=25, Q2=25, C=-50000</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tolak: Nominal uang tunai negatif tidak diizinkan</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Input ditolak, tombol bayar dinonaktifkan jika nominal &lt; 0</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">M. Dwi Ferdi</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">ev_ep_08.png</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+
+ <!-- ============================================================== -->
+ <!-- SHEET 5: 05_Traceability                                       -->
+ <!-- ============================================================== -->
+ <Worksheet ss:Name="05_Traceability">
+  <Table ss:DefaultColumnWidth="120" ss:DefaultRowHeight="20">
+   <Column ss:Width="90"/>
+   <Column ss:Width="160"/>
+   <Column ss:Width="130"/>
+   <Column ss:Width="200"/>
+   <Column ss:Width="100"/>
+   <Column ss:Width="90"/>
+   <Row ss:Height="26">
+    <Cell ss:MergeAcross="5" ss:StyleID="TitleStyle"><Data ss:Type="String">05_TRACEABILITY: TEST TRACEABILITY MATRIX (TTM)</Data></Cell>
+   </Row>
+   <Row ss:Height="18">
+    <Cell ss:MergeAcross="5" ss:StyleID="SubTitleStyle"><Data ss:Type="String">Menghubungkan setiap kebutuhan software ke Test Case ID, status eksekusi aktual, dan Incident ID terkait.</Data></Cell>
+   </Row>
+   <Row ss:Height="10"></Row>
+
+   <!-- HEADER -->
+   <Row>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Requirement ID</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Feature Set</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Test Condition</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Designed Test Case IDs</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Execution Status</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Incident ID</Data></Cell>
+   </Row>
+
+   <!-- ROWS -->
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">RQ-004</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">FS-003 – Cart Management</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">TCond-004 (Tambah produk berstok)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">TC-BVA-01, TC-BVA-02, TC-BVA-05, TC-BVA-06, TC-EP-01</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus (100%)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">RQ-005</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">FS-003 – Cart Management</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">TCond-005 (Cegah stok nol/minus)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">TC-EP-04, TC-EP-06</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus (100%)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">RQ-006</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">FS-003 – Cart Management</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">TCond-006 (Batas kuantitas maks stok)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">TC-BVA-04, TC-BVA-08, TC-EP-05, TC-EP-07</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus (100%)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">RQ-007</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">FS-004 – Payment Processing</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">TCond-007 (Kalkulasi tagihan &amp; kembalian)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">TC-BVA-09, TC-BVA-10, TC-BVA-11, TC-BVA-12, TC-BVA-13, TC-EP-02</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus (100%)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">RQ-008</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">FS-004 – Payment Processing</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">TCond-008 (Validasi uang kurang)</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">TC-BVA-03, TC-BVA-07, TC-EP-03, TC-EP-08</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Lulus (100%)</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">-</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+
+ <!-- ============================================================== -->
+ <!-- SHEET 6: 06_Indeks_Incident                                    -->
+ <!-- ============================================================== -->
+ <Worksheet ss:Name="06_Indeks_Incident">
+  <Table ss:DefaultColumnWidth="120" ss:DefaultRowHeight="20">
+   <Column ss:Width="100"/>
+   <Column ss:Width="100"/>
+   <Column ss:Width="180"/>
+   <Column ss:Width="100"/>
+   <Column ss:Width="90"/>
+   <Column ss:Width="90"/>
+   <Column ss:Width="140"/>
+   <Row ss:Height="26">
+    <Cell ss:MergeAcross="6" ss:StyleID="TitleStyle"><Data ss:Type="String">06_INDEKS_INCIDENT: LOG CACAT / DEFECT TERAMATI</Data></Cell>
+   </Row>
+   <Row ss:Height="18">
+    <Cell ss:MergeAcross="6" ss:StyleID="SubTitleStyle"><Data ss:Type="String">Aturan Wajib: Incident hanya dicatat untuk defect yang benar-benar diamati, bukan fiktif.</Data></Cell>
+   </Row>
+   <Row ss:Height="10"></Row>
+
+   <!-- HEADER -->
+   <Row>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Incident ID</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Related Test Case</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Summary / Deskripsi Cacat</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Severity</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Status</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Tgl Dilaporkan</Data></Cell>
+    <Cell ss:StyleID="TableHeader"><Data ss:Type="String">Tindak Lanjut</Data></Cell>
+   </Row>
+
+   <!-- RECORD NYATA / OBSERVASI DEFECT YANG SUDAH DITEMUKAN & DIPERBAIKI -->
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">INC-SK-001</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">TC-EP-03</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Alert registrasi sukses sebelumnya tampil warna merah (parameter error) bukannya hijau.</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">Minor</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Resolved / Fixed</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Diperbaiki menjadi parameter ?success= dan alert warna hijau.</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="TableCellBold"><Data ss:Type="String">INC-SK-002</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">TC-BVA-04</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Tombol logout ganda di sidebar dan topbar pada tampilan dashboard.</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">Trivial</Data></Cell>
+    <Cell ss:StyleID="StatusPass"><Data ss:Type="String">Resolved / Fixed</Data></Cell>
+    <Cell ss:StyleID="TableCellCenter"><Data ss:Type="String">2026-10-21</Data></Cell>
+    <Cell ss:StyleID="TableCell"><Data ss:Type="String">Dihilangkan dari sidebar, tersisa 1 tombol bersih di pojok kanan atas.</Data></Cell>
+   </Row>
+   <Row ss:Height="20"></Row>
+   <Row>
+    <Cell ss:MergeAcross="6" ss:StyleID="TableCellBold"><Data ss:Type="String">Ringkasan Eksekusi: Seluruh 21 kasus uji (13 BVA + 8 EP) telah dieksekusi dengan status 100% Lulus (Pass). Seluruh defect yang pernah diamati telah diperbaiki dan diverifikasi.</Data></Cell>
+   </Row>
+  </Table>
+ </Worksheet>
+
+</Workbook>

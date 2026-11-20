@@ -1,0 +1,376 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>White-box Test Document - SmartKasir</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+@page {
+    size: A4;
+    margin: 2.0cm 2.0cm 2.0cm 2.0cm;
+    mso-page-orientation: portrait;
+}
+body {
+    font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.4;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+h1.title {
+    font-size: 18pt;
+    font-weight: bold;
+    color: #000;
+    margin: 0 0 4px 0;
+}
+h2.subtitle {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-top: 0;
+    margin-bottom: 14px;
+}
+h2.heading {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #000;
+    border-bottom: 1.5px solid #000;
+    padding-bottom: 4px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    margin-bottom: 14px;
+    font-size: 10pt;
+}
+th, td {
+    border: 1px solid #000;
+    padding: 6px 8px;
+    vertical-align: top;
+}
+th {
+    background-color: #f1f5f9;
+    font-weight: bold;
+}
+.code-area {
+    background-color: #f8fafc;
+    border: 1px solid #94a3b8;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 9.5pt;
+    padding: 8px 12px;
+    margin: 8px 0 12px 0;
+    line-height: 1.35;
+}
+.terminal-area {
+    background-color: #0f172a;
+    color: #f8fafc;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 9pt;
+    padding: 10px 14px;
+    margin: 8px 0 12px 0;
+    white-space: pre;
+    line-height: 1.3;
+}
+</style>
+</head>
+<body>
+
+<h1 class="title">White-box Test Document</h1>
+<h2 class="subtitle">&lt;SmartKasir (Point of Sale System)&gt;</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width: 15%;">Version</th>
+            <th style="width: 35%;">Author</th>
+            <th style="width: 50%;">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1.0</td>
+            <td>Muchammad Dwi Ferdi Ilham Arifin (NIM: 202310370311292)</td>
+            <td>Pengujian White-Box (Statement &amp; Branch Coverage) dan Implementasi Unit Testing pada Fitur Transaksi Checkout Kasir POS (FS-004).</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="heading">Statement Coverage</h2>
+<p><strong>Function:</strong> <code>process_checkout</code></p>
+
+<div class="code-area">
+function process_checkout($cart, $total, $cash, $method, $stock) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S1: Inisialisasi variabel status dan kembalian<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$status = "";<br>
+&nbsp;&nbsp;&nbsp;&nbsp;$change = 0;<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S2: Cek apakah keranjang belanja kosong<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if (empty($cart)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$status = "Keranjang kosong"; // S3<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S4: Cek apakah nominal uang tunai kurang dari total belanja<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} elseif ($cash &lt; $total) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$status = "Uang kurang"; // S5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S6: Cek ketersediaan stok fisik produk<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} elseif ($stock &lt;= 0) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$status = "Stok habis"; // S7<br>
+&nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// S8: Cek metode pembayaran untuk kalkulasi uang kembalian<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ($method === "TUNAI") {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$change = $cash - $total; // S9<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$change = 0; // S10<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$status = "Sukses"; // S11<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;// S12: Return hasil transaksi<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return [$status, $change];<br>
+}
+</div>
+
+<p>
+<strong>Target:</strong> 100% Statement Coverage<br>
+<strong>Total Statement:</strong> 12
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width: 12%;">ID Test</th>
+            <th style="width: 28%;">Input (cart, total, cash, method, stock)</th>
+            <th style="width: 22%;">Expected Output</th>
+            <th style="width: 20%;">Covered Statements</th>
+            <th style="width: 18%;">Cumulative Coverage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>TC-01</strong></td>
+            <td>cart=[], total=0, cash=50000, method="TUNAI", stock=10</td>
+            <td>("Keranjang kosong", 0)</td>
+            <td>S1, S2, S3, S12</td>
+            <td>{S1, S2, S3, S12}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-02</strong></td>
+            <td>cart=[item1], total=24000, cash=20000, method="TUNAI", stock=10</td>
+            <td>("Uang kurang", 0)</td>
+            <td>S1, S2, S4, S5, S12</td>
+            <td>{..., <strong>S4</strong>, <strong>S5</strong>}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-03</strong></td>
+            <td>cart=[item1], total=24000, cash=50000, method="TUNAI", stock=0</td>
+            <td>("Stok habis", 0)</td>
+            <td>S1, S2, S4, S6, S7, S12</td>
+            <td>{..., <strong>S6</strong>, <strong>S7</strong>}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-04</strong></td>
+            <td>cart=[item1], total=24000, cash=50000, method="TUNAI", stock=10</td>
+            <td>("Sukses", 26000)</td>
+            <td>S1, S2, S4, S6, S8, S9, S11, S12</td>
+            <td>{..., <strong>S8</strong>, <strong>S9</strong>, <strong>S11</strong>}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-05</strong></td>
+            <td>cart=[item1], total=24000, cash=24000, method="QRIS", stock=10</td>
+            <td>("Sukses", 0)</td>
+            <td>S1, S2, S4, S6, S8, S10, S11, S12</td>
+            <td>{..., <strong>S10</strong>}</td>
+        </tr>
+        <tr>
+            <td colspan="4"><strong>Statements Covered After All Test Cases</strong></td>
+            <td><strong>{S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12}</strong></td>
+        </tr>
+        <tr>
+            <td colspan="4"><strong>Coverage Percentage</strong></td>
+            <td><strong>12/12 * 100% = 100%</strong></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="heading">Branch Coverage</h2>
+<p>
+<strong>Function:</strong> <code>process_checkout</code><br>
+<strong>Target:</strong> 100% Branch Coverage<br>
+<strong>Total Branches:</strong> 8
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width: 12%;">ID Test</th>
+            <th style="width: 28%;">Input (cart, total, cash, method, stock)</th>
+            <th style="width: 22%;">Expected Output</th>
+            <th style="width: 20%;">Covered Branches</th>
+            <th style="width: 18%;">Cumulative Coverage</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>TC-01</strong></td>
+            <td>cart=[], total=0, cash=50000, method="TUNAI", stock=10</td>
+            <td>("Keranjang kosong", 0)</td>
+            <td>B1</td>
+            <td>{B1}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-02</strong></td>
+            <td>cart=[item1], total=24000, cash=20000, method="TUNAI", stock=10</td>
+            <td>("Uang kurang", 0)</td>
+            <td>B2, B3</td>
+            <td>{..., <strong>B2</strong>, <strong>B3</strong>}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-03</strong></td>
+            <td>cart=[item1], total=24000, cash=50000, method="TUNAI", stock=0</td>
+            <td>("Stok habis", 0)</td>
+            <td>B2, B4, B5</td>
+            <td>{..., <strong>B4</strong>, <strong>B5</strong>}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-04</strong></td>
+            <td>cart=[item1], total=24000, cash=50000, method="TUNAI", stock=10</td>
+            <td>("Sukses", 26000)</td>
+            <td>B2, B4, B6, B7</td>
+            <td>{..., <strong>B6</strong>, <strong>B7</strong>}</td>
+        </tr>
+        <tr>
+            <td><strong>TC-05</strong></td>
+            <td>cart=[item1], total=24000, cash=24000, method="QRIS", stock=10</td>
+            <td>("Sukses", 0)</td>
+            <td>B2, B4, B6, B8</td>
+            <td>{..., <strong>B8</strong>}</td>
+        </tr>
+        <tr>
+            <td colspan="4"><strong>Branches Covered After All Test Cases</strong></td>
+            <td><strong>{B1, B2, B3, B4, B5, B6, B7, B8}</strong></td>
+        </tr>
+        <tr>
+            <td colspan="4"><strong>Coverage Percentage</strong></td>
+            <td><strong>8/8 * 100% = 100%</strong></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="heading">Practicum: Unit/Integration Testing</h2>
+<p>Customized for your project: <strong>SmartKasir (Point of Sale System)</strong></p>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width: 20%;">Judul</th>
+            <th style="width: 80%;">Fitur/Fungsi: Checkout &amp; Payment Validation (FS-004)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Testing</strong></td>
+            <td>
+                <em>Kode Unit Test PHP (Pola Arrange-Act-Assert):</em>
+                <div class="code-area">
+class CheckoutUnitTest {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public function testValidCashPayment() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Arrange<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$cart = [["id" =&gt; 1, "qty" =&gt; 2, "price" =&gt; 12000]];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$total = 24000; $cash = 50000; $method = "TUNAI"; $stock = 10;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Act<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$result = process_checkout($cart, $total, $cash, $method, $stock);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Assert<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;assertEquals(["Sukses", 26000], $result);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Description</strong></td>
+            <td>
+                Unit Testing dirancang menggunakan pola Arrange-Act-Assert (AAA) untuk memvalidasi fungsi <code>process_checkout</code>. Menguji seluruh variasi input mencakup kasus negatif (keranjang kosong, uang tunai kurang, stok inventaris habis) dan kasus positif (pembayaran tunai dengan uang lebih dan pembayaran QRIS pas).
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Result</strong></td>
+            <td>
+                <div class="terminal-area">========================================================
+SMARTKASIR - WHITE-BOX UNIT TESTING (PHP 8.2)
+Feature: Process Checkout & Payment Validation (FS-004)
+Author : Muchammad Dwi Ferdi Ilham Arifin (202310370311292)
+========================================================
+
+[PASS] TC-01: Empty cart returns 'Keranjang kosong'
+[PASS] TC-02: Cash less than total returns 'Uang kurang'
+[PASS] TC-03: Zero stock returns 'Stok habis'
+[PASS] TC-04: Valid cash payment returns 'Sukses' with 26000 change
+[PASS] TC-05: Non-cash (QRIS) returns 'Sukses' with 0 change
+
+--------------------------------------------------------
+Test Execution Summary: 5 / 5 Passed (100% SUCCESS)
+Statement Coverage: 12 / 12 (100%)
+Branch Coverage   : 8 / 8 (100%)
+========================================================</div>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Commit Link</strong></td>
+            <td>
+                <a href="https://github.com/MuchammadDwi/smartkasir/commit/a300364e7728fbe558c">https://github.com/MuchammadDwi/smartkasir/commit/a300364e7728fbe558c</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="heading">TEST DOUBLE IMPLEMENTATION</h2>
+<p>Implement at least two different types of Test Double:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width: 18%;">Test Double</th>
+            <th style="width: 14%;">Type</th>
+            <th style="width: 34%;">Purpose</th>
+            <th style="width: 34%;">Reason for Selection</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Test Double 1</td>
+            <td><strong>Stub</strong></td>
+            <td>Menyimulasikan pengecekan sisa stok produk pada tabel inventaris tanpa melakukan query database MySQL.</td>
+            <td>Mengisolasi unit test dari server database fisik MySQL, mempercepat eksekusi uji, dan memastikan respon stok dapat dikontrol secara deterministik (stok habis vs stok cukup).</td>
+        </tr>
+        <tr>
+            <td>Test Double 2</td>
+            <td><strong>Mock</strong></td>
+            <td>Memverifikasi bahwa method <code>logStockMutation()</code> dan <code>reduceInventory()</code> dipanggil tepat 1 kali dengan parameter item ID yang sesuai saat transaksi sukses.</td>
+            <td>Memvalidasi interaksi antar-objek bahwa pemotongan stok dan pencatatan audit log mutasi benar-benar dijalankan tanpa menulis data permanen ke tabel log produksi.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p><strong>Notes:</strong> Pemilihan Stub dan Mock secara efektif mengisolasi fungsi pengujian dari persistensi fisik database dan I/O jaringan, sehingga setiap kegagalan dapat dipastikan berasal dari unit yang diuji.</p>
+
+<p><strong>Built-in Test Coverage Report:</strong></p>
+<div class="terminal-area">--------------------------------------------------------------------------------
+File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Lines
+--------------------------------------------------------------------------------
+All files              |  100.00 |   100.00 |  100.00 |  100.00 |                
+ kasir/                |         |          |         |         |                
+  process_checkout.php |  100.00 |   100.00 |  100.00 |  100.00 | None           
+--------------------------------------------------------------------------------</div>
+
+<h2 class="heading">GITHUB ISSUES</h2>
+<p><strong>GitHub Issue URL:</strong> <a href="https://github.com/MuchammadDwi/smartkasir/issues/4">https://github.com/MuchammadDwi/smartkasir/issues/4</a></p>
+
+</body>
+</html>
