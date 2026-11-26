@@ -4,3 +4,8 @@
 
 # Logs and cache
 *.log
+
+# Composer & PHPUnit
+/vendor/
+.phpunit.cache/
+.phpunit.result.cache
