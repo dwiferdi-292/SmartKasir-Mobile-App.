@@ -383,6 +383,17 @@ class SmartKasirFullTestSuite {
         if ($r2['valid'] === true && count($r2['data']) === 1) {
             echo "  [PASS] TC-F5-02: Filter rentang 10 s/d 20 Nov -> Tepat 1 transaksi\n"; $this->passed++;
         }
+
+        // TC-F5-03
+        // [Arrange] input tidak valid  [Act]
+        $this->total++;
+        $r = filter_order_history("", "2026-11-20", $orders);
+        // [Assert]
+        if ($r['valid'] === false) {
+            echo "  [PASS] TC-F5-03: Tanggal mulai kosong -> Ditolak\n"; $this->passed++;
+        } else {
+            echo "  [FAIL] TC-F5-03\n";
+        }
     }
 
     // FITUR 6: QUICK RESTOCK
@@ -435,6 +446,17 @@ class SmartKasirFullTestSuite {
         if ($r3['valid'] === true) {
             echo "  [PASS] TC-F7-03: Harga Rp 25.000 valid -> Diterima\n"; $this->passed++;
         }
+
+        // TC-F7-04
+        // [Arrange] input tidak valid  [Act]
+        $this->total++;
+        $r = validate_product_price("abc");
+        // [Assert]
+        if ($r['valid'] === false) {
+            echo "  [PASS] TC-F7-04: Harga bukan angka -> Ditolak\n"; $this->passed++;
+        } else {
+            echo "  [FAIL] TC-F7-04\n";
+        }
     }
 
     // FITUR 8: EMAIL VALIDATION
@@ -453,6 +475,17 @@ class SmartKasirFullTestSuite {
         $r2 = validate_cashier_email("kasir.baru@smartkasir.com");
         if ($r2['valid'] === true) {
             echo "  [PASS] TC-F8-02: Format RFC valid -> Diterima\n"; $this->passed++;
+        }
+
+        // TC-F8-03
+        // [Arrange] input tidak valid  [Act]
+        $this->total++;
+        $r = validate_cashier_email("");
+        // [Assert]
+        if ($r['valid'] === false) {
+            echo "  [PASS] TC-F8-03: Email kosong -> Ditolak\n"; $this->passed++;
+        } else {
+            echo "  [FAIL] TC-F8-03\n";
         }
     }
 
